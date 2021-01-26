@@ -1,0 +1,10 @@
+version: "3.4"
+services:
+
+  dev:
+    build:
+      dockerfile: "./docker/Dockerfile"
+      context: "."
+    image: "extra-model-dev"
+    volumes:
+      - ./:/io
