@@ -1,10 +1,16 @@
 version: "3.4"
 services:
 
-  dev:
+  dev: &dev
     build:
       dockerfile: "./docker/Dockerfile"
       context: "."
     image: "extra-model-dev"
     volumes:
       - ./:/io
+
+  # run all the tests and linting locally
+  # - black & isort will format code to address issues
+  test:
+    <<: *dev
+    command: docker/run_tests.sh --format-code
