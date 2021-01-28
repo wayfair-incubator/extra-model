@@ -1,0 +1,6 @@
+[flake8]
+max-complexity = 8
+ignore = E203,W503,E501
+builtins = unicode
+tee = True
+exclude = venv,env
