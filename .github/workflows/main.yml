@@ -131,3 +131,16 @@ jobs:
           with:
             file: coverage-${{ matrix.python-version }}.xml
             fail_ci_if_error: true
+
+  verify-wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Verify wheel
+        uses: ./.github/actions/verify-wheel
+        with:
+          package-import-name: "extral_model"
