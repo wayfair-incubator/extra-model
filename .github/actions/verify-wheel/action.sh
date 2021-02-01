@@ -5,7 +5,7 @@ MODULE_NAME=$1
 echo "Ensuring pip is up to date"
 python -m pip install --upgrade pip
 echo "Installing the PyPA build package"
-pip build
+pip install build
 
 echo "--------------"
 echo "Building wheel"
