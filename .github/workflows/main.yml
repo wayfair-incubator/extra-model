@@ -143,4 +143,4 @@ jobs:
       - name: Verify wheel
         uses: ./.github/actions/verify-wheel
         with:
-          package-import-name: "extral_model"
+          package-import-name: "extra_model"
