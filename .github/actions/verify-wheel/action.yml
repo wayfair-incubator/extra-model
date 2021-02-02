@@ -1,0 +1,12 @@
+name: "Verify Python Wheel"
+description: "Build a wheel for the package and importing the package doesn't cause an error"
+inputs:
+  package-import-name:
+    description: "Name used to import the package from python code"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: "Verify wheel"
+      run: "$GITHUB_ACTION_PATH/action.sh ${{ inputs.package-import-name }}"
+      shell: "bash"
