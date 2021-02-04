@@ -24,7 +24,7 @@ class vectorizer:
             #  normalized ones = saves lots of memory!"
             self.wv_glove.init_sims()
         else:
-            glove_file = datapath('/app/glove.840B.300d.txt')
+            glove_file = datapath("/app/glove.840B.300d.txt")
             tmp_file = get_tmpfile("test.txt")
 
             _ = glove2word2vec(glove_file, tmp_file)

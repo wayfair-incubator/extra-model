@@ -12,9 +12,7 @@ LOGGER = logging.getLogger(__name__)
 @click.argument("output_path", type=Path, default="/app/output")
 @click.option("--debug", is_flag=True)
 def entrypoint(
-    input_path: Path,
-    output_path: Path,
-    debug: bool = False,
+    input_path: Path, output_path: Path, debug: bool = False
 ) -> Dict[str, Path]:
 
     """
