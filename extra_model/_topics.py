@@ -52,10 +52,10 @@ def iterate(transition_matrix, importance, original, alpha):
     return importance
 
 
-def aggregate(aspects, aspect_counts, synsets_match, vectors):
-    """ aggregate the aspects by building a tree from the hypernym chains
-        and using a page-rank type algorithm to assign importance to the nodes in the graph
-        we only consider wordnet entries for this, not the actual aspects extracted from the texts"""
+def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
+    """aggregate the aspects by building a tree from the hypernym chains
+    and using a page-rank type algorithm to assign importance to the nodes in the graph
+    we only consider wordnet entries for this, not the actual aspects extracted from the texts"""
 
     # count how many aspects are matched to a given wornet entry, so that we
     # can remove ambiguities from the graph
@@ -233,7 +233,7 @@ def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree
                 if full_tree.has_edge(aspect, subtopic):
                     raw_aspects[aspect] = count
         if len(raw_aspects) == 0:
-            logger.debug("No attached terms, skipping".format(topic_noun))
+            logger.debug("No attached terms, skipping")
             continue
         ordered_aspects = sorted(
             raw_aspects.items(), key=lambda pair: pair[1], reverse=True
