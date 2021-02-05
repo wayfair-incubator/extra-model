@@ -1,11 +1,14 @@
 import pytest
 
 import spacy
+import pandas as pd
 from extra_model._aspects import (
     compound_noun_list,
     acomp_list,
     adjective_list,
     adjective_negations,
+    parse,
+    generate_aspects,
 )
 
 
@@ -28,24 +31,61 @@ def test_aspects__compound_noun_list__right_compound(spacy_nlp):
 
 def test_aspects__acomp_list(spacy_nlp):
     example_text = "The shelf is sturdy and beautiful."
-    acomp_list(spacy_nlp(example_text)[1].head.children) == ["sturdy", "beautiful"]
+    assert acomp_list(spacy_nlp(example_text)[1].head.children) == [
+        "sturdy",
+        "beautiful",
+    ]
 
 
 def test_aspects__adjective_list(spacy_nlp):
-    example_text = "I baught a sturdy and beautiful shelf."
-    adjective_list(spacy_nlp(example_text)[6].head.children) == ["sturdy", "beautiful"]
+    example_text = "I bought a sturdy and beautiful shelf."
+    assert adjective_list(spacy_nlp(example_text)[6].children) == [
+        "sturdy",
+        "beautiful",
+    ]
 
 
 def test_aspects__adjective_negations__direct(spacy_nlp):
     example_text = "This not so sturdy table is a disappointment."
-    adjective_negations(spacy_nlp(example_text)[3]) == ["sturdy"]
+    assert adjective_negations(spacy_nlp(example_text)[1]) == ["sturdy"]
+    # There is a difference here in spacy versions that will need to be investigated.
 
 
 def test_aspects__adjective_negations__right_non_attr(spacy_nlp):
     example_text = "This color is not pretty."
-    adjective_negations(spacy_nlp(example_text)[3]) == ["pretty"]
+    assert adjective_negations(spacy_nlp(example_text)[3]) == ["pretty"]
 
 
 def test_aspects__adjective_negations__right_attr(spacy_nlp):
     example_text = "This is not a terrible table."
-    adjective_negations(spacy_nlp(example_text)[2]) == ["terrible"]
+    assert adjective_negations(spacy_nlp(example_text)[2]) == ["terrible"]
+
+
+def test_aspects__parse(spacy_nlp, mocker):
+    # chose a text that exercise as much code as possible
+    # second part of the sentence is here to check that negations are properly filtered
+    example_text = "The wooden cabinet serves its purpose, it's not terrible."
+    data_frame = pd.DataFrame([{"Comments": example_text}])
+    mocker.patch("spacy.load", return_value=spacy_nlp)
+    result = parse(data_frame)
+    assert (
+        result.iloc[0]["CiD"] == 0
+        and result.iloc[0]["position"] == 11
+        and result.iloc[0]["aspect"] == "cabinet"
+        and result.iloc[0]["descriptor"] == "wooden"
+        and result.iloc[0]["is_negated"] == False
+    )
+
+
+def test_aspects_generate_aspects(spacy_nlp, mocker):
+    example_text = "The wooden cabinet serves its purpose, it's not terrible."
+    data_frame = pd.DataFrame([{"Comments": example_text}])
+    mocker.patch("spacy.load", return_value=spacy_nlp)
+    result = generate_aspects(data_frame)
+    assert (
+        result.iloc[0]["CiD"] == 0
+        and result.iloc[0]["position"] == 11
+        and result.iloc[0]["aspect"] == "cabinet"
+        and result.iloc[0]["descriptor"] == "wooden"
+        and result.iloc[0]["is_negated"] == False
+    )
