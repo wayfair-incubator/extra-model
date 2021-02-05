@@ -49,6 +49,7 @@ def test_aspects__adjective_negations__direct(spacy_nlp):
     example_text = "This not so sturdy table is a disappointment."
     assert adjective_negations(spacy_nlp(example_text)[1]) == ["sturdy"]
     # There is a difference here in spacy versions that will need to be investigated.
+    # succeeds in 2.0.18 but fails in 3.0.
 
 
 def test_aspects__adjective_negations__right_non_attr(spacy_nlp):
