@@ -1,14 +1,14 @@
-import pytest
-
-import spacy
 import pandas as pd
+import pytest
+import spacy
+
 from extra_model._aspects import (
-    compound_noun_list,
     acomp_list,
     adjective_list,
     adjective_negations,
-    parse,
+    compound_noun_list,
     generate_aspects,
+    parse,
 )
 
 
@@ -74,7 +74,7 @@ def test_aspects__parse(spacy_nlp, mocker):
         and result.iloc[0]["position"] == 11
         and result.iloc[0]["aspect"] == "cabinet"
         and result.iloc[0]["descriptor"] == "wooden"
-        and result.iloc[0]["is_negated"] == False
+        and not result.iloc[0]["is_negated"]
     )
 
 
@@ -88,5 +88,5 @@ def test_aspects_generate_aspects(spacy_nlp, mocker):
         and result.iloc[0]["position"] == 11
         and result.iloc[0]["aspect"] == "cabinet"
         and result.iloc[0]["descriptor"] == "wooden"
-        and result.iloc[0]["is_negated"] == False
+        and not result.iloc[0]["is_negated"]
     )
