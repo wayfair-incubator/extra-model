@@ -3,7 +3,7 @@ jinja2
 pyarrow
 boto==2.48.0
 certifi==2018.10.15
-chardet==3.0.4
+chardet==4.0.0
 click==7.1.2
 cymem==2.0.2
 cytoolz==0.9.0
