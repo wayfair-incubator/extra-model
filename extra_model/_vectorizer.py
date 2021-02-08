@@ -9,7 +9,7 @@ from gensim.test.utils import datapath, get_tmpfile
 logger = logging.getLogger(__name__)
 
 
-class vectorizer:
+class Vectorizer:
     """simple vectorizer class using pre-trained vectors"""
 
     def __init__(self, embedding_file, raw=True):
