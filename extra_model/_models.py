@@ -2,30 +2,29 @@ from typing import Any, Optional, Tuple, Union
 
 
 class ModelBase:
-    """ Base class that provides file loading functionality
-    """
-    
+    """Base class that provides file loading functionality"""
+
     def load_from_files(self):
         pass
 
 
 class ExtraModelBase:
-    """ Extra model class that provides an interface for 
+    """Extra model class that provides an interface for
     training and predicting
     """
 
     def __init__(self):
         pass
-    
+
     def storage_metadata(self):
         pass
-    
+
     def load_from_files(self):
         pass
-    
+
     def train(self):
         pass
-    
+
     def predict(self):
         pass
 
