@@ -1,5 +1,6 @@
 """simple vecotrizer class using prettrained vectors"""
 import logging
+import tempfile
 
 import numpy as np
 from gensim.models import KeyedVectors
@@ -24,7 +25,10 @@ class vectorizer:
             #  normalized ones = saves lots of memory!"
             self.wv_glove.init_sims()
         else:
-            glove_file = datapath("/app/glove.840B.300d.txt")
+            if embedding_file is None:
+                glove_file = datapath("/app/glove.840B.300d.txt")
+            else:
+                glove_file = embedding_file
             tmp_file = get_tmpfile("test.txt")
 
             _ = glove2word2vec(glove_file, tmp_file)
