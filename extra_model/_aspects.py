@@ -19,7 +19,7 @@ def compound_noun_list(token):
     :param token: token for which to generate potential compound nouns
     :type token: :class:`spacy.token`
     :return: list of potential compounds
-    :rtyoe: [string]
+    :rtype: [string]
     """
     nouns = [token.text]
     for nc in token.lefts:
