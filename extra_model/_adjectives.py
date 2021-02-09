@@ -114,7 +114,7 @@ def cluster_adjectives(adjective_counts, vectorizer):  # noqa: C901
 
 
 def fill_sentiment_dict(adjective_counts):
-    """ given a dictionary with adjectives and their counts, will compute
+    """given a dictionary with adjectives and their counts, will compute
     the sentiment of each of the adjectives using the VADER sentiment analysis package
     and return a dictionary of the adjectives and their sentiments.
     :param adjective_counts: dictionary with adjectives and their counts
