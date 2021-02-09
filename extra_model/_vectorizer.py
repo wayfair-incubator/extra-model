@@ -1,6 +1,5 @@
 """simple vecotrizer class using prettrained vectors"""
 import logging
-import tempfile
 
 import numpy as np
 from gensim.models import KeyedVectors
