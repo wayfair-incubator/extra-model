@@ -11,7 +11,7 @@ from nltk.corpus import wordnet as wn
 from scipy.spatial import distance
 
 from extra_model._disambiguate import match, match_from_single
-from extra_model._vectorizer import vectorizer
+from extra_model._vectorizer import Vectorizer
 
 logger = logging.getLogger(__name__)
 
@@ -314,7 +314,7 @@ def get_topics(dataframe_aspects, vectors):
     """
     Generate the semanticall clustered topics from the raw aspects
     :param dataframe_aspects: (pandas.dataframe): the collection of nouns to aggregated into topics
-    :param vectors: (vectorizer): provides embeddings for context clustering and wordsense disammbguation
+    :param vectors: (Vectorizer): provides embeddings for context clustering and wordsense disammbguation
     """
 
     # for most of the processing we don't really need the specific aspect
@@ -374,7 +374,7 @@ def attach_to_known_topic(
     if len(dataframe_unassigned.index) > 0:
         # if all words have already been seen, we don't need the vectorizer and
         # can skip loading this huge file
-        vectors = vectorizer(embedding)
+        vectors = Vectorizer(embedding)
 
         # remove the first try of a join
         dataframe_unassigned = dataframe_unassigned[in_columns]
