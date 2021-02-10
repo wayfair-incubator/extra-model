@@ -1,10 +1,15 @@
+import sys
 import logging
 from pathlib import Path
 from typing import Dict
 
 import click
 
-LOGGER = logging.getLogger(__name__)
+from extra_model._run import run
+from extra_model._errors import ExtraModelError
+
+
+logger = logging.getLogger(__name__)
 
 
 @click.command()
@@ -23,6 +28,11 @@ def entrypoint(
     :param debug: If set to True, sets log level for the application to DEBUG, else WARNING.
     :return: Dictionary with input_path and output_path set to specified values
     """
-    logging.getLogger("extra_model").setLevel("DEBUG" if debug else "WARNING")
-
-    return {"input_path": input_path, "output_path": output_path}
+    
+    logging.getLogger("extra_model").setLevel("DEBUG" if debug else "INFO")
+    
+    try:
+        run(input_path, output_path)
+    except ExtraModelError as e:
+        logger.exception(e) if debug else logger.error(e)
+        sys.exit(1)
