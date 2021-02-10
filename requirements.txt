@@ -1,6 +1,6 @@
 numpy==1.15.2
 nltk==3.4.5
-scikit-learn==0.20.0
+scikit-learn==0.24.1
 vaderSentiment==3.3.2
 pandas==0.23.3
 pycld2==0.31
