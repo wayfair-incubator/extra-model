@@ -3,7 +3,7 @@ nltk==3.4.5
 scikit-learn==0.20.0
 vaderSentiment==3.3.2
 pandas==0.23.3
-pycld2==0.31
+pycld2==0.41
 networkx==2.2
 gensim==3.5.0
 spacy==2.3.5
