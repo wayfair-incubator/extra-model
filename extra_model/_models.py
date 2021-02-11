@@ -48,24 +48,6 @@ class ModelBase:
             self._storage_metadata["json_extras"] = storage_metadata.get("json_extras")
 
 
-# NOTE: improve typehints!
-def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
-    """Factory for ExtraModel class types. Will dynamically create
-    the class when called with the provided base classes
-
-    :param bases: Base classes to be used when creating ExtraModel class
-    :type bases: Class type or tuple of class types
-
-    :return: ExtraModel class
-    """
-
-    if not isinstance(bases, tuple):
-        bases = (bases,)
-    bases = bases + (ExtraModelBase,)
-
-    return type("ExtraModel", bases, {})
-
-
 class ExtraModelBase:
     """Extra model class that provides an interface for
     training and predicting
@@ -205,6 +187,24 @@ class ExtraModelBase:
         return standardize_output(output, names=self.api_spec_names).to_dict("records")
 
 
+# NOTE: improve typehints!
+def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
+    """Factory for ExtraModel class types. Will dynamically create
+    the class when called with the provided base classes
+
+    :param bases: Base classes to be used when creating ExtraModel class
+    :type bases: Class type or tuple of class types
+
+    :return: ExtraModel class
+    """
+
+    if not isinstance(bases, tuple):
+        bases = (bases,)
+    bases = bases + (ExtraModelBase,)
+
+    return type("ExtraModel", bases, {})
+
+
 def standardize_output(data: pd.DataFrame, names: dict) -> pd.DataFrame:
     """
     Helper function to ensure that:
@@ -216,3 +216,6 @@ def standardize_output(data: pd.DataFrame, names: dict) -> pd.DataFrame:
     :return: renamed dataframe.
     """
     return data[list(names.keys())].rename(columns=names)
+
+
+ExtraModel = extra_factory()
