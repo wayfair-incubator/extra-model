@@ -1,5 +1,7 @@
 import pandas
 import pytest
+from gensim.models import KeyedVectors
+from gensim.scripts.glove2word2vec import glove2word2vec
 
 from extra_model._adjectives import (
     adjective_info,
@@ -7,12 +9,19 @@ from extra_model._adjectives import (
     fill_sentiment_dict,
     sentiments_from_adjectives,
 )
-from extra_model._vectorizer import vectorizer
+from extra_model._vectorizer import Vectorizer
 
 
 @pytest.fixture()
 def vec():
-    return vectorizer("tests/resources/test_adjectives.vec", raw=False)
+    # preprocess plain-text test embeddings to proper binary format for vectorizer
+    glove_file = "tests/resources/test_adjectives.vec"
+    tmp_file = "tests/resources/test_adjectives.tmp"
+    _ = glove2word2vec(glove_file, tmp_file)
+    model = KeyedVectors.load_word2vec_format(tmp_file)
+    model.save("tests/resources/test_adjectives.prepro")
+
+    return Vectorizer("tests/resources/test_adjectives.prepro")
 
 
 def test__cluster_adjectives__empty(vec):
