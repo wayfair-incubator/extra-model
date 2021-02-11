@@ -10,13 +10,14 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 def cluster_adjectives(adjective_counts, vectorizer):  # noqa: C901
     """cluster adjectives based on a constant radius clustering algorithm
     technical implementation uses a scikitlearn BallTree
-    parameters:
-    adjective_counts (dict): dictionary with adjectives and their counts
-    vectorizer (Vectorizer): provide embeddings to evaluate adjective similarity
-    returns:
-    tuple ([string],[int],[[(string,int)]]): first list contains the representative words for the adjective clusters,
+    :param adjective_counts: dictionary with adjectives and their counts
+    :type adjective_counts: [(str,int)]
+    :param vectorizer:  provide embeddings to evaluate adjective similarity
+    :type vectorizer: :class:`_vectorizer.vectorizer`
+    :return: first list contains the representative words for the adjective clusters,
         second list the size (total number of clustered adjectives) for each cluster,
         third list has for each cluster a list of the constituent adjectives with number of occurence
+    :rtype: ([string],[int],[[(string,int)]])
     """
     adjectives, counts = zip(*adjective_counts)
     adjectives = list(adjectives)
@@ -113,6 +114,15 @@ def cluster_adjectives(adjective_counts, vectorizer):  # noqa: C901
 
 
 def fill_sentiment_dict(adjective_counts):
+    """given a dictionary with adjectives and their counts, will compute
+    the sentiment of each of the adjectives using the VADER sentiment analysis package
+    and return a dictionary of the adjectives and their sentiments.
+    :param adjective_counts: dictionary with adjectives and their counts
+    :type adjective_counts: dict
+    :return: dictionary, where the keys are the adjectives and the values are tuples of the
+        corresponding compound sentiument and binary sentiment
+    :rtype: dict
+    """
     sentiment_dict = {}
     analyzer = SentimentIntensityAnalyzer()
     for one_topic_adjectives in adjective_counts:
@@ -128,7 +138,12 @@ def fill_sentiment_dict(adjective_counts):
 
 def sentiments_from_adjectives(adjective_counts, sentiment_dict):
     """build the weighted average sentiment score from a list of adjetives and their counts
-    inputs:
+    :param adjective_counts: list of tuples with adjectives and their counts
+    :type adjective_counts: [(str,int)]
+    :param sentiment_dict: dictionary with adjectives and their sentiment, as tuple of compound and binary sentiment
+    :type sentiment_dict: dict
+    :return: a tuple of the weighted averages of compound and binary sentiment
+    :rtype: (float,float)
     """
     cumulative_sentimenent_compound = 0
     cumulative_sentimenent_binary = 0
@@ -151,12 +166,14 @@ def adjective_info(dataframe_topics, dataframe_aspects, vectorizer):
     """Add adjective related information to the dataframes, this has two facets:
     -> for each topic cluster similar adjectives, to get a more abstract/readable list
     -> for each topic, use the adjectives to come up with a sentiment classification
-    inputs:
-    dataframe_topics (pandas.dataframe): the dataframe with the topics we want to enrich
-    dataframe_aspects (pandas.dataframe): the dataframe with the aspect instances and related adjectives
-    vectorizer (Vectorizer): provide embeddings for the adjectives
-    returns:
-    the enriched datafroma_topics
+    :param dataframe_topics: the dataframe with the topics we want to enrich, needs to have a collum `rawterms`
+    :type dataframe_topics: :class:`pandas.DataFrame`
+    :param dataframe_aspects: the dataframe with the aspect instances and related adjectives with columsn `aspect` and `descriptor`
+    :type dataframe_aspects: :class:`pandas.DataFrame`
+    :param vectorizer:  provide embeddings for the adjectives
+    :type vectorizer: :class:`_vectorizer.vectorizer`
+    :return: the enriched datafromes
+    :rtype: (:class:`pandas.DataFrame`,:class:`pandas.DataFrame`)
     """
     # get counts of adjectives connected to a given topic
     dataframe_topics["adjectives"] = dataframe_topics["rawterms"].apply(
