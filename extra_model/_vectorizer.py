@@ -3,8 +3,6 @@ import logging
 
 import numpy as np
 from gensim.models import KeyedVectors
-from gensim.scripts.glove2word2vec import glove2word2vec
-from gensim.test.utils import datapath, get_tmpfile
 
 logger = logging.getLogger(__name__)
 
