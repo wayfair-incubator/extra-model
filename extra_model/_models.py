@@ -200,7 +200,7 @@ def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
 
     if not isinstance(bases, tuple):
         bases = (bases,)
-    bases = bases + (ExtraModelBase,)
+    bases = (ExtraModelBase,) + bases
 
     return type("ExtraModel", bases, {})
 
