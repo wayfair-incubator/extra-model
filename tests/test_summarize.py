@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 
 from extra_model._summarize import (
     link_aspects_to_texts,
