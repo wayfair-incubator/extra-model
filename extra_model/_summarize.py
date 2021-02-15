@@ -7,9 +7,12 @@ logger = logging.getLogger(__name__)
 def qa(dataframe_texts, dataframe_aspects, dataframe_topics):
     """
     Print summary information
-    :param dataframe_texts: (pandas.dataframe): dataframe with the raw texts (for example output)
-    :param dataframe_aspects: (pandas.dataframe): dataframe with the apsects
-    :param dataframe_topics: (pandas.dataframe): dataframe with the topics
+    :param dataframe_texts: dataframe with the raw texts (for example output)
+    :type dataframe_texts: :class:`pandas.DataFrame`
+    :param dataframe_aspects:  dataframe with the apsects
+    :type dataframe_texts: :class:`pandas.DataFrame`
+    :param dataframe_topics: dataframe with the topics
+    :type dataframe_texts: :class:`pandas.DataFrame`
     """
     for ind in dataframe_topics.index:
         logger.debug("\n++++++++++++++++++++++++++++++\n")
@@ -73,9 +76,10 @@ def qa(dataframe_texts, dataframe_aspects, dataframe_topics):
 def set_aspect(topic, dataframe_aspects):
     """
     For a given topic, set topic and adjective cluster fields in the aspect_dataframe
-    :param topic: (pandas.dataframe.row): the topic and it's associated information that we need to copy to the relevant
-        entries in the aspect frame
-    :param dataframe_aspects: (pandas.dataframe): the dataframe to be enriched with topic information
+    :param topic: the topic and it's associated information that we need to copy to the relevant entries in the aspect frame
+    :type topic: :class:`pandas.DataFrame.Row`
+    :param dataframe_aspects: the dataframe to be enriched with topic information
+    :type dataframe_aspects: :class:`pandas.DataFrame`
     """
     dataframe_aspects.loc[
         dataframe_aspects["aspect"].isin(topic["rawterms"]), "topicID"
@@ -96,8 +100,12 @@ def set_aspect(topic, dataframe_aspects):
 def link_aspects_to_topics(dataframe_aspects, dataframe_topics):
     """
     Fill topic and adjective cluster information into the aspect dataframe
-    :param dataframe_aspects: (pandas.dataframe): the dataframe to be enriched
-    :param dataframe_topics: (pandas.dataframe): the dataframe that has the topic and adjective cluster information
+    :param dataframe_aspects: the dataframe to be enriched
+    :type dataframe_aspects: :class:`panada.DataFrame`
+    :param dataframe_topics:  the dataframe that has the topic and adjective cluster information
+    :type dataframe_topics: :class:`panada.DataFrame`
+    :return: the enriched dataframe
+    :rtype: :class:`panada.DataFrame`
     """
     # create empty collumns to be filled
     dataframe_aspects["topicID"] = None
@@ -114,10 +122,13 @@ def link_aspects_to_topics(dataframe_aspects, dataframe_topics):
 
 def link_aspects_to_texts(dataframe_aspects, dataframe_texts):
     """
-    Transfer the original text identifier and other useful information from the original text data table into the final
-        aspect table
-    :param dataframe_aspects: (pandas.dataframe): table to be enriched
-    :param dataframe_texts: (pandas.dataframe): original table from which this information is extracted
+    Transfer the original text identifier from the original text data table into the final aspect table
+    :param dataframe_aspects: table to be enriched
+    :type dataframe_aspects: :class:`panada.DataFrame`
+    :param dataframe_texts: original table from which this information is extracted
+    :type dataframe_texts: :class:`panada.DataFrame`
+    :return: The aspect dataframe which has been enriched with source-information
+    :rtype: :class:`panada.DataFrame`
     """
     # we don't need everything from the original, let's keep only the useful
     # info to safe space on the output table
