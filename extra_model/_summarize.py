@@ -9,7 +9,7 @@ def qa(dataframe_texts, dataframe_aspects, dataframe_topics):
     Print summary information
     :param dataframe_texts: dataframe with the raw texts (for example output)
     :type dataframe_texts: :class:`pandas.DataFrame`
-    :param dataframe_aspects:  dataframe with the apsects
+    :param dataframe_aspects:  dataframe with the aspects
     :type dataframe_texts: :class:`pandas.DataFrame`
     :param dataframe_topics: dataframe with the topics
     :type dataframe_texts: :class:`pandas.DataFrame`
@@ -101,11 +101,11 @@ def link_aspects_to_topics(dataframe_aspects, dataframe_topics):
     """
     Fill topic and adjective cluster information into the aspect dataframe
     :param dataframe_aspects: the dataframe to be enriched
-    :type dataframe_aspects: :class:`panada.DataFrame`
+    :type dataframe_aspects: :class:`pandas.DataFrame`
     :param dataframe_topics:  the dataframe that has the topic and adjective cluster information
-    :type dataframe_topics: :class:`panada.DataFrame`
+    :type dataframe_topics: :class:`pandas.DataFrame`
     :return: the enriched dataframe
-    :rtype: :class:`panada.DataFrame`
+    :rtype: :class:`pandas.DataFrame`
     """
     # create empty collumns to be filled
     dataframe_aspects["topicID"] = None
@@ -124,11 +124,11 @@ def link_aspects_to_texts(dataframe_aspects, dataframe_texts):
     """
     Transfer the original text identifier from the original text data table into the final aspect table
     :param dataframe_aspects: table to be enriched
-    :type dataframe_aspects: :class:`panada.DataFrame`
+    :type dataframe_aspects: :class:`pandas.DataFrame`
     :param dataframe_texts: original table from which this information is extracted
-    :type dataframe_texts: :class:`panada.DataFrame`
+    :type dataframe_texts: :class:`pandas.DataFrame`
     :return: The aspect dataframe which has been enriched with source-information
-    :rtype: :class:`panada.DataFrame`
+    :rtype: :class:`pandas.DataFrame`
     """
     # we don't need everything from the original, let's keep only the useful
     # info to safe space on the output table
