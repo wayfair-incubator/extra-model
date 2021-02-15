@@ -3,8 +3,6 @@ import logging
 
 import numpy as np
 from gensim.models import KeyedVectors
-from gensim.scripts.glove2word2vec import glove2word2vec
-from gensim.test.utils import datapath, get_tmpfile
 
 logger = logging.getLogger(__name__)
 
@@ -12,24 +10,16 @@ logger = logging.getLogger(__name__)
 class Vectorizer:
     """simple vectorizer class using pre-trained vectors"""
 
-    def __init__(self, embedding_file, raw=True):
+    def __init__(self, embedding_file):
         """use the generic gensim vector embedding lookup
         currently using pretrained glove embeddings, but anything goes.
         parameters:
         embedding_file (string): pathname for the file that stores the word-mebedddings in gensim keyed-vectors format
         """
-        if raw:
-            self.wv_glove = KeyedVectors.load(embedding_file, mmap="r")
-            # TODO: should this have True since help file says "If True - forget the original vectors and only keep the
-            #  normalized ones = saves lots of memory!"
-            self.wv_glove.init_sims()
-        else:
-            glove_file = datapath("/app/glove.840B.300d.txt")
-            tmp_file = get_tmpfile("test.txt")
-
-            _ = glove2word2vec(glove_file, tmp_file)
-            self.wv_glove = KeyedVectors.load_word2vec_format(tmp_file)
-            self.wv_glove.init_sims()
+        self.wv_glove = KeyedVectors.load(embedding_file, mmap="r")
+        # TODO: should this have True since help file says "If True - forget the original vectors and only keep the
+        #  normalized ones = saves lots of memory!"
+        self.wv_glove.init_sims()
 
     def get_vector(self, key):
         """return the vector embedding for a given word
