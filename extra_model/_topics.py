@@ -10,8 +10,7 @@ from nltk import tokenize
 from nltk.corpus import wordnet as wn
 from scipy.spatial import distance
 
-from extra_model._disambiguate import match, match_from_single
-from extra_model._vectorizer import Vectorizer
+from extra_model._disambiguate import match
 
 logger = logging.getLogger(__name__)
 
@@ -184,7 +183,7 @@ def traverse_tree(  # noqa: C901
         if direction == "down":
             maybe_daugthers = full_tree.predecessors(node)
         for daughter in maybe_daugthers:
-            if full_tree.node[daughter]["seed"]:  # we already too care of these
+            if full_tree.node[daughter]["seed"]:  # we already took care of these
                 continue
             elif weighted:  # go further up/down the tree
                 new_nodes.append(
@@ -350,89 +349,3 @@ def get_topics(dataframe_aspects, vectors):
     )
 
     return dataframe_topics
-
-
-def attach_to_known_topic(
-    dataframe_aspects, dataframe_nouns, dataframe_adjectives, dataframe_texts, embedding
-):
-
-    in_columns = dataframe_aspects.columns.values
-
-    # First try: we have already seen the aspect in question.
-    dataframe_merged = dataframe_aspects.merge(
-        dataframe_nouns,
-        how="left",
-        left_on="aspect",
-        right_on="teaAspect",
-        validate="m:1",
-    )
-    dataframe_matched = dataframe_merged[~pd.isnull(dataframe_merged["teaTopicID"])]
-
-    # second try: for words we havent' seen yet, we find the wordnet node and
-    # check if we've seen that node
-    dataframe_unassigned = dataframe_merged[pd.isnull(dataframe_merged["teaTopicID"])]
-    if len(dataframe_unassigned.index) > 0:
-        # if all words have already been seen, we don't need the vectorizer and
-        # can skip loading this huge file
-        vectors = Vectorizer(embedding)
-
-        # remove the first try of a join
-        dataframe_unassigned = dataframe_unassigned[in_columns]
-        dataframe_unassigned.loc[:, "wordnet_node"] = dataframe_unassigned.apply(
-            lambda row: match_from_single(
-                row["aspect"], dataframe_texts["Comments"][row["CiD"]], vectors
-            ),
-            axis=1,
-        )
-        # if we can't match to the actual aspects, that field should be empty
-        reduced_noun_table = dataframe_nouns[
-            ["teaWordNet", "teaTopicID", "talAggregateID"]
-        ]
-        reduced_noun_table = reduced_noun_table.drop_duplicates()
-        dataframe_merged = dataframe_unassigned.merge(
-            reduced_noun_table,
-            how="left",
-            left_on="wordnet_node",
-            right_on="teaWordNet",
-            validate="m:1",
-        )
-        dataframe_matched.append(
-            dataframe_merged[~pd.isnull(dataframe_merged["teaTopicID"])], sort=False
-        )
-
-        dataframe_unassigned = dataframe_merged[
-            pd.isnull(dataframe_merged["teaTopicID"])
-        ]
-
-    logger.debug(
-        "assigned {} of {} aspects, {} unassigned".format(
-            len(dataframe_matched.index),
-            len(dataframe_aspects.index),
-            len(dataframe_unassigned.index),
-        )
-    )
-    logger.debug(dataframe_unassigned[["aspect"]].drop_duplicates())
-
-    dataframe_matched = dataframe_matched.merge(
-        dataframe_adjectives,
-        how="left",
-        left_on=["teaTopicID", "descriptor"],
-        right_on=["tedTopicID", "tedDescriptor"],
-        validate="m:1",
-    )
-    logger.debug(
-        "assigned {} of {} descriptors, {} unassigned".format(
-            len(
-                dataframe_matched[~pd.isnull(dataframe_matched["tedDescriptor"])].index
-            ),
-            len(dataframe_matched.index),
-            len(dataframe_matched[pd.isnull(dataframe_matched["tedDescriptor"])].index),
-        )
-    )
-    logger.debug(
-        dataframe_matched[pd.isnull(dataframe_matched["tedDescriptor"])][
-            "descriptor"
-        ].drop_duplicates()
-    )
-
-    return dataframe_matched
