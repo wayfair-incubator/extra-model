@@ -106,13 +106,17 @@ jobs:
           with:
             requirements: "true"
             test-requirements: "true"
+
         - name: Install spacy language pack
           uses: ./.github/actions/install-spacy-lang
           with:
             pack: en_core_web_sm
-        - name: download wordnet
-          run: python -m nltk.downloader wordnet
 
+        - name: Install nltk wordnet resource
+          run: python -m nltk.downloader wordnet
+          
+        - name: Install nltk punkt resource
+          run: python -m nltk.downloader punkt
 
         - name: Run pytest
           run: pytest --cov-report xml:coverage-${{ matrix.python-version }}.xml --junitxml=test-results-${{ matrix.python-version }}.xml
