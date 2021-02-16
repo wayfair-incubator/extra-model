@@ -22,9 +22,9 @@ def test_aspects__compound_noun_list__left_compound(spacy_nlp):
     assert compound_noun_list(spacy_nlp(example_text)[4]) == ["screw", "wood screw"]
 
 
-@pytest.mark.skip(reason="Left-headed compounds are exceedginly rare in english")
+@pytest.mark.skip(reason="Left-headed compounds are exceedingly rare in English")
 def test_aspects__compound_noun_list__right_compound(spacy_nlp):
-    # left-headed compounds are exceedginly rare in english and in 10k
+    # left-headed compounds are exceedingly rare in english and in 10k
     # example texts, there was not a single one. Could remove the code or could
     # go for a deeper search for an example
     pass
