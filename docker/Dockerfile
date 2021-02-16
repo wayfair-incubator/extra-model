@@ -6,6 +6,11 @@ WORKDIR /io
 
 RUN pip install -r requirements.txt -r requirements-test.txt
 
+# download nltk resources
+RUN python -m nltk.downloader wordnet
+RUN python -m nltk.downloader punkt
+
+# download spacy resources
 RUN python -m spacy download en_core_web_sm
 
 CMD bash
