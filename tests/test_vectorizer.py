@@ -1,3 +1,4 @@
+import os
 import pytest
 from gensim.models import KeyedVectors
 from gensim.scripts.glove2word2vec import glove2word2vec
@@ -10,11 +11,16 @@ def vec():
     # preprocess plain-text test embeddings to proper binary format for vectorizer
     glove_file = "tests/resources/test_adjectives.vec"
     tmp_file = "tests/resources/test_adjectives.tmp"
+    prepro_file = "tests/resources/test_adjectives.prepro"
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
-    model.save("tests/resources/test_adjectives.prepro")
+    model.save(prepro_file)
 
-    return Vectorizer("tests/resources/test_adjectives.prepro")
+    yield Vectorizer(prepro_file)
+
+    # cleanup
+    os.remove(tmp_file)
+    os.remove(prepro_file)
 
 
 def test__word_exists(vec):
