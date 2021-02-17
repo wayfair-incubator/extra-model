@@ -60,13 +60,13 @@ def iterate(transition_matrix, importance, original, alpha):
     This function does a simple iteration.
     The "jump-back" probability from the paper is implemented as a linear superposition of
     the new and original importance numbers.
-    :param transition_matrix: The connectednes matrix of the graph, including similarity weights.
+    :param transition_matrix: The connectedness matrix of the graph, including similarity weights.
     :type transition_matrix: :class:`numpy.array`
     :param importance: Current importance vector
     :type importance: :class:`numpy.array`
     :param original: Original importance vector (i.e. aspect counts for leaf nodes, zero otherwise)
     :type original: :class:`numpy.array`
-    :param alpha: back-jump probability
+    :param alpha: jump-back probability
     :type alpha: float
     :return: the importance vector for the next step of the iteration
     :rtype: :class:`numpy.array`
@@ -368,7 +368,7 @@ def filter_aggregates(topics, tree):
     :type topics: [str]
     :param tree: the graph which is being traversed
     :type tree: :class:`networkx.DiGraph`
-    :return: a tupe of 1) the list of surviving topics, 2) a map of the culled topics keyed to the topics they are subsidiary to
+    :return: a tuple of 1) the list of surviving topics, 2) a map of the culled topics keyed to the topics they are subsidiary to
     :rtype: ([str],{str:[str]})
     """
     filtered_topics = []
@@ -392,7 +392,7 @@ def filter_aggregates(topics, tree):
 
 def get_topics(dataframe_aspects, vectors):
     """
-    Generate the semanticall clustered topics from the raw aspects
+    Generate the semantically clustered topics from the raw aspects
     :param dataframe_aspects: the collection of nouns to be aggregated into topics
     :type dataframe_aspects: :class:`pandas.DataFrame`
     :param vectors: provides embeddings for context clustering and wordsense disammbguation

@@ -22,11 +22,16 @@ def minivec():
     # preprocess plain-text test embeddings to proper binary format for vectorizer
     glove_file = "tests/resources/test_topics.vec"
     tmp_file = "tests/resources/test_topics.tmp"
+    prepro_file = "tests/resources/test_topics.prepro"
     _ = glove2word2vec(glove_file, tmp_file)
     model = KeyedVectors.load_word2vec_format(tmp_file)
-    model.save("tests/resources/test_topics.prepro")
+    model.save(prepro_file)
 
-    return Vectorizer("tests/resources/test_topics.prepro")
+    yield Vectorizer(prepro_file)
+
+    # cleanup
+    os.remove(tmp_file)
+    os.remove(prepro_file)
 
 
 @pytest.fixture()
@@ -36,6 +41,9 @@ def vec():
 
 @pytest.fixture()
 def simple_graph():
+    # a simple example graph: two leaf nodes (corresponding to text instances), L1 and L2, connected to
+    # the root of the tree R via two intermidate nodes I1 and I2 which represent higher-level wordnet synsets
+    # the edges are weighted to test the similarity functionality
     graph = nx.DiGraph()
     graph.add_nodes_from(["L1", "I1", "L2", "I2", "R"])
     graph.add_edges_from([("L1", "I1"), ("L2", "I2"), ("I1", "R"), ("I2", "R")])
