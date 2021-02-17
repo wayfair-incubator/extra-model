@@ -35,7 +35,6 @@ def vec():
 def test__vectorize_aspects(vec_cluster):
     counts = Counter(["chair", "chair", "table", "unkown"])
     nouns, vecs = vectorize_aspects(counts, vec_cluster)
-    print(nouns, vecs)
     assert (
         nouns[0] == "chair"  # should be ordered by fequency, so chair first
         and nouns[1] == "table"
@@ -64,7 +63,6 @@ def test__best_cluster():
         vectors.append(
             [math.sin(math.pi * 2 * i / 100), math.cos(math.pi * 2 * i / 100)]
         )
-    print(vectors)
     assert best_cluster(vectors) == 22
 
 
