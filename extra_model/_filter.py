@@ -1,8 +1,3 @@
-"""do some filtering on the text input:
- -comments need to be not empty
- -a few letters long
- -in egnlish Langage
-"""
 import logging
 
 import pandas as pd
@@ -13,9 +8,15 @@ logger = logging.getLogger(__name__)
 
 def filter(dataframe):
     """
-    Filter a dataframe for language and text length, also remove unprintable unicode characters
-    :param dataframe: (pandas.dataframe): dataframe to be filtered
-    :return the filtered dataframe
+    Filter a dataframe for language and text length. Following rules apply:
+    1. Only comments with at least 20 characters retained.
+    2. Only comments in English are retained.
+    3. All unprintable unicode characters are removed.
+
+    :param dataframe: dataframe to be filtered. Must have column "Comments"
+    :type pd.DataFrame
+    :return: Filtered dataframe
+    :rtype: pd.DataFrame
     """
     # 'None' comments would lead to cashes later
     dataframe = dataframe[pd.notnull(dataframe["Comments"])]
@@ -28,7 +29,7 @@ def filter(dataframe):
     )
     dataframe = dataframe[dataframe.cl > 20]
 
-    # remove problemaric unicode characters
+    # remove problematic unicode characters
     dataframe.loc[:, "Comments"] = dataframe.Comments.apply(
         lambda com: "".join(x for x in com if x.isprintable())
     )
