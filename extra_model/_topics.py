@@ -10,14 +10,21 @@ from nltk import tokenize
 from nltk.corpus import wordnet as wn
 from scipy.spatial import distance
 
-from extra_model._disambiguate import match, match_from_single
-from extra_model._vectorizer import Vectorizer
+from extra_model._disambiguate import match
 
 logger = logging.getLogger(__name__)
 
 
 def path_to_graph(hypernym_list, initialnoun):
-    """Make a hypernym chain into a graph."""
+    """make a hypernym chain into a graph
+    :param hypernym_list: list of hypernyms for a word as obtained from wordnet
+    :type hypernym_list: [str]
+    :param initialnoun: the initial noun (we need this to mark it as leaf in the tree)
+    :type initialnoun: str
+    :return: the linear directed graph of the chain
+    :rtype: :class:`networkx.DiGraph`
+    """
+
     graph = nx.DiGraph()
     # mark the original word as 'seed' so we can track 'importance' later
     graph.add_node(initialnoun, seed=True)
@@ -31,9 +38,14 @@ def path_to_graph(hypernym_list, initialnoun):
 
 
 def get_nodevec(node, vectors):
-    """Get the vector representation of a gloss a wordnet node.
-    
-    Used to evaluate similarity between rungs in the hypernym chain.
+    """get the vector representation of a gloss a wordnet node
+    (used to evaluate similarity between rungs in the hypernym chain)
+    :param node: the wornet node for which to compute the embedding
+    :type node: str
+    :param vectors: the vectorizer to use for the embedding
+    :type vectors: :class:`extra_model._vectorizer.Vectorizer`
+    :return: the embedding for the node
+    :retype: :class:`numpy.array`
     """
     desc = tokenize.word_tokenize(wn.synset(node).definition())
     desc = [vectors.get_vector(word) for word in desc]
@@ -44,7 +56,21 @@ def get_nodevec(node, vectors):
 
 
 def iterate(transition_matrix, importance, original, alpha):
-    """Find the stable importance vector by iterated multiplication with the distance matrix."""
+    """find the stable importance vector by iterated multiplication with the distance matrix
+    This function does a simple iteration.
+    The "jump-back" probability from the paper is implemented as a linear superposition of
+    the new and original importance numbers.
+    :param transition_matrix: The connectedness matrix of the graph, including similarity weights.
+    :type transition_matrix: :class:`numpy.array`
+    :param importance: Current importance vector
+    :type importance: :class:`numpy.array`
+    :param original: Original importance vector (i.e. aspect counts for leaf nodes, zero otherwise)
+    :type original: :class:`numpy.array`
+    :param alpha: jump-back probability
+    :type alpha: float
+    :return: the importance vector for the next step of the iteration
+    :rtype: :class:`numpy.array`
+    """
     importance = np.matmul(transition_matrix, importance)
     importance = np.multiply(importance, alpha)
     importance = np.add(
@@ -55,12 +81,21 @@ def iterate(transition_matrix, importance, original, alpha):
 
 
 def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
-    """Aggregate the aspects.
-    
-    This is done by building a tree from the hypernym chains using a page-rank type
-    algorithm to assign importance to the nodes in the graph we only consider wordnet
-    entries for this, not the actual aspects extracted from the texts.
+    """aggregate the aspects by building a tree from the hypernym chains
+    and using a page-rank type algorithm to assign importance to the nodes in the graph
+    we only consider wordnet entries for this, not the actual aspects extracted from the texts
+    :param aspects: List of aspects to analyze
+    :type aspects: [str]
+    :param aspect_counts: Map with the aspects as keys and their counts as values
+    :type aspect_counts: {str:int}
+    :param synsets_match: List of synsets matched to each aspect
+    :type synsets_match: [:class:`nltk.wordnet.Synset`]
+    :param vectors: the vectorizer to use for the embedding
+    :type vectors: :class:`extra_model._vectorizer.Vectorizer`
+    :return: A list nodes and their importances
+    :rtype: [(str,float)]
     """
+
     # count how many aspects are matched to a given wornet entry, so that we
     # can remove ambiguities from the graph
 
@@ -173,10 +208,22 @@ def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
 def traverse_tree(  # noqa: C901
     node_list, associated_aspects, aspect_counts, full_tree, weighted, direction
 ):
-    """Find all hypernyms/hyponyms in the tree to a given node.
-    
-    Aggregate the number of associated mentions in the original texts,
-    optionally weighted by term-similarity.
+    """find all hypernyms/hyponyms in the tree to a given node and aggregate the number of associated mentions
+    in the original texts, optionally weighted by term-similarity
+    :param nodelist: List of nodes from which to gather the subsidiary terms and their initial mentions
+    :type nodelist: [(str,int)]
+    :param associated_aspects:  intermediate map of associated terms, used in recursion, start with an empty map
+    :type associated_aspects: {str:float}
+    :param aspect_counts: List of the pairs of aspects and their counts
+    :type aspect_counts: [(str,int)]
+    :param full_tree: the graph which is being traversed
+    :type full_tree: :class:`networkx.DiGraph`
+    :param weighted: True->similarity weights are used in aggregation. False->weights are assumed to be 1
+    :type weighted: Bool
+    :param direction: In which direction to traverse the tree "up" or "down"
+    :type direction: str
+    :return: A map of the resulting terms associated to the initial node and their distance-weighted number of mentions
+    :rtype: {str:float}
     """
     new_nodes = []
     for node, weight in node_list:
@@ -191,7 +238,7 @@ def traverse_tree(  # noqa: C901
         if direction == "down":
             maybe_daugthers = full_tree.predecessors(node)
         for daughter in maybe_daugthers:
-            if full_tree.node[daughter]["seed"]:  # we already too care of these
+            if full_tree.node[daughter]["seed"]:  # we already took care of these
                 continue
             elif weighted:  # go further up/down the tree
                 new_nodes.append(
@@ -216,10 +263,18 @@ def traverse_tree(  # noqa: C901
 
 
 def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree):
-    """Gather various bits of information into a single DataFrame.
-    
-    Data is gathered specifically for each topic we store the importance,
-    the list of associated raw text terms and their numbers.
+    """gather various bits of information into a single DataFrame
+    specifically for each topic we store the importance, the list of associated raw text terms and their numbers
+    :param filtered_topics: List of topics remaining after filtering out low-iimportance subsidiary topics
+    :type filtered_topics: [str]
+    :param removed_topics: Map with the removed topics keyed to the selected topics to which they are subsidiary
+    :param removed_topics: {str:[str]}
+    :param aspect_counts: List of the pairs of aspects and their counts
+    :type aspect_counts: [(str,int)]
+    :param full_tree: the graph which is being traversed
+    :type full_tree: :class:`networkx.DiGraph`
+    :return: the aggregated dataframe of topics
+    :rtype: :class:`pandas.DataFrame`
     """
     row_vec = []
     for topic in filtered_topics:
@@ -290,7 +345,16 @@ def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree
 
 
 def has_connection(term, prior, full_tree):
-    """Check if two terms are connected within the directed hyopernym graph."""
+    """check if two terms are connected within the directed hyopernym graph
+    :param term: first node to test
+    :type term: str
+    :param prior: second node to test
+    :type prior: str
+    :param full_tree: the graph which is being traversed
+    :type full_tree: :class:`networkx.DiGraph`
+    :return: Do the two nodes have a connection in the directed graph?
+    :rtype: Bool
+    """
     if term in nx.descendants(full_tree, prior) or prior in nx.descendants(
         full_tree, term
     ):
@@ -299,9 +363,13 @@ def has_connection(term, prior, full_tree):
 
 
 def filter_aggregates(topics, tree):
-    """Filter the importance-sorted list.
-    
-    Each remaining topic is the sole member of its hypernym chain.
+    """filter the importance-sorted list, so that each remaining topic is the sole member of its hypernym chain
+    :param topics: List of all topics in the graph
+    :type topics: [str]
+    :param tree: the graph which is being traversed
+    :type tree: :class:`networkx.DiGraph`
+    :return: a tuple of 1) the list of surviving topics, 2) a map of the culled topics keyed to the topics they are subsidiary to
+    :rtype: ([str],{str:[str]})
     """
     filtered_topics = []
     removed_topics = {}
@@ -323,10 +391,14 @@ def filter_aggregates(topics, tree):
 
 
 def get_topics(dataframe_aspects, vectors):
-    """Generate the semanticall clustered topics from the raw aspects.
-    
-    :param dataframe_aspects: (pandas.dataframe): the collection of nouns to aggregated into topics
-    :param vectors: (Vectorizer): provides embeddings for context clustering and wordsense disammbguation
+    """
+    Generate the semantically clustered topics from the raw aspects
+    :param dataframe_aspects: the collection of nouns to be aggregated into topics
+    :type dataframe_aspects: :class:`pandas.DataFrame`
+    :param vectors: provides embeddings for context clustering and wordsense disammbguation
+    :type vectors: :class:`extra_model._vectorizer.Vectorizer`
+    :return: The dataframe containing the topics and associated info
+    :rtype: :class:`pandas.DataFrame`
     """
     # for most of the processing we don't really need the specific aspect
     # instances, but just a dict with the aspects and numbers of appearance
@@ -361,89 +433,3 @@ def get_topics(dataframe_aspects, vectors):
     )
 
     return dataframe_topics
-
-
-def attach_to_known_topic(
-    dataframe_aspects, dataframe_nouns, dataframe_adjectives, dataframe_texts, embedding
-):
-    """Docstring."""
-    in_columns = dataframe_aspects.columns.values
-
-    # First try: we have already seen the aspect in question.
-    dataframe_merged = dataframe_aspects.merge(
-        dataframe_nouns,
-        how="left",
-        left_on="aspect",
-        right_on="teaAspect",
-        validate="m:1",
-    )
-    dataframe_matched = dataframe_merged[~pd.isnull(dataframe_merged["teaTopicID"])]
-
-    # second try: for words we havent' seen yet, we find the wordnet node and
-    # check if we've seen that node
-    dataframe_unassigned = dataframe_merged[pd.isnull(dataframe_merged["teaTopicID"])]
-    if len(dataframe_unassigned.index) > 0:
-        # if all words have already been seen, we don't need the vectorizer and
-        # can skip loading this huge file
-        vectors = Vectorizer(embedding)
-
-        # remove the first try of a join
-        dataframe_unassigned = dataframe_unassigned[in_columns]
-        dataframe_unassigned.loc[:, "wordnet_node"] = dataframe_unassigned.apply(
-            lambda row: match_from_single(
-                row["aspect"], dataframe_texts["Comments"][row["CiD"]], vectors
-            ),
-            axis=1,
-        )
-        # if we can't match to the actual aspects, that field should be empty
-        reduced_noun_table = dataframe_nouns[
-            ["teaWordNet", "teaTopicID", "talAggregateID"]
-        ]
-        reduced_noun_table = reduced_noun_table.drop_duplicates()
-        dataframe_merged = dataframe_unassigned.merge(
-            reduced_noun_table,
-            how="left",
-            left_on="wordnet_node",
-            right_on="teaWordNet",
-            validate="m:1",
-        )
-        dataframe_matched.append(
-            dataframe_merged[~pd.isnull(dataframe_merged["teaTopicID"])], sort=False
-        )
-
-        dataframe_unassigned = dataframe_merged[
-            pd.isnull(dataframe_merged["teaTopicID"])
-        ]
-
-    logger.debug(
-        "assigned {} of {} aspects, {} unassigned".format(
-            len(dataframe_matched.index),
-            len(dataframe_aspects.index),
-            len(dataframe_unassigned.index),
-        )
-    )
-    logger.debug(dataframe_unassigned[["aspect"]].drop_duplicates())
-
-    dataframe_matched = dataframe_matched.merge(
-        dataframe_adjectives,
-        how="left",
-        left_on=["teaTopicID", "descriptor"],
-        right_on=["tedTopicID", "tedDescriptor"],
-        validate="m:1",
-    )
-    logger.debug(
-        "assigned {} of {} descriptors, {} unassigned".format(
-            len(
-                dataframe_matched[~pd.isnull(dataframe_matched["tedDescriptor"])].index
-            ),
-            len(dataframe_matched.index),
-            len(dataframe_matched[pd.isnull(dataframe_matched["tedDescriptor"])].index),
-        )
-    )
-    logger.debug(
-        dataframe_matched[pd.isnull(dataframe_matched["tedDescriptor"])][
-            "descriptor"
-        ].drop_duplicates()
-    )
-
-    return dataframe_matched

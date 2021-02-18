@@ -30,10 +30,12 @@ def vectorize_aspects(aspect_counts, vectorizer):
 
 
 def best_cluster(aspect_vectors):
-    """Find the optimal cluster size using silhouette scores.
-    
-    :param aspect_vectors: ([embeddings]): list of embeddings vectors to be clustered
-    :return int the optimal number of clusters
+    """
+    Find the optimal cluster size using silhouette scores
+    :param aspect_vectors:  list of embeddings vectors to be clustered
+    :type aspect_vectors: [:class:`numpy.array`]
+    :return: the optimal number of clusters
+    :rtype: int
     """
     # search a decent number of cluster-numbers for the optimum, but don't get
     # excessive
@@ -69,15 +71,18 @@ def best_cluster(aspect_vectors):
 
 
 def cluster(aspects, aspect_vectors, vectorizer):
-    """Cluster aspects based on the distance of their vector representations.
-    
-    Once clusters are found, use the other aspects in a given cluster to generate the
-    context for a specific aspect noun.
-    
-    :param aspects: ([string]): list of words for which clusters are generated
-    :param aspect_vectors: ([embedding]): list of embeddings corresponding to the the aspects
-    :param vectorizer: (Vectorizer):  the provider of word-embeddings for context generation
-    :return [embedding]: the synthetic context embedding for each of the input aspects
+    """
+    cluster aspects based on the distance of their vector representations
+        once clusters are found, use the other aspects in a given cluster to generate the context for a specific aspect
+        noun
+    :param aspects: list of words for which clusters are generated
+    :type aspects: [str]
+    :param aspect_vectors:  list of embeddings corresponding to the the aspects
+    :type aspect_vectors: [:class:`numpy.array`]
+    :param vectorizer: the provider of word-embeddings for context generation
+    :type vectorizer: :class:`extra_model._vectorizer.Vectorizer`
+    :return: the synthetic context embedding for each of the input aspects
+    :rtype: [:class:`numpy.array`]
     """
     # find the best cluster-size and run k-means clustering, resulting
     # clusters will serve as pseudo-contexts for disambiguation
@@ -107,12 +112,14 @@ def cluster(aspects, aspect_vectors, vectorizer):
 
 
 def match(aspect_counts, vectorizer):
-    """Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
-    
-    :param aspect_counts: (dict): dictionary of aspect->number of occurrence
-    :param vectorizer: (Vectorizer):  the provider of word-embeddings for context generation
-    :return [string]: list of aspects that have an embedding
-        [synset]: best matching wordnet synonym for each aspect (can be None if no match is found)
+    """
+    Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
+    :param aspect_counts: Counter object of aspect->number of occurrence
+    :type aspect_counts: :class:`collections.Counter`
+    :param vectorizer:  the provider of word-embeddings for context generation
+    :type vectorizer: :class:`extra_model._vectorizer.Vectorizer`
+    :return list of aspects that have an embedding and best matching wordnet synonym for each aspect (can be None if no match is found)
+    :rtype: ([str],[:class:`nltk.wornet.Synset`])
     """
     # prepare vector representations for clustering
     aspects, aspect_vectors = vectorize_aspects(aspect_counts, vectorizer)
@@ -192,58 +199,3 @@ def match(aspect_counts, vectorizer):
         logger.debug(synset[min_index].definition())
 
     return aspects, synsets_match
-
-
-def match_from_single(aspect, fulltext, vectorizer):
-    """docstring."""
-    # produce the synsets and their embedding
-    synset = wn.synsets(aspect.lower(), pos=wn.NOUN)
-    if len(synset) == 0:
-        # wordnet is missing some compounds, if that happens, we try at to sea
-        # if we can have matches for constituents
-        for subword in aspect.split():
-            synset.extend(wn.synsets(subword.lower(), pos=wn.NOUN))
-    if len(synset) == 0:
-        logger.debug("No wordnet defintion found for: %s" % aspect)
-        return None
-
-    synset_vec = [
-        synonym.definition() for synonym in synset
-    ]  # get the definitions as string
-    synset_vec = [
-        tokenize.word_tokenize(synonym_def) for synonym_def in synset_vec
-    ]  # tokenize each sting
-    synset_vec = [
-        [vectorizer.get_vector(word) for word in synonym_def_word]
-        for synonym_def_word in synset_vec
-    ]  # gert the rmbeddding for each token
-    synset_vec = [
-        [embedding for embedding in synonym_def_emebd if embedding is not None]
-        for synonym_def_emebd in synset_vec
-    ]  # ignore words without embedding
-    # sum the embeddings to get a bag-of-words embedding
-    synset_vec = [
-        np.sum(synonym_embeddings, axis=0) for synonym_embeddings in synset_vec
-    ]
-    synset_vec = [
-        np.divide(synset_embedding, np.linalg.norm(synset_embedding))
-        for synset_embedding in synset_vec
-    ]  # normalize
-
-    word_vec = tokenize.word_tokenize(fulltext)
-    #    word_vec.remove(aspect)
-    word_vec = [vectorizer.get_vector(word) for word in word_vec]
-    word_vec = [embedding for embedding in word_vec if embedding is not None]
-    if len(word_vec) == 0:
-        logger.debug("No embedding for: %s" % fulltext)
-        return None
-    word_vec = np.sum(word_vec, axis=0)
-    word_vec = np.divide(word_vec, np.linalg.norm(word_vec))
-
-    distances = [distance.cosine(word_vec, synonym) for synonym in synset_vec]
-    min_dist, min_index = min((val, idx) for (idx, val) in enumerate(distances))
-    logger.debug(
-        "{0!s} {1!s}  at distance: {2:f}".format(aspect, synset[min_index], min_dist)
-    )
-    logger.debug(synset[min_index].definition())
-    return synset[min_index].name()
