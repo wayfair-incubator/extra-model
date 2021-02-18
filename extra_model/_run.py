@@ -9,7 +9,7 @@ OUTPUT_FILE = "result.csv"
 
 
 def run(input_path: Path, output_path: Path) -> None:
-
+    """Docstring."""
     extra_model = ExtraModel(models_folder=MODELS_FOLDER)
     extra_model.load_from_files()
 

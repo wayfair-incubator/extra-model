@@ -89,6 +89,22 @@ jobs:
 
         - name: Run mypy
           run: mypy extra_model tests
+  
+  pydocstyle:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+        - uses: actions/setup-python@v2
+          with:
+            python-version: ${{ env.PYTHON_VERSION }}
+        - name: Install dependencies
+          uses: ./.github/actions/install-dependencies
+          with:
+            test-requirements: "true"
+
+        - name: Run pydocstyle
+          run: pydocstyle extra_model
 
   test:
     runs-on: ubuntu-latest

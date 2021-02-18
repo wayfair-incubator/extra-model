@@ -1,2 +1,2 @@
 class ExtraModelError(Exception):
-    """ Generic Error """
+    """Generic error."""

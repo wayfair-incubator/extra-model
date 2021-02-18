@@ -1,4 +1,4 @@
-"""Aggregate aspects into semantic clusters ('topics')"""
+"""Aggregate aspects into semantic clusters ('topics')."""
 import logging
 from collections import Counter
 
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def path_to_graph(hypernym_list, initialnoun):
-    """make a hypernym chain into a graph"""
+    """Make a hypernym chain into a graph."""
     graph = nx.DiGraph()
     # mark the original word as 'seed' so we can track 'importance' later
     graph.add_node(initialnoun, seed=True)
@@ -31,8 +31,10 @@ def path_to_graph(hypernym_list, initialnoun):
 
 
 def get_nodevec(node, vectors):
-    """get the vector representation of a gloss a wordnet node
-    (used to evaluate similarity between rungs in the hypernym chain)"""
+    """Get the vector representation of a gloss a wordnet node.
+    
+    Used to evaluate similarity between rungs in the hypernym chain.
+    """
     desc = tokenize.word_tokenize(wn.synset(node).definition())
     desc = [vectors.get_vector(word) for word in desc]
     desc = [word for word in desc if word is not None]
@@ -42,7 +44,7 @@ def get_nodevec(node, vectors):
 
 
 def iterate(transition_matrix, importance, original, alpha):
-    """find the stable importance vector by iterated multiplication with the distance matrix"""
+    """Find the stable importance vector by iterated multiplication with the distance matrix."""
     importance = np.matmul(transition_matrix, importance)
     importance = np.multiply(importance, alpha)
     importance = np.add(
@@ -53,10 +55,12 @@ def iterate(transition_matrix, importance, original, alpha):
 
 
 def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
-    """aggregate the aspects by building a tree from the hypernym chains
-    and using a page-rank type algorithm to assign importance to the nodes in the graph
-    we only consider wordnet entries for this, not the actual aspects extracted from the texts"""
-
+    """Aggregate the aspects.
+    
+    This is done by building a tree from the hypernym chains using a page-rank type
+    algorithm to assign importance to the nodes in the graph we only consider wordnet
+    entries for this, not the actual aspects extracted from the texts.
+    """
     # count how many aspects are matched to a given wornet entry, so that we
     # can remove ambiguities from the graph
 
@@ -169,8 +173,11 @@ def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
 def traverse_tree(  # noqa: C901
     node_list, associated_aspects, aspect_counts, full_tree, weighted, direction
 ):
-    """find all hypernyms/hyponyms in the tree to a given node and aggregate the number of associated mentions
-    in the original texts, optionally weighted by term-similarity"""
+    """Find all hypernyms/hyponyms in the tree to a given node.
+    
+    Aggregate the number of associated mentions in the original texts,
+    optionally weighted by term-similarity.
+    """
     new_nodes = []
     for node, weight in node_list:
         for daughter in full_tree.predecessors(node):
@@ -209,8 +216,10 @@ def traverse_tree(  # noqa: C901
 
 
 def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree):
-    """gather various bits of information into a single DataFrame
-    specifically for each topic we store the importance, the list of associated raw text terms and their numbers
+    """Gather various bits of information into a single DataFrame.
+    
+    Data is gathered specifically for each topic we store the importance,
+    the list of associated raw text terms and their numbers.
     """
     row_vec = []
     for topic in filtered_topics:
@@ -281,7 +290,7 @@ def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree
 
 
 def has_connection(term, prior, full_tree):
-    """check if two terms are connected within the directed hyopernym graph """
+    """Check if two terms are connected within the directed hyopernym graph."""
     if term in nx.descendants(full_tree, prior) or prior in nx.descendants(
         full_tree, term
     ):
@@ -290,7 +299,10 @@ def has_connection(term, prior, full_tree):
 
 
 def filter_aggregates(topics, tree):
-    """filter the importance-sorted list, so that each remaining topic is the sole member of its hypernym chain"""
+    """Filter the importance-sorted list.
+    
+    Each remaining topic is the sole member of its hypernym chain.
+    """
     filtered_topics = []
     removed_topics = {}
     for term in topics:
@@ -311,12 +323,11 @@ def filter_aggregates(topics, tree):
 
 
 def get_topics(dataframe_aspects, vectors):
-    """
-    Generate the semanticall clustered topics from the raw aspects
+    """Generate the semanticall clustered topics from the raw aspects.
+    
     :param dataframe_aspects: (pandas.dataframe): the collection of nouns to aggregated into topics
     :param vectors: (Vectorizer): provides embeddings for context clustering and wordsense disammbguation
     """
-
     # for most of the processing we don't really need the specific aspect
     # instances, but just a dict with the aspects and numbers of appearance
     aspect_counts = Counter(dataframe_aspects["aspect"])
@@ -355,7 +366,7 @@ def get_topics(dataframe_aspects, vectors):
 def attach_to_known_topic(
     dataframe_aspects, dataframe_nouns, dataframe_adjectives, dataframe_texts, embedding
 ):
-
+    """Docstring."""
     in_columns = dataframe_aspects.columns.values
 
     # First try: we have already seen the aspect in question.

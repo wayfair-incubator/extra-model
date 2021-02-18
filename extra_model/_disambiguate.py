@@ -1,4 +1,4 @@
-"""functions to do word-sense disambiguation using artifical contexts"""
+"""Functions to do word-sense disambiguation using artifical contexts."""
 import logging
 import math
 
@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 def vectorize_aspects(aspect_counts, vectorizer):
-    """
-    Turn the aspect map into a a vector of nouns and their vector representations, which also filters aspects without embedding
+    """Turn the aspect map into a a vector of nouns and their vector representations, which also filters aspects without embedding.
+    
     :param aspect_counts: (dict): the dictionary with aspect counts
     :param vectorizer: (Vectorizer): the provider of word-embeddings
     :return vectors with representable aspects and their vector embeddings
@@ -30,8 +30,8 @@ def vectorize_aspects(aspect_counts, vectorizer):
 
 
 def best_cluster(aspect_vectors):
-    """
-    Find the optimal cluster size using silhouette scores
+    """Find the optimal cluster size using silhouette scores.
+    
     :param aspect_vectors: ([embeddings]): list of embeddings vectors to be clustered
     :return int the optimal number of clusters
     """
@@ -69,10 +69,11 @@ def best_cluster(aspect_vectors):
 
 
 def cluster(aspects, aspect_vectors, vectorizer):
-    """
-    cluster aspects based on the distance of their vector representations
-        once clusters are found, use the other aspects in a given cluster to generate the context for a specific aspect
-        noun
+    """Cluster aspects based on the distance of their vector representations.
+    
+    Once clusters are found, use the other aspects in a given cluster to generate the
+    context for a specific aspect noun.
+    
     :param aspects: ([string]): list of words for which clusters are generated
     :param aspect_vectors: ([embedding]): list of embeddings corresponding to the the aspects
     :param vectorizer: (Vectorizer):  the provider of word-embeddings for context generation
@@ -106,8 +107,8 @@ def cluster(aspects, aspect_vectors, vectorizer):
 
 
 def match(aspect_counts, vectorizer):
-    """
-    Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
+    """Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
+    
     :param aspect_counts: (dict): dictionary of aspect->number of occurrence
     :param vectorizer: (Vectorizer):  the provider of word-embeddings for context generation
     :return [string]: list of aspects that have an embedding
@@ -194,6 +195,7 @@ def match(aspect_counts, vectorizer):
 
 
 def match_from_single(aspect, fulltext, vectorizer):
+    """docstring."""
     # produce the synsets and their embedding
     synset = wn.synsets(aspect.lower(), pos=wn.NOUN)
     if len(synset) == 0:

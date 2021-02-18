@@ -1,7 +1,8 @@
-"""do some filtering on the text input:
- -comments need to be not empty
- -a few letters long
- -in egnlish Langage
+"""Do some filtering on the text input.
+
+- comments need to be not empty
+- a few letters long
+- in english Langage
 """
 import logging
 
@@ -12,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 def filter(dataframe):
-    """
-    Filter a dataframe for language and text length, also remove unprintable unicode characters
+    """Filter a dataframe for language and text length, also remove unprintable unicode characters.
+    
     :param dataframe: (pandas.dataframe): dataframe to be filtered
     :return the filtered dataframe
     """

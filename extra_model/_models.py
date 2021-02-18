@@ -14,20 +14,20 @@ from extra_model._summarize import link_aspects_to_texts, link_aspects_to_topics
 from extra_model._topics import get_topics
 from extra_model._vectorizer import Vectorizer
 
-CB_BASE_DIR = "/wayfair/mnt/crunch_buckets/central/data_science/extra/glove_embeddings"
+CB_BASE_DIR = "/"
 
 
 logger = logging.getLogger(__name__)
 
 
 class ModelBase:
-    """Base class that provides file loading functionality"""
+    """Base class that provides file loading functionality."""
 
     models_folder: str
     _storage_metadata: Dict[str, str]
 
     def load_from_files(self):
-        """Load model files"""
+        """Load model files."""
         # load the storage metadata info obtained when loading models from model storage
         file_name = os.path.join(self.models_folder, "metadata.json")
         storage_metadata = {}
@@ -49,9 +49,7 @@ class ModelBase:
 
 
 class ExtraModelBase:
-    """Extra model class that provides an interface for
-    training and predicting
-    """
+    """Extra model class that provides an interface for training and predicting."""
 
     is_trained = False
     models_folder = "/models"
@@ -71,16 +69,13 @@ class ExtraModelBase:
         models_folder=models_folder,
         embedding_type="glove.840B.300d.prepro",
     ):
-        """
-        Init function for ExtraModel object
+        """Init function for ExtraModel object.
 
-        KWARGS:
-            dag_id (str): Name of dag
-            dag_runs_ids (str): Dag run IDs
-            models_folder (str): Path to folder where model files are stored
-            embedding_type (str): Name of embedding file. Default is "glove.840B.300d.prepro"
+        :param dag_id: Name of dag
+        :param dag_runs_ids: Dag run IDs
+        :param models_folder: Path to folder where model files are stored
+        :param embedding_type: Name of embedding file. Default is "glove.840B.300d.prepro"
         """
-
         self.models_folder = models_folder
         self.embedding_type = embedding_type
         self.api_spec_names = {
@@ -118,9 +113,11 @@ class ExtraModelBase:
             self._storage_metadata[key] = {}
 
     def storage_metadata(self):
+        """Docstring."""
         return self._storage_metadata
 
     def load_from_files(self):
+        """Docstring."""
         super().load_from_files()
         self.vectorizer = Vectorizer(
             os.path.join(self.models_folder, self.embedding_type)
@@ -128,6 +125,7 @@ class ExtraModelBase:
         self.is_trained = True
 
     def train(self):
+        """Docstring."""
         for key, filename in self._filenames.items():
             logger.debug(f"Downloading {key}")
             shutil.copyfile(
@@ -137,6 +135,7 @@ class ExtraModelBase:
         self.is_trained = True
 
     def predict(self, comments: List[Dict[str, str]]) -> List[Dict]:
+        """Docstring."""
         if not self.is_trained:
             raise RuntimeError("Extra must be trained before you can predict!")
         dataframe_texts = pd.DataFrame(comments)
@@ -189,15 +188,14 @@ class ExtraModelBase:
 
 # NOTE: improve typehints!
 def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
-    """Factory for ExtraModel class types. Will dynamically create
-    the class when called with the provided base classes
+    """Create for ExtraModel class types.
+    
+    Will dynamically create the class when called with the provided base classes.
 
     :param bases: Base classes to be used when creating ExtraModel class
     :type bases: Class type or tuple of class types
-
     :return: ExtraModel class
     """
-
     if not isinstance(bases, tuple):
         bases = (bases,)
     bases = (ExtraModelBase,) + bases
@@ -206,10 +204,11 @@ def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
 
 
 def standardize_output(data: pd.DataFrame, names: dict) -> pd.DataFrame:
-    """
-    Helper function to ensure that:
-    a) only required columns are returned and
-    b) they are named according to spec.
+    """Standarize output.
+    
+    Ensures the following:
+    - only required columns are returned and
+    - they are named according to spec
 
     :param data: input dataframe.
     :param names: dictionary to standardize output to API spec.
