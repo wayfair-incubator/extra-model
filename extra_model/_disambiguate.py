@@ -74,7 +74,7 @@ def best_cluster(aspect_vectors):
 def cluster(aspects, aspect_vectors, vectorizer):
     """Cluster aspects based on the distance of their vector representations.
     
-    Once clusters are found, use the other aspects in a given cluster to generate the 
+    Once clusters are found, use the other aspects in a given cluster to generate the
     context for a specific aspect noun
 
     :param aspects: list of words for which clusters are generated
