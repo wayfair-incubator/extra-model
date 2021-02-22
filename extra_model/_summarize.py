@@ -1,12 +1,12 @@
-"""fill out and link the dataframes for topics, aspects and texts , provide some summary ouput if debug-level is set to info or lower"""
+"""Fill out and link the dataframes for topics, aspects and texts. Provide some summary ouput if debug-level is set to info or lower."""
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 def qa(dataframe_texts, dataframe_aspects, dataframe_topics):
-    """
-    Print summary information
+    """Print summary information.
+    
     :param dataframe_texts: dataframe with the raw texts (for example output)
     :type dataframe_texts: :class:`pandas.DataFrame`
     :param dataframe_aspects:  dataframe with the aspects
@@ -74,8 +74,8 @@ def qa(dataframe_texts, dataframe_aspects, dataframe_topics):
 
 
 def set_aspect(topic, dataframe_aspects):
-    """
-    For a given topic, set topic and adjective cluster fields in the aspect_dataframe
+    """For a given topic, set topic and adjective cluster fields in the aspect_dataframe.
+    
     :param topic: the topic and it's associated information that we need to copy to the relevant entries in the aspect frame
     :type topic: :class:`pandas.DataFrame.Row`
     :param dataframe_aspects: the dataframe to be enriched with topic information
@@ -98,8 +98,8 @@ def set_aspect(topic, dataframe_aspects):
 
 
 def link_aspects_to_topics(dataframe_aspects, dataframe_topics):
-    """
-    Fill topic and adjective cluster information into the aspect dataframe
+    """Fill topic and adjective cluster information into the aspect dataframe.
+    
     :param dataframe_aspects: the dataframe to be enriched
     :type dataframe_aspects: :class:`pandas.DataFrame`
     :param dataframe_topics:  the dataframe that has the topic and adjective cluster information
@@ -121,8 +121,8 @@ def link_aspects_to_topics(dataframe_aspects, dataframe_topics):
 
 
 def link_aspects_to_texts(dataframe_aspects, dataframe_texts):
-    """
-    Transfer the original text identifier from the original text data table into the final aspect table
+    """Transfer the original text identifier from the original text data table into the final aspect table.
+    
     :param dataframe_aspects: table to be enriched
     :type dataframe_aspects: :class:`pandas.DataFrame`
     :param dataframe_texts: original table from which this information is extracted

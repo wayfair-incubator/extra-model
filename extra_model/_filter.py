@@ -7,8 +7,9 @@ logger = logging.getLogger(__name__)
 
 
 def filter(dataframe):
-    """
-    Filter a dataframe for language and text length. Following rules apply:
+    """Filter a dataframe for language and text length.
+    
+    The following rules apply:
     1. Only comments with at least 20 characters retained.
     2. Only comments in English are retained.
     3. All unprintable unicode characters are removed.

@@ -51,3 +51,6 @@ flake8 extra_model tests
 
 echo "Running bandit..."
 bandit --ini .bandit --quiet -r extra_model
+
+echo "Running pydocstyle..."
+pydocstyle extra_model

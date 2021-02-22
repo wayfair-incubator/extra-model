@@ -1,5 +1,5 @@
-__version__ = "0.0.1"
+"""Extra model public objects."""
 
+from extra_model._models import ExtraModel, extra_factory  # noqa
 
-def example():
-    return "hello, world"
+__version__ = "0.1.0"
