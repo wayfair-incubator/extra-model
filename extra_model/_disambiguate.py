@@ -31,7 +31,8 @@ def vectorize_aspects(aspect_counts, vectorizer):
 
 def best_cluster(aspect_vectors):
     """
-    Find the optimal cluster size using silhouette scores
+    Find the optimal cluster size using silhouette scores.
+    
     :param aspect_vectors:  list of embeddings vectors to be clustered
     :type aspect_vectors: [:class:`numpy.array`]
     :return: the optimal number of clusters
@@ -71,10 +72,11 @@ def best_cluster(aspect_vectors):
 
 
 def cluster(aspects, aspect_vectors, vectorizer):
-    """
-    cluster aspects based on the distance of their vector representations
-        once clusters are found, use the other aspects in a given cluster to generate the context for a specific aspect
-        noun
+    """Cluster aspects based on the distance of their vector representations.
+    
+    Once clusters are found, use the other aspects in a given cluster to generate the 
+    context for a specific aspect noun
+
     :param aspects: list of words for which clusters are generated
     :type aspects: [str]
     :param aspect_vectors:  list of embeddings corresponding to the the aspects
@@ -112,8 +114,8 @@ def cluster(aspects, aspect_vectors, vectorizer):
 
 
 def match(aspect_counts, vectorizer):
-    """
-    Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
+    """Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
+    
     :param aspect_counts: Counter object of aspect->number of occurrence
     :type aspect_counts: :class:`collections.Counter`
     :param vectorizer:  the provider of word-embeddings for context generation
