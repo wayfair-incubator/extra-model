@@ -129,11 +129,11 @@ def test_predict(tmp_trained_ExtraModel, test_comments):
 
     # extra should succeed with this input
     test_comments_2 = [
-        {"CommentId": 28657368, "Comments": "Quality end table, nice size"},
         {
-            "CommentId": 24928973,
-            "Comments": "Perfect size to compliment my other purchases from Wayfair/Birchlane!  Sectional, husbands recliner,.. coffee table ALL pulling my rustic country look together!!",
+            "CommentId": 986,
+            "Comments": "The problem I have is that they charge $11.99 for a sandwich that is no bigger than a Subway sub (which offers better and more amount of vegetables).",
         },
+        {"CommentId": 860, "Comments": "Worst food/service I've had in a while"},
     ]
     res = tmp_trained_ExtraModel.predict(comments=test_comments_2)
     assert len(res) > 0
