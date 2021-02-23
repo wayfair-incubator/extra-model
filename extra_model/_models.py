@@ -97,8 +97,9 @@ class ExtraModelBase:
 
         self._storage_metadata = {
             "type": "text",
-            "owner": "DS EU VoC",
-            "description": "Running ExtRA algorithm as a service to support Customer Feedback Hub use-cases",
+            # TODO replace this
+            "owner": "replace me",
+            "description": "Running ExtRA algorithm",
             "display_name": "extra-model",
             "features": {},
             "hyperparameters": {},
@@ -189,7 +190,7 @@ class ExtraModelBase:
 # NOTE: improve typehints!
 def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
     """Create for ExtraModel class types.
-    
+
     Will dynamically create the class when called with the provided base classes.
 
     :param bases: Base classes to be used when creating ExtraModel class
@@ -205,7 +206,7 @@ def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
 
 def standardize_output(data: pd.DataFrame, names: dict) -> pd.DataFrame:
     """Standarize output.
-    
+
     Ensures the following:
     - only required columns are returned and
     - they are named according to spec
