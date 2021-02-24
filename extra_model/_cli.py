@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 @click.command()
 @click.argument("input_path", type=Path)
-@click.argument("output_path", type=Path, default="/app/output")
+@click.argument("output_path", type=Path, default="/io/output")
 @click.option("--debug", is_flag=True)
 def entrypoint(input_path: Path, output_path: Path, debug: bool = False) -> None:
     """Parse and handle CLI arguments.
