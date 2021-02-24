@@ -29,3 +29,7 @@ def entrypoint(input_path: Path, output_path: Path, debug: bool = False) -> None
     except ExtraModelError as e:
         logger.exception(e) if debug else logger.error(e)
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    entrypoint()
