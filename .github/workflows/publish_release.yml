@@ -1,0 +1,27 @@
+name: Publish Release
+env:
+  PYTHON_VERSION: "3.6"
+on:
+  release:
+    types: [published]
+jobs:
+  build-and-publish-wheel-to-pypi:
+    runs-on: "ubuntu-latest"
+    environment: "Publish Release"
+    steps:
+      - name: "Check out code"
+        uses: "actions/checkout@v2"
+
+      - uses: "actions/setup-python@v2"
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: "Build wheel"
+        uses: "./.github/actions/build-dist"
+
+        # v1.4.2 release. Using full SHA for security
+        # https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
+      - name: "Publish distribution 📦 to PyPI"
+        uses: "pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29"
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
