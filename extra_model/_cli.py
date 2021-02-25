@@ -13,14 +13,13 @@ logger = logging.getLogger(__name__)
 @click.command()
 @click.argument("input_path", type=Path)
 @click.argument("output_path", type=Path, default="/app/output")
-@click.option("--debug", is_flag=True)
+@click.option("--debug", is_flag=True, help="Enable debug logging")
 def entrypoint(input_path: Path, output_path: Path, debug: bool = False) -> None:
-    """Parse and handle CLI arguments.
+    """Run the Extra algorithm for unsupervised topic extraction.
 
-    :param input_path: Path to the file that should be used for running extra_model on.
-    :param output_path: Path to the file that output of extra_model is going to be saved.
-    :param debug: If set to True, sets log level for the application to DEBUG, else WARNING.
-    :return: Dictionary with input_path and output_path set to specified values
+    INPUT_PATH is the path to the input parquet file with the user generated texts.
+    
+    OUTPUT_PATH is the path to the output directory. Default is /app/output
     """
     logging.getLogger("extra_model").setLevel("DEBUG" if debug else "INFO")
 

@@ -4,7 +4,10 @@ RUN mkdir /io
 COPY . /io
 WORKDIR /io
 
+RUN pip install --upgrade pip wheel setuptools
+
 RUN pip install -r requirements.txt -r requirements-test.txt
+RUN pip install -e .
 
 # download nltk resources
 RUN python -m nltk.downloader wordnet
