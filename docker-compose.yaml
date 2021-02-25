@@ -8,6 +8,11 @@ services:
     image: "extra-model-dev"
     volumes:
       - ./:/io
+    
+  extra-model:
+    <<: *dev
+    entrypoint: "extra-model"
+    command: "--help"
 
   # run all the tests and linting locally
   # - black & isort will format code to address issues
