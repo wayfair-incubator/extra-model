@@ -19,6 +19,6 @@ def run(input_path: Path, output_path: Path) -> None:
     results = pd.DataFrame(results_raw)
 
     if not output_path.exists():
-        output_path.mkdir()
+        output_path.mkdir(parents=True)
 
     results.to_csv(output_path / OUTPUT_FILE, encoding="utf-8", index=False)
