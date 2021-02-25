@@ -26,7 +26,7 @@ docker-compose build
 Then running `extra-model` is as simple as:
 
 ```bash
-docker-compose run dev python /io/extra_model/_cli.py /io/tests/resources/100_comments.csv
+docker-compose run extra-model /io/tests/resources/100_comments.csv
 ```
 
 NOTE: when using this approach, input file should be mounted inside the container.
@@ -38,7 +38,7 @@ This will produce a `result.csv` file in `/io/output/` (default setting) folder.
 Location of the output can be changed by supplying second path, e.g.:
 
 ```bash
-docker-compose run dev python /io/extra_model/_cli.py /io/tests/resources/100_comments.csv /io/output/another_folder/
+docker-compose run extra-model /io/tests/resources/100_comments.csv /io/output/another_folder
 ```
 
 ### Using command line
@@ -140,25 +140,6 @@ Then run the test suite to see if docker is set up correctly:
 ```bash
 docker-compose run test
 ```
-
-## Debugging
-
-TODO: do we need this section?
-
-Out of the box we use [pdb++](https://pypi.org/project/pdbpp/) as our debugger.
-You are welcome to set up a different debugger if you would rather use it over `pdb`.
-
-To use pdb add a `pdb.set_trace()` in your code.
-
-```python
-def my_function():
-    import pdb; pdb.set_trace()
-    ...
-```
-
-Run your code, and you will drop into an interactive `pdb++` debugger.
-
-See the documentation on [pdb](https://docs.python.org/3/library/pdb.html) and [pdb++](https://pypi.org/project/pdbpp/) for more information.
 
 ## Testing
 
