@@ -1,4 +1,6 @@
-<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+[![codecov](https://codecov.io/gh/wayfair-incubator/extra-model/branch/main/graph/badge.svg?token=HXSGN5IUzu)](https://codecov.io/gh/wayfair-incubator/extra-model)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 
 TODO: update badges
 
@@ -15,23 +17,42 @@ For example, on Mac/Windows it should have at least 8 Gb of RAM available to it.
 
 ### Using docker-compose
 
+First, build the image:
+
+```bash
+docker-compose build
+```
+
+Then running `extra-model` is as simple as:
+
 ```bash
 docker-compose run dev python /io/extra_model/_cli.py /io/tests/resources/100_comments.csv
 ```
 
-This will produce a `result.csv` file in `/io/output/` folder. Location of the output can be changed by supplying second path, e.g.:
+NOTE: when using this approach, input file should be mounted inside the container.
+By default, everything from `extra-model` folder will be mounted to `/io/` folder. 
+This can be changed in `docker-compose.yaml`
+
+This will produce a `result.csv` file in `/io/output/` (default setting) folder. 
+
+Location of the output can be changed by supplying second path, e.g.:
 
 ```bash
 docker-compose run dev python /io/extra_model/_cli.py /io/tests/resources/100_comments.csv /io/output/another_folder/
 ```
 
+### Using command line
+
+TODO: add this section.
+
 ## `extra-model` input
 
-Input of an extra is dafaframe-like object with 2 columns: `CommentId` and `Comments`. Both must be present and named exactly in that way.
+Input of an extra is a `.csv` file with 2 columns: `CommentId` and `Comments`. 
+Both must be present and named exactly in that way.
 
 ## `extra-model` output
 
-After `extra-model` finishes calculations, it'll produce a dataframe-like object with following structure:
+After `extra-model` finishes calculations, it'll produce a `.csv` file with following structure:
 
 ```text
 AdCluster,Aspect,AspectCount,CommentId,Descriptor,Position,SentimentBinary,SentimentCompound,Topic,TopicCount,TopicImportance,TopicSentimentBinary,TopicSentimentCompound,WordnetNode
@@ -45,44 +66,44 @@ Columns have following meaning:
 
 |Column                      | Description |
 |:----------------------|:----------------------|
-|Position               |Character number where aspect was found (e.g., "nice shirt" will have aspect "shirt" and `Position` 6|
+|AdCluster              |Adjectives are clustered together and this indicates the "center" of a cluster (e.g., "awesome", "fantastic", "great" descriptors might produce "great" as `AdCluster`)|
 |Aspect                 |Identified aspect - this is an actual word that person wrote in a text|
-|Descriptor             |Identified adjective (not clustered) - this is an actual word that person wrote in a text|
 |AspectCount            |How often this aspect has been found in all of the input|
-|WordnetNode            |Mapping to `wordnet` node. Identifiers in the form `.n.01` mean first meaning of the noun in `wordnet`| 
-|SentimentCompound      |Compound sentiment for aspect|
-|SentimentBinary        |Binary sentiment for aspect|
-|AdCluster              |Adjectives are clustered together and this indicates the "center" of a cluster (e.g., "awesome", "fantastic", "great" descriptors might produce "great" as `AdCluster`)| 
 |CommentId              |`ID` of an input. Since one input may produce multiple aspects, `ID` column must always be present|
+|Descriptor             |Identified adjective (not clustered) - this is an actual word that person wrote in a text|
+|Position               |Character number where aspect was found (e.g., "nice shirt" will have aspect "shirt" and `Position` 6|
+|SentimentBinary        |Binary sentiment for aspect|
+|SentimentCompound      |Compound sentiment for aspect|
 |Topic                  |Collection of aspects.|
-|TopicImportance        |Importance of a topic|
-|TopicSentimentCompound |Similar to aspect, but on a topic level|
-|TopicSentimentBinary   |Similar to aspect, but on a topic level|
 |TopicCount             |How often topic has been found in input|
+|TopicImportance        |Importance of a topic|
+|TopicSentimentBinary   |Similar to aspect, but on a topic level|
+|TopicSentimentCompound |Similar to aspect, but on a topic level|
+|WordnetNode            |Mapping to `wordnet` node. Identifiers in the form `.n.01` mean first meaning of the noun in `wordnet`| 
 
 
 ## Extra workflow
 
-The workflow has the following stages:
+The workflow follows the algorithm suggested in the paper and has following stages:
 
 ### Filtering (`_filter.py`)
-Get rid of cruft in the input data
+Get rid of cruft in the input data:
 *  empty text fields
 *  requires at least 20 characters of text
 *  remove unprintable unicode characters
-*  filter for english language using Googles cld2 tool
+*  filter for english language using Googles `cld2` tool
 
 ### Generate aspects (`_aspects.py`)
-Extracts promising phrases (i.e. nouns described by adjectives) using `spacy`.
+Extracts promising phrases (i.e., nouns described by adjectives) using `spacy`.
 
 ### Aggregate aspects into topics (`_topics.py`)
 Takes the output of the phrase extraction, maps them to `wordnet` (via `_disambiguate.py`) and produces the list of clustered aspects
 important dependencies:
-  - `sklearn` for clustering
-  - `nltk` for the `wordnet`
-  - `networkx` for the semantic tree
-  - pretrained word-vectors (via `_vectorizer.py`)
-  - `vaderSentiment` for sentiment analysis
+* `sklearn` for clustering
+* `nltk` for the `wordnet`
+* `networkx` for the semantic tree
+* pretrained word-vectors (via `_vectorizer.py`)
+* `vaderSentiment` for sentiment analysis
 
 ### Analyze descriptors (`_adjectives.py`)
 Cluster the associated adjectives using constant radius clustering. 
@@ -96,16 +117,14 @@ The whole code produces one csv file.
 
 TODO: update this section
 
-This project comes with a Buildkite pipeline definition. 
-Instructions to perform those manual steps (and documentation of the pipeline) can be found on the
-[python docs website](https://docs.csnzoo.com/python/docs/wayfair_infrastructure/buildkite/#how-to-setup-a-new-project)
+This project comes with a GitHub Actions pipeline definition. 
 
 ## Develop
 
 First, please [install docker](https://docs.docker.com/install/) on your computer.
 Docker must be running correctly for these commands to work. 
 
-* If you are using windows, please make sure your editor writes files with linefeed (`\n`) line endings.*
+* If you are using windows, please make sure your editor writes files with the linefeed (`\n`) line endings.*
 
 Next, clone the repo:
 
@@ -113,15 +132,11 @@ TODO: update this
 
 ```bash
 git clone 
+cd extra-model
 ```
 
 Then run the test suite to see if docker is set up correctly:
 
-```bash
-docker-compose run test
-```
-
-To run testing and linting:
 ```bash
 docker-compose run test
 ```
@@ -151,7 +166,8 @@ You'll be unable to merge code unless the linting and tests pass. You can run th
 
 The tests, linting, and code coverage are run automatically via CI, and you'll see the output on your pull requests.
 
-Generally we should endeavor to write tests for every feature. Every new feature branch should increase the test coverage rather than decreasing it.
+Generally we should endeavor to write tests for every feature. 
+Every new feature branch should increase the test coverage rather than decreasing it.
 
 We use [pytest](https://docs.pytest.org/en/latest/) as our testing framework.
 
@@ -164,9 +180,11 @@ TODO: update this
 To customize / override a specific testing stage, please read the documentation specific to that tool:
 
 1. PyTest: [https://docs.pytest.org/en/latest/contents.html](https://docs.pytest.org/en/latest/contents.html)
-3. Black: [https://black.readthedocs.io/en/stable/](https://black.readthedocs.io/en/stable/)
-4. Flake8: [http://flake8.pycqa.org/en/latest/](http://flake8.pycqa.org/en/latest/)
-5. Bandit: [https://bandit.readthedocs.io/en/latest/](https://bandit.readthedocs.io/en/latest/)
+1. Black: [https://black.readthedocs.io/en/stable/](https://black.readthedocs.io/en/stable/)
+1. Flake8: [http://flake8.pycqa.org/en/latest/](http://flake8.pycqa.org/en/latest/)
+1. Bandit: [https://bandit.readthedocs.io/en/latest/](https://bandit.readthedocs.io/en/latest/)
+1. iSort: [https://pycqa.github.io/isort/](https://pycqa.github.io/isort/)
+1. pydocstyle: [http://www.pydocstyle.org/en/stable/](http://www.pydocstyle.org/en/stable/)
 
   
 ## Documentation
