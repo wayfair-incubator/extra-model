@@ -26,19 +26,19 @@ docker-compose build
 Then running `extra-model` is as simple as:
 
 ```bash
-docker-compose run extra-model /io/tests/resources/100_comments.csv
+docker-compose run extra-model /package/tests/resources/100_comments.csv
 ```
 
 NOTE: when using this approach, input file should be mounted inside the container.
-By default, everything from `extra-model` folder will be mounted to `/io/` folder. 
+By default, everything from `extra-model` folder will be mounted to `/package/` folder. 
 This can be changed in `docker-compose.yaml`
 
-This will produce a `result.csv` file in `/io/output/` (default setting) folder. 
+This will produce a `result.csv` file in `/io/` (default setting) folder. 
 
 Location of the output can be changed by supplying second path, e.g.:
 
 ```bash
-docker-compose run extra-model /io/tests/resources/100_comments.csv /io/output/another_folder
+docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder
 ```
 
 ### Using command line
