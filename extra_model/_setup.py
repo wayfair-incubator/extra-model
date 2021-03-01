@@ -10,7 +10,7 @@ from gensim.test.utils import datapath, get_tmpfile
 from extra_model._errors import ExtraModelError
 
 URL = "http://downloads.cs.stanford.edu/nlp/data/glove.840B.300d.zip"
-OUTPUT = Path("/models")
+OUTPUT = Path("/embeddings")
 
 logger = logging.getLogger(__name__)
 
