@@ -4,7 +4,7 @@ import pandas as pd
 
 from extra_model._models import ExtraModel
 
-MODELS_FOLDER = "./glove_embeddings"
+MODELS_FOLDER = "./models"
 OUTPUT_FILE = "result.csv"
 
 
