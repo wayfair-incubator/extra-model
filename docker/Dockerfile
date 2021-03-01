@@ -1,8 +1,8 @@
 FROM python:3.6-buster
 
-RUN mkdir /io
-COPY . /io
-WORKDIR /io
+RUN mkdir /package
+COPY . /package
+WORKDIR /package
 
 RUN pip install --upgrade pip wheel setuptools
 

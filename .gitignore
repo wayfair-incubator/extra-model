@@ -15,10 +15,7 @@ style_venv/
 .DS_Store
 *.zip
 
-glove*.txt
-glove*.zip
-
-models*
+models/*
 
 ################################
 # Bellow is created as described
