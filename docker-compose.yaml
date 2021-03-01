@@ -7,8 +7,10 @@ services:
       context: "."
     image: "extra-model-dev"
     volumes:
-      - ./extra_model:/io/extra_model
-      - ./tests:/io/tests
+      - ./extra_model:/package/extra_model
+      - ./tests:/package/tests
+      - ./models:/models
+      - ./io:/io
     
   extra-model:
     <<: *dev
