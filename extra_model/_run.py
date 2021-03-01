@@ -1,15 +1,22 @@
 from pathlib import Path
+import logging
 
 import pandas as pd
 
+
 from extra_model._models import ExtraModel
 
-MODELS_FOLDER = "./glove_embeddings"
+MODELS_FOLDER = "./models"
 OUTPUT_FILE = "result.csv"
+
+logger = logging.getLogger(__name__)
 
 
 def run(input_path: Path, output_path: Path) -> None:
     """Docstring."""
+    
+    logging.basicConfig(format="  %(message)s")
+    
     extra_model = ExtraModel(models_folder=MODELS_FOLDER)
     extra_model.load_from_files()
 

@@ -6,6 +6,7 @@ import click
 
 from extra_model._errors import ExtraModelError
 from extra_model._run import run
+from extra_model._setup import setup
 
 logger = logging.getLogger(__name__)
 
@@ -31,3 +32,8 @@ def entrypoint(input_path: Path, output_path: Path, debug: bool = False) -> None
     except ExtraModelError as e:
         logger.exception(e) if debug else logger.error(e)
         sys.exit(1)
+
+
+@click.command()
+def entrypoint_setup():
+    setup()
