@@ -36,4 +36,5 @@ def entrypoint(input_path: Path, output_path: Path, debug: bool = False) -> None
 
 @click.command()
 def entrypoint_setup():
+    """Download resources entrypoint."""
     setup()

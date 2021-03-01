@@ -1,8 +1,7 @@
-from pathlib import Path
 import logging
+from pathlib import Path
 
 import pandas as pd
-
 
 from extra_model._models import ExtraModel
 
@@ -14,9 +13,8 @@ logger = logging.getLogger(__name__)
 
 def run(input_path: Path, output_path: Path) -> None:
     """Docstring."""
-    
     logging.basicConfig(format="  %(message)s")
-    
+
     extra_model = ExtraModel(models_folder=MODELS_FOLDER)
     extra_model.load_from_files()
 
