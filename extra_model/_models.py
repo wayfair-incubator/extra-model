@@ -28,7 +28,7 @@ class ModelBase:
 
     def load_from_files(self):
         """Load model files."""
-        # load the storage metadata info obtained when loading models from model storage
+        # load the storage metadata info obtained when loading embeddings from model storage
         file_name = os.path.join(self.models_folder, "metadata.json")
         storage_metadata = {}
         if os.path.isfile(file_name):
@@ -52,7 +52,7 @@ class ExtraModelBase:
     """Extra model class that provides an interface for training and predicting."""
 
     is_trained = False
-    models_folder = "/models"
+    models_folder = "/embeddings"
     training_folder = "/wayfair/mnt/sql_staging/exports"
 
     _filenames = {

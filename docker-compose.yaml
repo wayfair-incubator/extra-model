@@ -9,9 +9,9 @@ services:
     volumes:
       - ./extra_model:/package/extra_model
       - ./tests:/package/tests
-      - ./models:/models
+      - ./embeddings:/embeddings
       - ./io:/io
-    
+
   extra-model:
     <<: *dev
     entrypoint: "extra-model"
