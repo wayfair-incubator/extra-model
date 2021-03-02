@@ -25,7 +25,7 @@ To download the required embeddings, run the following command:
 docker-compose run --rm setup
 ```
 
-The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be save in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
+The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
 
 ### Using docker-compose
 
