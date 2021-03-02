@@ -53,7 +53,7 @@ class ExtraModelBase:
 
     is_trained = False
     models_folder = "/embeddings"
-    training_folder = "/wayfair/mnt/sql_staging/exports"
+    training_folder = ""
 
     _filenames = {
         "embeddings": "glove.840B.300d.prepro.vectors.npy",
