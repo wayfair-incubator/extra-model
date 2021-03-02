@@ -22,7 +22,7 @@ The input looks like this:
 DT::datatable(input)
 ```
 
-As you can see, there are only 7 rows that all (essentially) repeat the same thing. The only difference is that each time the type of wood changes. This is done on purpose to demonstrate, what we think, is a unique advantage of `extra-model`: semantic grouping.
+As you can see, there are only 7 rows that all (essentially) repeat the same thing. The only difference is that each time the type of wood changes. This is done on purpose to demonstrate, what we think, a unique feature of `extra-model`: semantic grouping.
 
 ## Output
 
@@ -42,3 +42,5 @@ DT::datatable(output_cleaned)
 Notice how all of the different types of wood are mapped to the same WordNet node (`wood.n.01`). This is powerful since we went from completely unstructured data to the point where we know that 6 out of 7 comments are talking about different types of wood.
 
 Moreover, we add "native" WordNet node (`WordnetNode` column) to the output. This gives us even richer output since not only did we group our comments, we've also enriched each of them with semantic meaning that can be used in any downstream tasks.
+
+Finally, since `extra-model` is unsupervised, it is possible to have output that doesn't always conform to what we would expect. Concretely, we would like `wood` in the first comment to also map to `wood` WordNet node. However, it was mapped to `forest`. Situations like these are possible when using `extra-model`, so we leave it here on purpose to make sure that you are aware of this possibility.
