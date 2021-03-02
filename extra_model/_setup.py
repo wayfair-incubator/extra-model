@@ -10,12 +10,11 @@ from gensim.test.utils import datapath, get_tmpfile
 from extra_model._errors import ExtraModelError
 
 URL = "http://downloads.cs.stanford.edu/nlp/data/glove.840B.300d.zip"
-OUTPUT = Path("/embeddings")
 
 logger = logging.getLogger(__name__)
 
 
-def setup(url: str = URL, output: Path = OUTPUT) -> None:
+def setup(output_path: Path) -> None:
     """Docstring."""
     logging.basicConfig(level="INFO", format="  %(message)s")
 
@@ -28,27 +27,27 @@ def setup(url: str = URL, output: Path = OUTPUT) -> None:
     logger.info("Setup can be safely re-run if exited prematurely.")
     logger.info("")
 
-    if input("  Would you like to continue? [y/n]: ").lower() == "n":
-        exit(0)
+    if input("  Would you like to continue? [y/n]: ").lower() != "y":
+        return
 
     files_to_cleanup: List[Path] = []
 
-    file_zipped = download_file(url, output)
+    file_zipped = download_file(URL, output_path)
     files_to_cleanup.append(file_zipped)
 
-    file_unzipped = unzip_file(file_zipped, output)
+    file_unzipped = unzip_file(file_zipped, output_path)
     files_to_cleanup.append(file_unzipped)
 
-    format_file(file_unzipped, output)
+    format_file(file_unzipped, output_path)
     cleanup(files_to_cleanup)
 
     logger.info("Done!")
 
 
-def download_file(url: str, output: Path) -> Path:
+def download_file(url: str, output_path: Path) -> Path:
     """Download embeddings file."""
     filename = url.split("/")[-1]
-    output_file = output / filename
+    output_file = output_path / filename
 
     if not output_file.is_file():
         logger.info("Downloading embeddings file.")
@@ -61,13 +60,13 @@ def download_file(url: str, output: Path) -> Path:
     return output_file
 
 
-def unzip_file(file: Path, output: Path) -> Path:
+def unzip_file(file: Path, output_path: Path) -> Path:
     """Unzip embeddings file."""
-    output_file = output / f"{file.stem}.txt"
+    output_file = output_path / f"{file.stem}.txt"
 
     if not output_file.is_file():
         logger.info("Unzipping file. This will take approximately 5 minutes.")
-        run_subprocess(["unzip", str(file), "-d", str(output)])
+        run_subprocess(["unzip", str(file), "-d", str(output_path)])
 
     else:
         logger.info(f"File {output_file} detected, unzipping skipped!")
@@ -75,9 +74,9 @@ def unzip_file(file: Path, output: Path) -> Path:
     return output_file
 
 
-def format_file(file: Path, output: Path) -> None:
+def format_file(file: Path, output_path: Path) -> None:
     """Format embeddings file."""
-    output_file = output / f"{file.stem}"
+    output_file = output_path / f"{file.stem}"
     if not output_file.is_file():
         logger.info("Formatting file. This will take approximately 10 minutes.")
         glove_file = datapath(str(file))
