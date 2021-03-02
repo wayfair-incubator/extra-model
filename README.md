@@ -6,7 +6,7 @@ TODO: update badges
 
 # extra-model
 
-Code to run the Extra [algorithm](https://aclanthology.info/papers/D18-1384/d18-1384) for unsupervised topic extraction.
+Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) for unsupervised topic extraction.
 
 ## Quick start
 
