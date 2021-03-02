@@ -15,8 +15,6 @@ style_venv/
 .DS_Store
 *.zip
 
-embeddings/glove.840B.300d*
-
 ################################
 # Bellow is created as described
 ################################
@@ -279,5 +277,5 @@ dmypy.json
 .venv/
 
 # End of https://www.gitignore.io/api/emacs,python,intellij+all
-embeddings
-/output/
+embeddings/glove*
+output/*
