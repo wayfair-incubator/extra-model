@@ -1,0 +1,8 @@
+AdCluster,Aspect,AspectCount,CommentId,Descriptor,Position,SentimentBinary,SentimentCompound,Topic,TopicCount,TopicImportance,TopicSentimentBinary,TopicSentimentCompound,WordnetNode
+Solid,wood,1,1,Solid,6,1.0,0.1531,forest.n.01,1,0.08018667899447676,1.0,0.1531,forest.n.01
+Solid,oak,1,2,Solid,6,1.0,0.1531,wood.n.01,6,0.21791807337328903,1.0,0.1531,oak.n.01
+Solid,birch,1,3,Solid,6,1.0,0.1531,wood.n.01,6,0.21791807337328903,1.0,0.1531,birch.n.01
+Solid,maple,1,4,Solid,6,1.0,0.1531,wood.n.01,6,0.21791807337328903,1.0,0.1531,maple.n.01
+Solid,fir,1,5,Solid,6,1.0,0.1531,wood.n.01,6,0.21791807337328903,1.0,0.1531,fir.n.01
+Solid,cherry,1,6,Solid,6,1.0,0.1531,wood.n.01,6,0.21791807337328903,1.0,0.1531,cherry.n.01
+Solid,chestnut,1,7,Solid,6,1.0,0.1531,wood.n.01,6,0.21791807337328903,1.0,0.1531,chestnut.n.01
