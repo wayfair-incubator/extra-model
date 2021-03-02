@@ -56,8 +56,8 @@ class ExtraModelBase:
     training_folder = "/wayfair/mnt/sql_staging/exports"
 
     _filenames = {
-        "embeddings": "glove.840B.300d.prepro.vectors.npy",
-        "prepro": "glove.840B.300d.prepro",
+        "embeddings": "glove.840B.300d.vectors.npy",
+        "prepro": "glove.840B.300d",
     }
     # there is no need for this since Extra doesn't create any artifacts
     _training_artifacts: Dict[str, str] = {}
@@ -67,14 +67,14 @@ class ExtraModelBase:
         dag_id="",
         dag_run_id="",
         models_folder=models_folder,
-        embedding_type="glove.840B.300d.prepro",
+        embedding_type="glove.840B.300d",
     ):
         """Init function for ExtraModel object.
 
         :param dag_id: Name of dag
         :param dag_runs_ids: Dag run IDs
         :param models_folder: Path to folder where model files are stored
-        :param embedding_type: Name of embedding file. Default is "glove.840B.300d.prepro"
+        :param embedding_type: Name of embedding file. Default is "glove.840B.300d"
         """
         self.models_folder = models_folder
         self.embedding_type = embedding_type
