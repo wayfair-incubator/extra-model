@@ -1,0 +1,20 @@
+site_name: extra-model Documentation
+repo_url: https://github.com/wayfair-incubator/extra-model
+repo_name: wayfair-incubator/extra-model
+edit_uri: edit/main/docs/
+docs_dir: docs
+nav:
+  - Overview: index.md
+  - Reference: reference.md
+theme: material
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            docstring_style: "restructured-text"
+          rendering:
+            heading_level: 3
+            show_root_heading: True
+            show_source: False
+            show_root_full_path: False

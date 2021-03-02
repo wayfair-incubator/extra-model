@@ -15,8 +15,11 @@ style_venv/
 .DS_Store
 *.zip
 
+<<<<<<< Updated upstream
 embeddings/*
 
+=======
+>>>>>>> Stashed changes
 ################################
 # Bellow is created as described
 ################################
@@ -279,5 +282,5 @@ dmypy.json
 .venv/
 
 # End of https://www.gitignore.io/api/emacs,python,intellij+all
-embeddings
-/output/
+embeddings/*
+output/*
