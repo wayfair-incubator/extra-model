@@ -15,7 +15,19 @@ Code to run the Extra [algorithm](https://aclanthology.info/papers/D18-1384/d18-
 **IMPORTANT**: 
 1. When running Extra inside docker-container, make sure that Docker process has enough resources. 
 For example, on Mac/Windows it should have at least 8 Gb of RAM available to it.
-1. GitHub repo does **not** come with Glove Embeddings. TODO: update after script is in place.
+1. GitHub repo does **not** come with Glove Embeddings. See the next section for how to download the reuired embeddings.
+
+### Downloading Embeddings
+
+**This package does not come with the required Glove embeddings and they must be downloaded before use.**
+
+To download the required embeddings, run the following command:
+
+```bash
+docker-compose run --rm setup
+```
+
+The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
 
 ### Using docker-compose
 
