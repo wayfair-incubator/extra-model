@@ -181,4 +181,4 @@ Check out the [project documentation]().
 `extra-model` was written by `mbalyasin@wayfair.com`, `mmozer@wayfair.com`.
 
 
-[official_documentation]: https://wayfair-incubator.github.io/extra-model/
+[official_documentation]: https://wayfair-incubator.github.io/extra-model/site
