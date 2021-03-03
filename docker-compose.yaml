@@ -11,6 +11,7 @@ services:
       - ./tests:/package/tests
       - ./docs:/package/docs
       - ./site:/package/site
+      - ./mkdocs.yml:/package/mkdocs.yml
       - ./embeddings:/embeddings
       - ./io:/io
 
