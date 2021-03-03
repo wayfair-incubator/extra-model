@@ -369,14 +369,24 @@ git checkout --track origin/gh-pages</code></p>
 docker-compose run --rm mkdocs build</code></p>
 </li>
 <li>
+<p>Stash changes</p>
+<p><code>bash
+git add site
+git stash</code></p>
+</li>
+<li>
 <p>Checkout the <code>gh-pages</code> branch</p>
 <p><code>bash
 git checkout gh-pages</code></p>
 </li>
 <li>
+<p>Apply stashed changes to <code>gh-pages</code> branch</p>
+<p><code>bash
+git checkout stash -- site</code></p>
+</li>
+<li>
 <p>Commit and push your changes</p>
 <p><code>bash
-git add .
 git commit -m "updating documentation"
 git push</code></p>
 </li>
