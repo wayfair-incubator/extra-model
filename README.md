@@ -8,6 +8,8 @@ TODO: update badges
 
 Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) for unsupervised topic/aspect extraction on English texts.
 
+[Read the Official Documentation here][official_documentation]
+
 ## Quick start
 
 **IMPORTANT**: 
@@ -189,3 +191,6 @@ Check out the [project documentation]().
 # Authors
 
 `extra-model` was written by `mbalyasin@wayfair.com`, `mmozer@wayfair.com`.
+
+
+[official_documentation]: https://wayfair-incubator.github.io/extra-model/site
