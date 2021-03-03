@@ -12,13 +12,17 @@ services:
       - ./embeddings:/embeddings
       - ./io:/io
 
+  # download embeddings
+  setup:
+    <<: *dev
+    entrypoint: "extra-model-setup"
+
+  # run extra-model
   extra-model:
     <<: *dev
     entrypoint: "extra-model"
-    command: "--help"
 
-  # run all the tests and linting locally
-  # - black & isort will format code to address issues
+  # run test & lint suite
   test:
     <<: *dev
-    command: docker/run_tests.sh --format-code
+    command: "docker/run_tests.sh --format-code"
