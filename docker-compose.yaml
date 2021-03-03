@@ -9,8 +9,8 @@ services:
     volumes:
       - ./extra_model:/package/extra_model
       - ./tests:/package/tests
-      - ./mkdocs.yml:/package/mkdocs.yml
       - ./docs:/package/docs
+      - ./site:/package/site
       - ./embeddings:/embeddings
       - ./io:/io
 

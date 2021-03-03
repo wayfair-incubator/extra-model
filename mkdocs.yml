@@ -5,7 +5,9 @@ edit_uri: edit/main/docs/
 docs_dir: docs
 nav:
   - Overview: index.md
+  - Blog: blog.md
   - Reference: reference.md
+  - Contributing to Documentation: documentation.md
 theme: material
 plugins:
   - mkdocstrings:

@@ -8,6 +8,8 @@ TODO: update badges
 
 Code to run the Extra [algorithm](https://aclanthology.info/papers/D18-1384/d18-1384) for unsupervised topic extraction.
 
+[Read the Official Documentation here][official_documentation]
+
 ## Quick start
 
 **IMPORTANT**: 
@@ -177,3 +179,6 @@ Check out the [project documentation]().
 # Authors
 
 `extra-model` was written by `mbalyasin@wayfair.com`, `mmozer@wayfair.com`.
+
+
+[official_documentation]: https://wayfair-incubator.github.io/extra-model/

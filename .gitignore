@@ -15,11 +15,6 @@ style_venv/
 .DS_Store
 *.zip
 
-<<<<<<< Updated upstream
-embeddings/*
-
-=======
->>>>>>> Stashed changes
 ################################
 # Bellow is created as described
 ################################
