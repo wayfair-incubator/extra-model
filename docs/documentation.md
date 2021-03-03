@@ -30,17 +30,29 @@
     ```bash
     docker-compose run --rm mkdocs build
     ```
+
+1. Stash changes
+
+    ```bash
+    git add site
+    git stash
+    ```
     
 1. Checkout the `gh-pages` branch
 
     ```bash
     git checkout gh-pages
     ```
+
+1. Apply stashed changes to `gh-pages` branch
+
+    ```bash
+    git checkout stash -- site
+    ```
     
 1. Commit and push your changes
 
     ```bash
-    git add .
     git commit -m "updating documentation"
     git push
     ```
