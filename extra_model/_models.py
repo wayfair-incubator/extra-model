@@ -189,7 +189,7 @@ class ExtraModelBase:
 
 
 # NOTE: improve typehints!
-def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
+def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = None) -> Any:
     """Create for ExtraModel class types.
 
     Will dynamically create the class when called with the provided base classes.
@@ -198,7 +198,9 @@ def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = ModelBase) -> Any:
     :type bases: Class type or tuple of class types
     :return: ExtraModel class
     """
-    if not isinstance(bases, tuple):
+    if bases is None:
+        bases = (ModelBase,)
+    elif not isinstance(bases, tuple):
         bases = (bases,)
     bases = (ExtraModelBase,) + bases
 

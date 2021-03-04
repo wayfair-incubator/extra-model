@@ -7,7 +7,8 @@ nav:
   - Overview: index.md
   - Blog: blog.md
   - Reference: reference.md
-  - Contributing to Documentation: documentation.md
+  - Contributing:
+    - Documentation: documentation.md
 theme: material
 plugins:
   - mkdocstrings:
