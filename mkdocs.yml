@@ -9,8 +9,8 @@ nav:
   - Blog: blog.md
   - Reference: reference.md
   - Contributing:
-    - Documentation: documentation.md
-    - Publish a Release: publish_releae.md
+    - Documentation: contributing/documentation.md
+    - Publish a Release: contributing/publish_release.md
 theme: material
 plugins:
   - mkdocstrings:
