@@ -5,6 +5,7 @@ edit_uri: edit/main/docs/
 docs_dir: docs
 nav:
   - Overview: index.md
+  - Using a Custom Base Class: custom_base_class.md
   - Blog: blog.md
   - Reference: reference.md
   - Contributing:
