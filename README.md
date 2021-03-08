@@ -2,7 +2,6 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![GitHub license](https://img.shields.io/github/license/wayfair-incubator/extra-model)](https://github.com/wayfair-incubator/extra-model/blob/main/LICENSE)
-[![](https://img.shields.io/pypi/v/badge.svg?maxAge=3600)](https://pypi.org/project/extra-model/)
 ![PyPI](https://img.shields.io/pypi/v/extra-model)
 
 # extra-model
