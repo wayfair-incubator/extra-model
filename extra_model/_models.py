@@ -15,6 +15,7 @@ from extra_model._topics import get_topics
 from extra_model._vectorizer import Vectorizer
 
 CB_BASE_DIR = "/"
+EMBEDDING_TYPE = "glove.840B.300d"
 
 
 logger = logging.getLogger(__name__)
@@ -53,11 +54,11 @@ class ExtraModelBase:
 
     is_trained = False
     models_folder = "/embeddings"
-    training_folder = "/wayfair/mnt/sql_staging/exports"
+    training_folder = ""
 
     _filenames = {
-        "embeddings": "glove.840B.300d.vectors.npy",
-        "prepro": "glove.840B.300d",
+        "embeddings": f"{EMBEDDING_TYPE}.vectors.npy",
+        "prepro": EMBEDDING_TYPE,
     }
     # there is no need for this since Extra doesn't create any artifacts
     _training_artifacts: Dict[str, str] = {}
@@ -67,7 +68,7 @@ class ExtraModelBase:
         dag_id="",
         dag_run_id="",
         models_folder=models_folder,
-        embedding_type="glove.840B.300d",
+        embedding_type=EMBEDDING_TYPE,
     ):
         """Init function for ExtraModel object.
 
