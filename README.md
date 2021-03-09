@@ -15,7 +15,7 @@ Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) fo
 **IMPORTANT**: 
 1. When running Extra inside docker-container, make sure that Docker process has enough resources. 
 For example, on Mac/Windows it should have at least 8 Gb of RAM available to it.
-1. GitHub repo does **not** come with Glove Embeddings. See section `Downloading Embeddings` for how to download the reuired embeddings.
+1. GitHub repo does **not** come with Glove Embeddings. See section `Downloading Embeddings` for how to download the required embeddings.
 
 ### Using docker-compose
 
@@ -31,9 +31,9 @@ Then, run following command to make sure that `extra-model` was installed correc
 docker-compose run test
 ```
 
-### Downloading Embeddings
+#### Downloading Embeddings
 
-Second, download the embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project).
+Next step is to download the embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project).
 
 To download the required embeddings, run the following command:
 
@@ -43,9 +43,9 @@ docker-compose run --rm setup
 
 The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
 
-### Run `extra-model`
+#### Run `extra-model`
 
-Then running `extra-model` is as simple as:
+Finally, running `extra-model` is as simple as:
 
 ```bash
 docker-compose run extra-model /package/tests/resources/100_comments.csv
