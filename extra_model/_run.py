@@ -6,7 +6,7 @@ import pandas as pd
 from extra_model._models import ExtraModel
 
 MODELS_FOLDER = "./embeddings"
-OUTPUT_FILE = "result.csv"
+OUTPUT_FILE = Path("result.csv")
 
 logger = logging.getLogger(__name__)
 
