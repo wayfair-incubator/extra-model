@@ -9,6 +9,7 @@ nav:
   - Examples: examples/examples.md 
   - Using a Custom Base Class: custom_base_class.md
   - Blog: blog.md
+  - RAM Requirements: ram_requirements.md
   - Reference: reference.md
   - Contributing:
     - Developer's Guide: contributing/developer_guide.md
