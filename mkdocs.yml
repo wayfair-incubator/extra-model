@@ -5,10 +5,13 @@ edit_uri: edit/main/docs/
 docs_dir: docs
 nav:
   - Overview: index.md
+  - Workflow: workflow.md
+  - Examples: examples/examples.md 
   - Using a Custom Base Class: custom_base_class.md
   - Blog: blog.md
   - Reference: reference.md
   - Contributing:
+    - Developer's Guide: contributing/developer_guide.md
     - Documentation: contributing/documentation.md
     - Publish a Release: contributing/publish_release.md
 theme: material
