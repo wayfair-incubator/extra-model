@@ -6,12 +6,16 @@
 
 ## Develop
 
+1. Make changes on a development branch
+
 1. Run the following command to render and serve documentation locally
 
         docker-compose run --rm --service-ports mkdocs
 
 1. Visit the local documentation to see your changes while developing  
     **[http://localhost:8000](http://localhost:8000)**  
+  
+1. Push this branch, get approval and merge to the `main` branch
 
 ## Publish
 
@@ -19,27 +23,13 @@
 
         git checkout --track origin/gh-pages
     
-1. Generate documentation on your development branch
+1. Pull down the `main` branch after changes have been merged
 
         docker-compose run --rm mkdocs build
 
-1. Stash changes
+1. Run the `publish_documentation` script
 
-        git add site
-        git stash
-    
-1. Checkout the `gh-pages` branch
-
-        git checkout gh-pages
-
-1. Apply stashed changes to `gh-pages` branch
-
-        git checkout stash -- site
-    
-1. Commit and push your changes
-
-        git commit -m "updating documentation"
-        git push
+        ./publish_documentation.sh
     
 1. Visit the hosted documentation  
     **[https://wayfair-incubator.github.io/extra-model/site/](https://wayfair-incubator.github.io/extra-model/site/)**  
