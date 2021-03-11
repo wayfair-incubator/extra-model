@@ -179,10 +179,98 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Overview
       </a>
       
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-model-input" class="md-nav__link">
+    extra-model input
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-model-output" class="md-nav__link">
+    extra-model output
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="workflow/" class="md-nav__link">
+        Workflow
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="custom_base_class/" class="md-nav__link">
+        Using a Custom Base Class
+      </a>
     </li>
   
 
@@ -210,6 +298,21 @@
   
   
     <li class="md-nav__item">
+      <a href="ram_requirements/" class="md-nav__link">
+        RAM Requirements
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="reference/" class="md-nav__link">
         Reference
       </a>
@@ -224,10 +327,61 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      <label class="md-nav__link" for="__nav_8">
+        Contributing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Contributing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Contributing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
     <li class="md-nav__item">
-      <a href="documentation/" class="md-nav__link">
-        Contributing to Documentation
+      <a href="contributing/developer_guide/" class="md-nav__link">
+        Developer's Guide
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contributing/documentation/" class="md-nav__link">
+        Documentation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contributing/publish_release/" class="md-nav__link">
+        Publish a Release
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -250,6 +404,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-model-input" class="md-nav__link">
+    extra-model input
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-model-output" class="md-nav__link">
+    extra-model output
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -266,7 +449,92 @@
                 
                 
                 <h1 id="extra-model">extra-model</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p><code>extra-model</code> is an implementation of the <code>ExtRA</code> algorithm described in the paper <a href="https://www.aclweb.org/anthology/D18-1384">"ExtRA: Extracting Prominent Review Aspects from Customer Feedback"</a>. </p>
+<p>It is an unsupervised algorithm that implements an NLP task called <a href="https://paperswithcode.com/task/aspect-based-sentiment-analysis">Aspect-Based Sentiment Analysis</a>. </p>
+<p>At Wayfair this algorithm is routinely used in production on 1mln+ reviews to, e.g., produce what we call Bubble Filters: </p>
+<p><img alt="" src="img/bubble_filters.png" /></p>
+<p>However, what we found in our work is that <code>extra-model</code> can be used to analyze any text, not only reviews, so we are hoping that with this package you'd be able to unlock the power of this algorithm in your work too.</p>
+<h2 id="examples">Examples</h2>
+<p>More examples are available <a href="examples/examples/">here</a></p>
+<h2 id="extra-model-input"><code>extra-model</code> input</h2>
+<p>More info about the worklow is available <a href="workflow/">here</a></p>
+<p>Input of an extra is a <code>.csv</code> file with 2 columns: <code>CommentId</code> and <code>Comments</code>. 
+Both must be present and named exactly in that way.</p>
+<h2 id="extra-model-output"><code>extra-model</code> output</h2>
+<p>After <code>extra-model</code> finishes calculations, it'll produce a <code>.csv</code> file with following structure:</p>
+<pre><code class="language-text">AdCluster,Aspect,AspectCount,CommentId,Descriptor,Position,SentimentBinary,SentimentCompound,Topic,TopicCount,TopicImportance,TopicSentimentBinary,TopicSentimentCompound,WordnetNode
+only,downside,1,321,only,9,0.0,0.0,downside.n.01,1,0.005572645018795278,0.0,0.0,downside.n.01
+more,nothing,1,74,more,54,0.0,0.0,nothing.n.01,1,0.005572645018795278,0.0,0.0,nothing.n.01
+clean,bathrooms,1,146,clean,4,1.0,0.4019,toilet.n.01,1,0.005572645018795278,1.0,0.4019,toilet.n.01
+decorated,place,5,146,decorated,32,0.0,0.0,home.n.01,6,0.03343587011277168,0.0,-0.01131666666666666,home.n.01
+</code></pre>
+<p>Columns have following meaning:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Column</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">AdCluster</td>
+<td align="left">Adjectives are clustered together and this indicates the "center" of a cluster (e.g., "awesome", "fantastic", "great" descriptors might produce "great" as <code>AdCluster</code>)</td>
+</tr>
+<tr>
+<td align="left">Aspect</td>
+<td align="left">Identified aspect - this is an actual word that person wrote in a text</td>
+</tr>
+<tr>
+<td align="left">AspectCount</td>
+<td align="left">How often this aspect has been found in all of the input</td>
+</tr>
+<tr>
+<td align="left">CommentId</td>
+<td align="left"><code>ID</code> of an input. Since one input may produce multiple aspects, <code>ID</code> column must always be present</td>
+</tr>
+<tr>
+<td align="left">Descriptor</td>
+<td align="left">Identified adjective (not clustered) - this is an actual word that person wrote in a text</td>
+</tr>
+<tr>
+<td align="left">Position</td>
+<td align="left">Character number where aspect was found (e.g., "nice shirt" will have aspect "shirt" and <code>Position</code> 6</td>
+</tr>
+<tr>
+<td align="left">SentimentBinary</td>
+<td align="left">Binary sentiment for aspect</td>
+</tr>
+<tr>
+<td align="left">SentimentCompound</td>
+<td align="left">Compound sentiment for aspect</td>
+</tr>
+<tr>
+<td align="left">Topic</td>
+<td align="left">Collection of aspects.</td>
+</tr>
+<tr>
+<td align="left">TopicCount</td>
+<td align="left">How often topic has been found in input</td>
+</tr>
+<tr>
+<td align="left">TopicImportance</td>
+<td align="left">Importance of a topic</td>
+</tr>
+<tr>
+<td align="left">TopicSentimentBinary</td>
+<td align="left">Similar to aspect, but on a topic level</td>
+</tr>
+<tr>
+<td align="left">TopicSentimentCompound</td>
+<td align="left">Similar to aspect, but on a topic level</td>
+</tr>
+<tr>
+<td align="left">WordnetNode</td>
+<td align="left">Mapping to <code>wordnet</code> node. Identifiers in the form <code>.n.01</code> mean first meaning of the noun in <code>wordnet</code></td>
+</tr>
+</tbody>
+</table>
                 
               
               
@@ -285,13 +553,13 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
       
-        <a href="blog/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="workflow/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Blog
+              Workflow
             </div>
           </div>
           <div class="md-footer__button md-icon">
