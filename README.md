@@ -14,7 +14,7 @@ Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) fo
 
 **IMPORTANT**: 
 1. When running Extra inside docker-container, make sure that Docker process has enough resources. 
-For example, on Mac/Windows it should have at least 8 Gb of RAM available to it.
+For example, on Mac/Windows it should have at least 8 Gb of RAM available to it. [Read More about RAM Requirements][ram_requirements]
 1. GitHub repo does **not** come with Glove Embeddings. See section `Downloading Embeddings` for how to download the required embeddings.
 
 ### Using docker-compose
@@ -75,3 +75,4 @@ TODO: add this section.
 
 
 [official_documentation]: https://wayfair-incubator.github.io/extra-model/site
+[ram_requirements]: https://wayfair-incubator.github.io/extra-model/site/ram_requirements
