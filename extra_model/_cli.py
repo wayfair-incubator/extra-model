@@ -30,7 +30,8 @@ def entrypoint(
 
     OUTPUT_PATH is the path to the output directory. Default is `/io`.
 
-    OUTPUT_FILENAME is the filename of the output file. Default is `result.csv`
+    OUTPUT_FILENAME is the filename of the output file. Default is `result.csv`.
+    The `.csv` file extension is not enforced. Please take care of this accordingly.
     """
     logging.getLogger("extra_model").setLevel("DEBUG" if debug else "INFO")
 
