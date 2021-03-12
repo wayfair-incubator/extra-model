@@ -12,10 +12,12 @@ Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) fo
 
 ## Quick start
 
-**IMPORTANT**: 
-1. When running Extra inside docker-container, make sure that Docker process has enough resources. 
+
+**IMPORTANT**:
+1. When running Extra inside docker-container, make sure that Docker process has enough resources.
 For example, on Mac/Windows it should have at least 8 Gb of RAM available to it. [Read More about RAM Requirements][ram_requirements]
 1. GitHub repo does **not** come with Glove Embeddings. See section `Downloading Embeddings` for how to download the required embeddings.
+
 
 ### Using docker-compose
 
@@ -52,15 +54,21 @@ docker-compose run extra-model /package/tests/resources/100_comments.csv
 ```
 
 NOTE: when using this approach, input file should be mounted inside the container.
-By default, everything from `extra-model` folder will be mounted to `/package/` folder. 
+By default, everything from `extra-model` folder will be mounted to `/package/` folder.
 This can be changed in `docker-compose.yaml`
 
-This will produce a `result.csv` file in `/io/` (default setting) folder. 
+This will produce a `result.csv` file in `/io/` (default setting) folder.
 
 Location of the output can be changed by supplying second path, e.g.:
 
 ```bash
 docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder
+```
+
+The output filename can also be changed if you want it to be something else than `result.csv` by supplying a third argument:
+
+```bash
+docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv
 ```
 
 More examples, as well as an explanation of input/output are available in [official documentation](official_documentation).
@@ -72,7 +80,6 @@ TODO: add this section.
 # Authors
 
 `extra-model` was written by `mbalyasin@wayfair.com`, `mmozer@wayfair.com`.
-
 
 [official_documentation]: https://wayfair-incubator.github.io/extra-model/site
 [ram_requirements]: https://wayfair-incubator.github.io/extra-model/site/ram_requirements

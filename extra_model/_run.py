@@ -6,12 +6,14 @@ import pandas as pd
 from extra_model._models import ExtraModel
 
 MODELS_FOLDER = "./embeddings"
-OUTPUT_FILE = "result.csv"
+OUTPUT_FILE = Path("result.csv")
 
 logger = logging.getLogger(__name__)
 
 
-def run(input_path: Path, output_path: Path) -> None:
+def run(
+    input_path: Path, output_path: Path, output_filename: Path = OUTPUT_FILE
+) -> None:
     """Docstring."""
     logging.basicConfig(format="  %(message)s")
 
@@ -26,4 +28,4 @@ def run(input_path: Path, output_path: Path) -> None:
     if not output_path.exists():
         output_path.mkdir(parents=True)
 
-    results.to_csv(output_path / OUTPUT_FILE, encoding="utf-8", index=False)
+    results.to_csv(output_path / output_filename, encoding="utf-8", index=False)

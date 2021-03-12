@@ -25,6 +25,7 @@ def setup_mock(mocker):
 
 INPUT = "/input"
 OUTPUT = "/output"
+OUTPUT_FILENAME = "result.csv"
 
 
 def test_entrypoint__run_raises_no_exception__exit_code_0(cli_runner, run_mock):
@@ -63,9 +64,11 @@ def test_entrypoint__debug_set__log_level_set_to_DEBUG(cli_runner, run_mock):
 def test_entrypoint__input_and_output_path_set__arguments_passed_to_run(
     cli_runner, run_mock
 ):
-    cli_runner.invoke(entrypoint, [INPUT, OUTPUT], catch_exceptions=False)
+    cli_runner.invoke(
+        entrypoint, [INPUT, OUTPUT, OUTPUT_FILENAME], catch_exceptions=False
+    )
 
-    run_mock.assert_called_once_with(Path(INPUT), Path(OUTPUT))
+    run_mock.assert_called_once_with(Path(INPUT), Path(OUTPUT), Path(OUTPUT_FILENAME))
 
 
 def test_entrypoint_setup__setup_raises_no_exception__exit_code_0(
