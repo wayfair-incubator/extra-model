@@ -12,8 +12,8 @@ Code to run the Extra [algorithm](https://aclanthology.info/papers/D18-1384/d18-
 
 ## Quick start
 
-**IMPORTANT**: 
-1. When running Extra inside docker-container, make sure that Docker process has enough resources. 
+**IMPORTANT**:
+1. When running Extra inside docker-container, make sure that Docker process has enough resources.
 For example, on Mac/Windows it should have at least 8 Gb of RAM available to it.
 1. GitHub repo does **not** come with Glove Embeddings. See the next section for how to download the reuired embeddings.
 
@@ -44,15 +44,21 @@ docker-compose run extra-model /package/tests/resources/100_comments.csv
 ```
 
 NOTE: when using this approach, input file should be mounted inside the container.
-By default, everything from `extra-model` folder will be mounted to `/package/` folder. 
+By default, everything from `extra-model` folder will be mounted to `/package/` folder.
 This can be changed in `docker-compose.yaml`
 
-This will produce a `result.csv` file in `/io/` (default setting) folder. 
+This will produce a `result.csv` file in `/io/` (default setting) folder.
 
 Location of the output can be changed by supplying second path, e.g.:
 
 ```bash
 docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder
+```
+
+The output filename can also be changed if you want it to be something else than `result.csv` by supplying a third argument:
+
+```bash
+docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv
 ```
 
 ### Using command line
@@ -61,7 +67,7 @@ TODO: add this section.
 
 ## `extra-model` input
 
-Input of an extra is a `.csv` file with 2 columns: `CommentId` and `Comments`. 
+Input of an extra is a `.csv` file with 2 columns: `CommentId` and `Comments`.
 Both must be present and named exactly in that way.
 
 ## `extra-model` output
@@ -93,7 +99,7 @@ Columns have following meaning:
 |TopicImportance        |Importance of a topic|
 |TopicSentimentBinary   |Similar to aspect, but on a topic level|
 |TopicSentimentCompound |Similar to aspect, but on a topic level|
-|WordnetNode            |Mapping to `wordnet` node. Identifiers in the form `.n.01` mean first meaning of the noun in `wordnet`| 
+|WordnetNode            |Mapping to `wordnet` node. Identifiers in the form `.n.01` mean first meaning of the noun in `wordnet`|
 
 
 ## Extra workflow
@@ -120,7 +126,7 @@ important dependencies:
 * `vaderSentiment` for sentiment analysis
 
 ### Analyze descriptors (`_adjectives.py`)
-Cluster the associated adjectives using constant radius clustering. 
+Cluster the associated adjectives using constant radius clustering.
 
 ### Link information (`_summarize.py`)
 To make the output more useful, we want to link the topics back to the original texts and vice versa.
@@ -131,12 +137,12 @@ The whole code produces one csv file.
 
 TODO: update this section
 
-This project comes with a GitHub Actions pipeline definition. 
+This project comes with a GitHub Actions pipeline definition.
 
 ## Develop
 
 First, please [install docker](https://docs.docker.com/install/) on your computer.
-Docker must be running correctly for these commands to work. 
+Docker must be running correctly for these commands to work.
 
 * If you are using windows, please make sure your editor writes files with the linefeed (`\n`) line endings.*
 
@@ -145,7 +151,7 @@ Next, clone the repo:
 TODO: update this
 
 ```bash
-git clone 
+git clone
 cd extra-model
 ```
 
@@ -161,7 +167,7 @@ You'll be unable to merge code unless the linting and tests pass. You can run th
 
 The tests, linting, and code coverage are run automatically via CI, and you'll see the output on your pull requests.
 
-Generally we should endeavor to write tests for every feature. 
+Generally we should endeavor to write tests for every feature.
 Every new feature branch should increase the test coverage rather than decreasing it.
 
 We use [pytest](https://docs.pytest.org/en/latest/) as our testing framework.
@@ -170,7 +176,7 @@ To test/lint your project, you can run `docker-compose run test`.
 
 #### Stages
 
-TODO: update this 
+TODO: update this
 
 To customize / override a specific testing stage, please read the documentation specific to that tool:
 
@@ -181,7 +187,7 @@ To customize / override a specific testing stage, please read the documentation 
 1. iSort: [https://pycqa.github.io/isort/](https://pycqa.github.io/isort/)
 1. pydocstyle: [http://www.pydocstyle.org/en/stable/](http://www.pydocstyle.org/en/stable/)
 
-  
+
 ## Documentation
 
 TODO: change to sphinx site:
