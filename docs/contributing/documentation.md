@@ -22,10 +22,6 @@
 1. Pull down the `gh-pages` branch. This only needs to be done once
 
         git checkout --track origin/gh-pages
-    
-1. Pull down the `main` branch after changes have been merged
-
-        docker-compose run --rm mkdocs build
 
 1. Run the `publish_documentation` script
 
