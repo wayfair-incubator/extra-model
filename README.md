@@ -75,7 +75,44 @@ More examples, as well as an explanation of input/output are available in [offic
 
 ### Using command line
 
-TODO: add this section.
+#### Downloading Embeddings
+
+First, run the following to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
+
+```bash
+extra-model-setup
+```
+
+The embeddings will be downloaded, unzipped and formatted into a space-efficient format. By default, files will be saved in `/embeddings`. You can set another directory by providing it as an argument when running `extra-model-setup` like so:
+
+```bash
+extra-model-setup /path/to/store/embeddings
+```
+
+ If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the embeddings directory.
+
+#### Run `extra-model`
+
+Once set up, running `extra-model` is as simple as:
+
+```bash
+extra-model /package/tests/resources/100_comments.csv
+```
+
+This will produce a `result.csv` file in `/io`. If you want to change the output directory this can be done by providing it as a second argument to `extra-model` like so:
+
+```bash
+extra-model /package/tests/resources/100_comments.csv /path/to/store/output
+```
+
+The output filename can also be changed if you want it to be something else than `result.csv` by supplying a third argument to `extra-model`:
+
+```bash
+docker-compose run extra-model /package/tests/resources/100_comments.csv /path/to/store/output another_filename.csv
+```
+
+More examples, as well as an explanation of input/output are available in [official documentation](official_documentation).
+
 
 # Authors
 
