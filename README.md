@@ -96,19 +96,19 @@ extra-model-setup /path/to/store/embeddings
 Once set up, running `extra-model` is as simple as:
 
 ```bash
-extra-model /package/tests/resources/100_comments.csv
+extra-model tests/resources/100_comments.csv
 ```
 
 This will produce a `result.csv` file in `/io`. If you want to change the output directory this can be done by providing it as a second argument to `extra-model` like so:
 
 ```bash
-extra-model /package/tests/resources/100_comments.csv /path/to/store/output
+extra-model tests/resources/100_comments.csv /path/to/store/output
 ```
 
 The output filename can also be changed if you want it to be something else than `result.csv` by supplying a third argument to `extra-model`:
 
 ```bash
-docker-compose run extra-model /package/tests/resources/100_comments.csv /path/to/store/output another_filename.csv
+docker-compose run extra-model tests/resources/100_comments.csv /path/to/store/output another_filename.csv
 ```
 
 More examples, as well as an explanation of input/output are available in [official documentation](official_documentation).
