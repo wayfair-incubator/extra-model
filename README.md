@@ -91,13 +91,9 @@ Next, run the following to download and set up the required embeddings (we use [
 extra-model-setup
 ```
 
-The embeddings will be downloaded, unzipped and formatted into a space-efficient format. By default, files will be saved in `/embeddings`. You can set another directory by providing it as an argument when running `extra-model-setup` like so:
+The embeddings will be downloaded, unzipped and formatted into a space-efficient format and saved in `/embeddings`.
 
-```bash
-extra-model-setup /path/to/store/embeddings
-```
-
- If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the embeddings directory.
+If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the embeddings directory.
 
 #### Run `extra-model`
 
