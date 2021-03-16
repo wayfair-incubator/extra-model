@@ -20,12 +20,16 @@ def run(
     extra_model = ExtraModel(models_folder=MODELS_FOLDER)
     extra_model.load_from_files()
 
+    logger.info(f"Loading data from {input_path}")
     input_data = pd.read_csv(input_path)
-
+    
+    logger.info("Running `extra-model`")
     results_raw = extra_model.predict(comments=input_data.to_dict("records"))
     results = pd.DataFrame(results_raw)
 
     if not output_path.exists():
+        logger.info(f"Creating folder {output_path}")
         output_path.mkdir(parents=True)
 
+    logger.info(f"Saving output to {output_path / output_filename}")
     results.to_csv(output_path / output_filename, encoding="utf-8", index=False)
