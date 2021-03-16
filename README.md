@@ -75,9 +75,17 @@ More examples, as well as an explanation of input/output are available in [offic
 
 ### Using command line
 
+#### Install `extra-model`
+
+First, install `extra-model` via pip:
+
+```bash
+pip install extra-model
+```
+
 #### Downloading Embeddings
 
-First, run the following to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
+Next, run the following to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
 
 ```bash
 extra-model-setup
@@ -111,11 +119,19 @@ The output filename can also be changed if you want it to be something else than
 docker-compose run extra-model tests/resources/100_comments.csv /path/to/store/output another_filename.csv
 ```
 
-### Using as a Pyhton package
+### Using as a Python package
+
+#### Install `extra-model`
+
+First, install `extra-model` via pip:
+
+```bash
+pip install extra-model
+```
 
 #### Downloading Embeddings
 
-First, use either the `extra-model-setup` CLI or `docker-compose` to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
+Next, use either the `extra-model-setup` CLI or `docker-compose` to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
 
 ```bash
 extra-model-setup
