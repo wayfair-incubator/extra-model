@@ -111,6 +111,57 @@ The output filename can also be changed if you want it to be something else than
 docker-compose run extra-model tests/resources/100_comments.csv /path/to/store/output another_filename.csv
 ```
 
+### Using as a Pyhton package
+
+#### Downloading Embeddings
+
+First, use either the `extra-model-setup` CLI or `docker-compose` to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
+
+```bash
+extra-model-setup
+```
+
+or
+
+```bash
+docker-compose run --rm setup
+```
+
+
+The embeddings will be downloaded, unzipped and formatted into a space-efficient format. For the Docker based workflow, the embeddings will be saved to the `embeddings` directory. For the CLI workflow, by default, files will be saved in `/embeddings`. You can set another directory by providing it as an argument when running `extra-model-setup` like so:
+
+```bash
+extra-model-setup /path/to/store/embeddings
+```
+
+
+If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the embeddings directory.
+
+#### Use `extra-model` as a Python package
+
+Once set up, you can use `extra-model` by calling the `run()` function in `extra_model/_run.py` :
+
+```python
+from extra_model._run import run
+
+run(
+    input_path=Path("input/path"),
+    output_path=Path("output/path")
+)
+```
+
+This will process `input/path` and produce a `result.csv` file in `output/path`. If you want to change the output filename to be something different than `result.csv`, you can do os by providing an additional argument to `run()`:
+
+```python
+from extra_model._run import run
+
+run(
+    input_path=Path("input/path"),
+    output_path=Path("output/path"),
+    output_filename=Path("output_filename.csv")
+)
+```
+
 More examples, as well as an explanation of input/output are available in [official documentation](official_documentation).
 
 
