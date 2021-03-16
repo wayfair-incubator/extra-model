@@ -161,7 +161,7 @@ Once set up, you can use `extra-model` by calling the `run()` function in `extra
 from extra_model._run import run
 
 run(
-    input_path=Path("input/path"),
+    input_path=Path("input/path/file.csv"),
     output_path=Path("output/path")
 )
 ```
