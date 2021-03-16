@@ -22,7 +22,7 @@ def run(
 
     logger.info(f"Loading data from {input_path}")
     input_data = pd.read_csv(input_path)
-    
+
     logger.info("Running `extra-model`")
     results_raw = extra_model.predict(comments=input_data.to_dict("records"))
     results = pd.DataFrame(results_raw)
