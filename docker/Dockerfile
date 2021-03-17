@@ -16,6 +16,11 @@ RUN python -m nltk.downloader wordnet punkt
 
 FROM python:3.8-slim-buster
 
+RUN apt-get update && apt-get install --no-install-recommends --yes \
+    curl \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder /root/nltk_data /root/nltk_data
 COPY --from=builder /requirements /usr/local
 
