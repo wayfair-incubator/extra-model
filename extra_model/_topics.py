@@ -185,7 +185,7 @@ def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
     for node in wordnet_nodes:
         imp = 0
         for neighbor in full_tree.predecessors(node):
-            if full_tree.node[neighbor]["seed"]:
+            if full_tree.nodes[neighbor]["seed"]:
                 imp = imp + aspect_counts[neighbor]
         importance_vec.append(imp)
 
@@ -233,7 +233,7 @@ def traverse_tree(  # noqa: C901
         for daughter in full_tree.predecessors(node):
             # we need the directed unpruned graph here to avoid descent from
             # hypernyms
-            if full_tree.node[daughter]["seed"] and daughter not in associated_aspects:
+            if full_tree.nodes[daughter]["seed"] and daughter not in associated_aspects:
                 associated_aspects[daughter] = aspect_counts[daughter] * weight
         maybe_daugthers = None
         if direction == "up":
@@ -241,7 +241,7 @@ def traverse_tree(  # noqa: C901
         if direction == "down":
             maybe_daugthers = full_tree.predecessors(node)
         for daughter in maybe_daugthers:
-            if full_tree.node[daughter]["seed"]:  # we already took care of these
+            if full_tree.nodes[daughter]["seed"]:  # we already took care of these
                 continue
             elif weighted:  # go further up/down the tree
                 new_nodes.append(

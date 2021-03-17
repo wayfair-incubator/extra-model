@@ -45,6 +45,14 @@ docker-compose run --rm setup
 
 The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
 
+#### [Optional] Run `docker-compose build` again
+
+After you've downloaded the embeddings, you may want to run `docker-compose build` again. 
+This will build an image with embeddings already present inside the image. 
+
+The tradeoff here is that the image will be much bigger, but you won't spend ~2 minutes each time you run `extra-model` waiting for embeddings to be mounted into the container.
+On the other hand, building an image with embeddings in the context will increase build time from ~3 minutes to ~10 minutes.
+
 #### Run `extra-model`
 
 Finally, running `extra-model` is as simple as:

@@ -1,4 +1,4 @@
-FROM python:3.6-buster
+FROM python:3.8-buster
 
 RUN mkdir /package
 COPY . /package
@@ -6,8 +6,8 @@ WORKDIR /package
 
 RUN pip install --upgrade pip wheel setuptools
 
-RUN pip install -r requirements.txt -r requirements-test.txt
-RUN pip install -e .
+RUN pip install --use-deprecated=legacy-resolver -r requirements.txt -r requirements-test.txt
+RUN pip install --use-deprecated=legacy-resolver -e .
 
 # download nltk resources
 RUN python -m nltk.downloader wordnet
