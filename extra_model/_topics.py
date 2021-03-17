@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def path_to_graph(hypernym_list, initialnoun):
     """Make a hypernym chain into a graph.
-    
+
     :param hypernym_list: list of hypernyms for a word as obtained from wordnet
     :type hypernym_list: [str]
     :param initialnoun: the initial noun (we need this to mark it as leaf in the tree)
@@ -39,7 +39,7 @@ def path_to_graph(hypernym_list, initialnoun):
 
 def get_nodevec(node, vectors):
     """Get the vector representation of a gloss a wordnet node.
-    
+
     Used to evaluate similarity between rungs in the hypernym chain.
     :param node: the wornet node for which to compute the embedding
     :type node: str
@@ -58,7 +58,7 @@ def get_nodevec(node, vectors):
 
 def iterate(transition_matrix, importance, original, alpha):
     """Find the stable importance vector by iterated multiplication with the distance matrix.
-    
+
     This function does a simple iteration. The "jump-back" probability from the paper
     is implemented as a linear superposition of the new and original importance numbers.
     :param transition_matrix: The connectedness matrix of the graph, including similarity weights.
@@ -83,7 +83,7 @@ def iterate(transition_matrix, importance, original, alpha):
 
 def aggregate(aspects, aspect_counts, synsets_match, vectors):  # noqa: C901
     """Aggregate the aspects by building a tree from the hypernym chains.
-    
+
     Using a page-rank type algorithm to assign importance to the nodes in the graph
     we only consider wordnet entries for this, not the actual aspects extracted from the texts.
     :param aspects: List of aspects to analyze
@@ -210,7 +210,7 @@ def traverse_tree(  # noqa: C901
     node_list, associated_aspects, aspect_counts, full_tree, weighted, direction
 ):
     """Find all hypernyms/hyponyms in the tree to a given node.
-    
+
     Aggregate the number of associated mentions in the original texts, optionally
     weighted by term-similarity.
     :param nodelist: List of nodes from which to gather the subsidiary terms and their initial mentions
@@ -267,7 +267,7 @@ def traverse_tree(  # noqa: C901
 
 def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree):
     """Gather various bits of information into a single DataFrame.
-    
+
     For each topic we store the importance, the list of associated raw text terms and their numbers.
     :param filtered_topics: List of topics remaining after filtering out low-iimportance subsidiary topics
     :type filtered_topics: [str]
@@ -350,7 +350,7 @@ def collect_topic_info(filtered_topics, removed_topics, aspect_counts, full_tree
 
 def has_connection(term, prior, full_tree):
     """Check if two terms are connected within the directed hyopernym graph.
-    
+
     :param term: first node to test
     :type term: str
     :param prior: second node to test
@@ -369,7 +369,7 @@ def has_connection(term, prior, full_tree):
 
 def filter_aggregates(topics, tree):
     """Filter the importance-sorted list, so that each remaining topic is the sole member of its hypernym chain.
-    
+
     :param topics: List of all topics in the graph
     :type topics: [str]
     :param tree: the graph which is being traversed
@@ -398,7 +398,7 @@ def filter_aggregates(topics, tree):
 
 def get_topics(dataframe_aspects, vectors):
     """Generate the semantically clustered topics from the raw aspects.
-    
+
     :param dataframe_aspects: the collection of nouns to be aggregated into topics
     :type dataframe_aspects: :class:`pandas.DataFrame`
     :param vectors: provides embeddings for context clustering and wordsense disammbguation

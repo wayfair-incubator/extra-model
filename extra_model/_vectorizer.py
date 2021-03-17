@@ -12,7 +12,7 @@ class Vectorizer:
     def __init__(self, embedding_file):
         """
         Use the generic gensim vector embedding lookup.
-        
+
         Currently using pretrained glove embeddings, but anything goes.
         :param embedding_file: pathname for the file that stores the word-embeddings in gensim keyed-vectors format
         :type str
@@ -25,7 +25,7 @@ class Vectorizer:
     def get_vector(self, key):
         """
         Return the vector embedding for a given word.
-        
+
         According to the following logic:
             - if no embedding is found for this word, check if it's a compound
             - if it's a compound try to take the average embedding of the constituent words
