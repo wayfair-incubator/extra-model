@@ -46,9 +46,7 @@ def test_aspects__adjective_list(spacy_nlp):
     ]
 
 
-@pytest.mark.skip(
-    reason="This needs to be looked at when fixing negations"
-)
+@pytest.mark.skip(reason="This needs to be looked at when fixing negations")
 def test_aspects__adjective_negations__direct(spacy_nlp):
     example_text = "This not so sturdy table is a disappointment."
     assert adjective_negations(spacy_nlp(example_text)[1]) == ["sturdy"]
