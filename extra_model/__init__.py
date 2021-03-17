@@ -2,4 +2,4 @@
 
 from extra_model._models import ExtraModel, extra_factory  # noqa
 
-__version__ = "0.2.0rc1"
+__version__ = "0.2.0"
