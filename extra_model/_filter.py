@@ -1,7 +1,7 @@
 import logging
 
+import cld3
 import pandas as pd
-import pycld2 as cld2
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ def filter(dataframe):
     # detect language and filter english. If it's 'unknown' it's probably
     # still english
     dataframe.loc[:, "lang"] = dataframe.Comments.apply(
-        lambda com: cld2.detect(com)[2][0][1]
+        lambda com: cld3.get_language(com).language
     )
     dataframe = dataframe[(dataframe["lang"] == "en") | (dataframe["lang"] == "un")]
 
