@@ -126,9 +126,9 @@ def parse(dataframe_texts):  # noqa: C901
     # the original text later
 
     # n_threads > 5 can segfault with long (>500 tokens) sentences
+    # n_threads has been deprecated in spacy 3.x - https://spacy.io/usage/v2-1#incompat
     for index, document in zip(
-        dataframe_texts.index,
-        nlp.pipe(dataframe_texts.Comments, batch_size=500, n_threads=5),
+        dataframe_texts.index, nlp.pipe(dataframe_texts.Comments, batch_size=500),
     ):  # TODO reduce for production/make configurable
         negated_adjectives = []
         for token in document:

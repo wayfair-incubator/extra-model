@@ -12,6 +12,7 @@ services:
       - ./docs:/package/docs
       - ./site:/package/site
       - ./mkdocs.yml:/package/mkdocs.yml
+      - ./embeddings:/package/embeddings
       - ./embeddings:/embeddings
       - ./io:/io
 
@@ -29,7 +30,7 @@ services:
   test:
     <<: *dev
     command: docker/run_tests.sh --format-code
-  
+
   # generate and serve the project documentation locally
   mkdocs: &mkdocs
     <<: *dev
