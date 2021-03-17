@@ -5,7 +5,7 @@ name: CI
 on: [push, pull_request]
 
 env:
-  PYTHON_VERSION: "3.6"
+  PYTHON_VERSION: "3.8"
 
 jobs:
   bandit:
@@ -110,7 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6]
+        python-version: [3.8]
     steps:
         - name: Check out code
           uses: actions/checkout@v2
