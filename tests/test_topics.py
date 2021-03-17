@@ -138,25 +138,31 @@ def test__aggregate(vec):
 
 
 def test__traverse_tree__down_weighted(simple_graph):
-    assert traverse_tree(
-        [("R", 1)],
-        {},
-        {"L1": 4, "L2": 1},
-        simple_graph,
-        weighted=True,
-        direction="down",
-    ) == {"L1": 2, "L2": 0.5}
+    assert (
+        traverse_tree(
+            [("R", 1)],
+            {},
+            {"L1": 4, "L2": 1},
+            simple_graph,
+            weighted=True,
+            direction="down",
+        )
+        == {"L1": 2, "L2": 0.5}
+    )
 
 
 def test__traverse_tree__down_unweighted(simple_graph):
-    assert traverse_tree(
-        [("R", 1)],
-        {},
-        {"L1": 4, "L2": 1},
-        simple_graph,
-        weighted=False,
-        direction="down",
-    ) == {"L1": 4, "L2": 1}
+    assert (
+        traverse_tree(
+            [("R", 1)],
+            {},
+            {"L1": 4, "L2": 1},
+            simple_graph,
+            weighted=False,
+            direction="down",
+        )
+        == {"L1": 4, "L2": 1}
+    )
 
 
 def test__traverse_tree__up_weighted(simple_graph):
@@ -166,14 +172,17 @@ def test__traverse_tree__up_weighted(simple_graph):
 
 
 def test__traverse_tree__up_unweighted(simple_graph):
-    assert traverse_tree(
-        [("I1", 1)],
-        {},
-        {"L1": 4, "L2": 1},
-        simple_graph,
-        weighted=False,
-        direction="up",
-    ) == {"L1": 4}
+    assert (
+        traverse_tree(
+            [("I1", 1)],
+            {},
+            {"L1": 4, "L2": 1},
+            simple_graph,
+            weighted=False,
+            direction="up",
+        )
+        == {"L1": 4}
+    )
 
 
 @pytest.mark.skip(

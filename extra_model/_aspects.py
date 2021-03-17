@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def compound_noun_list(token):
     """Find compound nouns.
-    
+
     :param token: token for which to generate potential compound nouns
     :type token: :class:`spacy.token`
     :return: list of potential compounds
@@ -33,7 +33,7 @@ def compound_noun_list(token):
 
 def acomp_list(tokens):
     """Find descriptions for a given token.
-    
+
     :param tokens: list of tokens that are children of the head of the nount for which descriptions are searched.
     :type tokens: [:class:`spacy.token`]
     :return: list of adjectives
@@ -55,7 +55,7 @@ def acomp_list(tokens):
 
 def adjective_list(tokens):
     """Find adjectives modifying a given noun.
-    
+
     :param tokens: tokens of potential adjectice candidates (children of the noun and children of the head for compounds)
     :type tokens: [:class:`spacy.token`]
     :return: list of adjectives
@@ -77,7 +77,7 @@ def adjective_list(tokens):
 
 def adjective_negations(token):
     """Find all negated adjectives in a sentence.
-    
+
     :param token: negation token to handle
     :type token: :class:`spacy.token`
     :return: list of negated adjectives
@@ -108,9 +108,9 @@ def adjective_negations(token):
 
 def parse(dataframe_texts):  # noqa: C901
     """Parse the comments and extract a list of potential aspects based on grammatical relations.
-    
+
     (e.g. modified by adjective)
-    
+
     :param dataframe_texts: a dataframe with the raw texts. The collumn wit the texts needs to be called 'Comments'
     :type dataframe_texts: :class:`pandas.DataFrame`
     :return: a dataframe with the aspect candidates
@@ -128,7 +128,8 @@ def parse(dataframe_texts):  # noqa: C901
     # n_threads > 5 can segfault with long (>500 tokens) sentences
     # n_threads has been deprecated in spacy 3.x - https://spacy.io/usage/v2-1#incompat
     for index, document in zip(
-        dataframe_texts.index, nlp.pipe(dataframe_texts.Comments, batch_size=500),
+        dataframe_texts.index,
+        nlp.pipe(dataframe_texts.Comments, batch_size=500),
     ):  # TODO reduce for production/make configurable
         negated_adjectives = []
         for token in document:
@@ -171,7 +172,7 @@ def parse(dataframe_texts):  # noqa: C901
 
 def generate_aspects(dataframe_texts):
     """Generate the aspects that will be merged into topics from the raw texts.
-    
+
     :param dataframe_texts: a dataframe with the raw texts in the column 'Comments'
     :type dataframe_texts: :class:`pandas.DataFrame`
     :return: a dataframe with the aspect candidates, their associated description, index of original text in the

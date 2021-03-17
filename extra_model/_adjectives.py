@@ -10,9 +10,9 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def cluster_adjectives(adjective_counts, vectorizer):  # noqa: C901
     """Cluster adjectives based on a constant radius clustering algorithm.
-    
+
     Technical implementation uses a scikitlearn BallTree.
-    
+
     :param adjective_counts: dictionary with adjectives and their counts
     :type adjective_counts: [(str,int)]
     :param vectorizer:  provide embeddings to evaluate adjective similarity
@@ -118,10 +118,10 @@ def cluster_adjectives(adjective_counts, vectorizer):  # noqa: C901
 
 def fill_sentiment_dict(adjective_counts):
     """Given a dictionary with adjectives and their counts, will compute.
-    
+
     The sentiment of each of the adjectives using the VADER sentiment analysis package
     and return a dictionary of the adjectives and their sentiments.
-    
+
     :param adjective_counts: dictionary with adjectives and their counts
     :type adjective_counts: dict
     :return: dictionary, where the keys are the adjectives and the values are tuples of the
@@ -143,7 +143,7 @@ def fill_sentiment_dict(adjective_counts):
 
 def sentiments_from_adjectives(adjective_counts, sentiment_dict):
     """Build the weighted average sentiment score from a list of adjetives and their counts.
-    
+
     :param adjective_counts: list of tuples with adjectives and their counts
     :type adjective_counts: [(str,int)]
     :param sentiment_dict: dictionary with adjectives and their sentiment, as tuple of compound and binary sentiment
@@ -170,11 +170,11 @@ def sentiments_from_adjectives(adjective_counts, sentiment_dict):
 
 def adjective_info(dataframe_topics, dataframe_aspects, vectorizer):
     """Add adjective related information to the dataframes.
-    
+
     This has two facets:
     -> for each topic cluster similar adjectives, to get a more abstract/readable list
     -> for each topic, use the adjectives to come up with a sentiment classification
-    
+
     :param dataframe_topics: the dataframe with the topics we want to enrich, needs to have a collum `rawterms`
     :type dataframe_topics: :class:`pandas.DataFrame`
     :param dataframe_aspects: the dataframe with the aspect instances and related adjectives with columsn `aspect` and `descriptor`

@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 def vectorize_aspects(aspect_counts, vectorizer):
     """Turn the aspect map into a a vector of nouns and their vector representations, which also filters aspects without embedding.
-    
+
     :param aspect_counts: (dict): the dictionary with aspect counts
     :param vectorizer: (Vectorizer): the provider of word-embeddings
     :return vectors with representable aspects and their vector embeddings
@@ -32,7 +32,7 @@ def vectorize_aspects(aspect_counts, vectorizer):
 def best_cluster(aspect_vectors):
     """
     Find the optimal cluster size using silhouette scores.
-    
+
     :param aspect_vectors:  list of embeddings vectors to be clustered
     :type aspect_vectors: [:class:`numpy.array`]
     :return: the optimal number of clusters
@@ -73,7 +73,7 @@ def best_cluster(aspect_vectors):
 
 def cluster(aspects, aspect_vectors, vectorizer):
     """Cluster aspects based on the distance of their vector representations.
-    
+
     Once clusters are found, use the other aspects in a given cluster to generate the
     context for a specific aspect noun
 
@@ -115,7 +115,7 @@ def cluster(aspects, aspect_vectors, vectorizer):
 
 def match(aspect_counts, vectorizer):
     """Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
-    
+
     :param aspect_counts: Counter object of aspect->number of occurrence
     :type aspect_counts: :class:`collections.Counter`
     :param vectorizer:  the provider of word-embeddings for context generation
