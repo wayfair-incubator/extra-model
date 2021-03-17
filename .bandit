@@ -1,3 +1,2 @@
 [bandit]
 exclude: tests,venv,env
-
