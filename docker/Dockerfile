@@ -1,19 +1,32 @@
-FROM python:3.8-slim-buster
+FROM python:3.8-slim-buster as builder
 
-RUN mkdir /package
-COPY . /package
-WORKDIR /package
+COPY requirements.txt requirements-test.txt ./
 
-RUN pip install --upgrade pip wheel setuptools
+RUN pip install --prefix=/requirements \
+    -r requirements.txt \
+    -r requirements-test.txt
 
-RUN pip install --use-deprecated=legacy-resolver -r requirements.txt -r requirements-test.txt
-RUN pip install --use-deprecated=legacy-resolver -e .
-
-# download nltk resources
-RUN python -m nltk.downloader wordnet
-RUN python -m nltk.downloader punkt
+ARG PYTHONPATH=/requirements/lib/python3.8/site-packages
 
 # download spacy resources
-RUN python -m spacy download en_core_web_sm
+RUN python -m spacy download en_core_web_sm --prefix=/requirements
+
+# download nltk resources
+RUN python -m nltk.downloader wordnet punkt
+
+FROM python:3.8-slim-buster
+
+RUN apt-get update && apt-get install --no-install-recommends --yes \
+    curl \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /root/nltk_data /root/nltk_data
+COPY --from=builder /requirements /usr/local
+
+WORKDIR /package
+COPY . /package
+
+RUN pip install -e .
 
 CMD bash

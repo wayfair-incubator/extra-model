@@ -1,0 +1,9 @@
+.git/
+.github/
+.mypy_cache/
+**/__pycache__/
+cov_html/
+docs/
+io/
+site/
+tests/resources/
