@@ -9,12 +9,10 @@ Docker must be running correctly for these commands to work.
 
 * If you are using windows, please make sure your editor writes files with the linefeed (`\n`) line endings.
 
-Next, clone the repo:
-
-TODO: update this
+Next, fork and clone forked repo.
 
 ```bash
-git clone 
+git clone git@your_repo.git
 cd extra-model
 ```
 
