@@ -68,6 +68,13 @@ First, install `extra-model` via pip:
 pip install extra-model
 ```
 
+Then, add all the external dependencies:
+
+```bash
+python -m spacy download en_core_web_sm
+python -m nltk.downloader wordnet punkt
+```
+
 #### Downloading Embeddings
 
 Next, run the following to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
@@ -108,6 +115,13 @@ First, install `extra-model` via pip:
 
 ```bash
 pip install extra-model
+```
+
+Then, add all the external dependencies:
+
+```bash
+python -m spacy download en_core_web_sm
+python -m nltk.downloader wordnet punkt
 ```
 
 #### Downloading Embeddings
