@@ -130,7 +130,7 @@ def parse(dataframe_texts):  # noqa: C901
     for index, document in zip(
         dataframe_texts.index,
         nlp.pipe(dataframe_texts.Comments, batch_size=500),
-    ):  # TODO reduce for production/make configurable
+    ):
         negated_adjectives = []
         for token in document:
             nouns = compound_noun_list(token)

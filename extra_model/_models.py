@@ -98,8 +98,7 @@ class ExtraModelBase:
 
         self._storage_metadata = {
             "type": "text",
-            # TODO replace this
-            "owner": "replace me",
+            "owner": "blank",
             "description": "Running ExtRA algorithm",
             "display_name": "extra-model",
             "features": {},
