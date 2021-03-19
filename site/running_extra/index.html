@@ -14,7 +14,7 @@
     
     
       
-        <title>Using a Custom Base Class - extra-model Documentation</title>
+        <title>Running Extra - extra-model Documentation</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#using-a-custom-base-class" class="md-skip">
+        <a href="#using-docker-compose" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Using a Custom Base Class
+              Running Extra
             
           </span>
         </div>
@@ -180,11 +180,140 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../running_extra/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Running Extra
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Running Extra
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-docker-compose" class="md-nav__link">
+    Using docker-compose
+  </a>
+  
+    <nav class="md-nav" aria-label="Using docker-compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#downloading-embeddings" class="md-nav__link">
+    Downloading Embeddings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-run-docker-compose-build-again" class="md-nav__link">
+    [Optional] Run docker-compose build again
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-extra-model" class="md-nav__link">
+    Run extra-model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-command-line" class="md-nav__link">
+    Using command line
+  </a>
+  
+    <nav class="md-nav" aria-label="Using command line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-extra-model" class="md-nav__link">
+    Install extra-model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloading-embeddings_1" class="md-nav__link">
+    Downloading Embeddings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-extra-model_1" class="md-nav__link">
+    Run extra-model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-as-a-python-package" class="md-nav__link">
+    Using as a Python package
+  </a>
+  
+    <nav class="md-nav" aria-label="Using as a Python package">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-extra-model_1" class="md-nav__link">
+    Install extra-model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloading-embeddings_2" class="md-nav__link">
+    Downloading Embeddings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-extra-model-as-a-python-package" class="md-nav__link">
+    Use extra-model as a Python package
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -225,76 +354,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Using a Custom Base Class
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../custom_base_class/" class="md-nav__link">
         Using a Custom Base Class
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#abstract" class="md-nav__link">
-    Abstract
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quickstart" class="md-nav__link">
-    Quickstart
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    Reference
-  </a>
-  
-    <nav class="md-nav" aria-label="Reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extra_model._models.extra_factory" class="md-nav__link">
-    extra_factory()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -410,8 +474,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -420,30 +482,98 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#abstract" class="md-nav__link">
-    Abstract
+  <a href="#using-docker-compose" class="md-nav__link">
+    Using docker-compose
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quickstart" class="md-nav__link">
-    Quickstart
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    Reference
-  </a>
-  
-    <nav class="md-nav" aria-label="Reference">
+    <nav class="md-nav" aria-label="Using docker-compose">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extra_model._models.extra_factory" class="md-nav__link">
-    extra_factory()
+  <a href="#downloading-embeddings" class="md-nav__link">
+    Downloading Embeddings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-run-docker-compose-build-again" class="md-nav__link">
+    [Optional] Run docker-compose build again
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-extra-model" class="md-nav__link">
+    Run extra-model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-command-line" class="md-nav__link">
+    Using command line
+  </a>
+  
+    <nav class="md-nav" aria-label="Using command line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-extra-model" class="md-nav__link">
+    Install extra-model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloading-embeddings_1" class="md-nav__link">
+    Downloading Embeddings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-extra-model_1" class="md-nav__link">
+    Run extra-model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-as-a-python-package" class="md-nav__link">
+    Using as a Python package
+  </a>
+  
+    <nav class="md-nav" aria-label="Using as a Python package">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-extra-model_1" class="md-nav__link">
+    Install extra-model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloading-embeddings_2" class="md-nav__link">
+    Downloading Embeddings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-extra-model-as-a-python-package" class="md-nav__link">
+    Use extra-model as a Python package
   </a>
   
 </li>
@@ -465,81 +595,108 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/wayfair-incubator/extra-model/edit/main/docs/custom_base_class.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/wayfair-incubator/extra-model/edit/main/docs/running_extra.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="using-a-custom-base-class">Using a Custom Base Class</h1>
-<h2 id="abstract">Abstract</h2>
-<p><code>extra-model</code> exposes a class factory that allows you to create the 
-<code>ExtraModel</code> class with a custom base class. <code>extra-model</code> was initially 
-developed as an internal project at Wayfair, and this functionality exists 
-to allow for continued use of the open source package with Wayfair base 
-classes. Use of this feature is not required to run <code>extra-model</code> and 
-most users can just ignore this feature.</p>
-<h2 id="quickstart">Quickstart</h2>
-<p>Create <code>ExtraModel</code> with a custom base class</p>
-<pre><code class="language-python">from extra_model import extra_factory
-from custom_bases import MyBaseClass
-
-ExtraModel = extra_factory(MyBaseClass)
+                  <h1>Running Extra</h1>
+                
+                <h3 id="using-docker-compose">Using docker-compose</h3>
+<p>First, build the image:</p>
+<pre><code class="language-bash">docker-compose build
 </code></pre>
-<h2 id="reference">Reference</h2>
+<p>Then, run following command to make sure that <code>extra-model</code> was installed correctly:</p>
+<pre><code class="language-bash">docker-compose run test
+</code></pre>
+<h4 id="downloading-embeddings">Downloading Embeddings</h4>
+<p>Next step is to download the embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project).</p>
+<p>To download the required embeddings, run the following command:</p>
+<pre><code class="language-bash">docker-compose run --rm setup
+</code></pre>
+<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the <code>embeddings/</code> directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except <code>README.md</code> in the <code>embeddings/</code> directory.</p>
+<h4 id="optional-run-docker-compose-build-again">[Optional] Run <code>docker-compose build</code> again</h4>
+<p>After you've downloaded the embeddings, you may want to run <code>docker-compose build</code> again. 
+This will build an image with embeddings already present inside the image. </p>
+<p>The tradeoff here is that the image will be much bigger, but you won't spend ~2 minutes each time you run <code>extra-model</code> waiting for embeddings to be mounted into the container.
+On the other hand, building an image with embeddings in the context will increase build time from ~3 minutes to ~10 minutes.</p>
+<h4 id="run-extra-model">Run <code>extra-model</code></h4>
+<p>Finally, running <code>extra-model</code> is as simple as:</p>
+<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv
+</code></pre>
+<p>NOTE: when using this approach, input file should be mounted inside the container.
+By default, everything from <code>extra-model</code> folder will be mounted to <code>/package/</code> folder.
+This can be changed in <code>docker-compose.yaml</code></p>
+<p>This will produce a <code>result.csv</code> file in <code>/io/</code> (default setting) folder.</p>
+<p>Location of the output can be changed by supplying second path, e.g.:</p>
+<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder
+</code></pre>
+<p>The output filename can also be changed if you want it to be something else than <code>result.csv</code> by supplying a third argument:</p>
+<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv
+</code></pre>
+<h3 id="using-command-line">Using command line</h3>
+<h4 id="install-extra-model">Install <code>extra-model</code></h4>
+<p>First, install <code>extra-model</code> via pip:</p>
+<pre><code class="language-bash">pip install extra-model
+</code></pre>
+<p>Then, add all the external dependencies:</p>
+<pre><code class="language-bash">python -m spacy download en_core_web_sm
+python -m nltk.downloader wordnet punkt
+</code></pre>
+<h4 id="downloading-embeddings_1">Downloading Embeddings</h4>
+<p>Next, run the following to download and set up the required embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project):</p>
+<pre><code class="language-bash">extra-model-setup
+</code></pre>
+<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format and saved in <code>/embeddings</code>.</p>
+<p>If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except <code>README.md</code> in the embeddings' directory.</p>
+<h4 id="run-extra-model_1">Run <code>extra-model</code></h4>
+<p>Once set up, running <code>extra-model</code> is as simple as:</p>
+<pre><code class="language-bash">extra-model tests/resources/100_comments.csv
+</code></pre>
+<p>This will produce a <code>result.csv</code> file in <code>/io</code>. If you want to change the output directory this can be done by providing it as a second argument to <code>extra-model</code> like so:</p>
+<pre><code class="language-bash">extra-model tests/resources/100_comments.csv /path/to/store/output
+</code></pre>
+<p>The output filename can also be changed if you want it to be something else than <code>result.csv</code> by supplying a third argument to <code>extra-model</code>:</p>
+<pre><code class="language-bash">docker-compose run extra-model tests/resources/100_comments.csv /path/to/store/output another_filename.csv
+</code></pre>
+<h3 id="using-as-a-python-package">Using as a Python package</h3>
+<h4 id="install-extra-model_1">Install <code>extra-model</code></h4>
+<p>First, install <code>extra-model</code> via pip:</p>
+<pre><code class="language-bash">pip install extra-model
+</code></pre>
+<p>Then, add all the external dependencies:</p>
+<pre><code class="language-bash">python -m spacy download en_core_web_sm
+python -m nltk.downloader wordnet punkt
+</code></pre>
+<h4 id="downloading-embeddings_2">Downloading Embeddings</h4>
+<p>Next, use either the <code>extra-model-setup</code> CLI or <code>docker-compose</code> to download and set up the required embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project):</p>
+<pre><code class="language-bash">extra-model-setup
+</code></pre>
+<p>or</p>
+<pre><code class="language-bash">docker-compose run --rm setup
+</code></pre>
+<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format. For the Docker based workflow, the embeddings will be saved to the <code>embeddings</code> directory. For the CLI workflow, by default, files will be saved in <code>/embeddings</code>. You can set another directory by providing it as an argument when running <code>extra-model-setup</code> like so:</p>
+<pre><code class="language-bash">extra-model-setup /path/to/store/embeddings
+</code></pre>
+<p>If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except <code>README.md</code> in the embeddings' directory.</p>
+<h4 id="use-extra-model-as-a-python-package">Use <code>extra-model</code> as a Python package</h4>
+<p>Once set up, you can use <code>extra-model</code> by calling the <code>run()</code> function in <code>extra_model/_run.py</code> :</p>
+<pre><code class="language-python">from extra_model._run import run
 
+run(
+    input_path=Path(&quot;input/path/file.csv&quot;),
+    output_path=Path(&quot;output/path&quot;)
+)
+</code></pre>
+<p>This will process <code>input/path</code> and produce a <code>result.csv</code> file in <code>output/path</code>. If you want to change the output filename to be something different from <code>result.csv</code>, you can do os by providing an additional argument to <code>run()</code>:</p>
+<pre><code class="language-python">from extra_model._run import run
 
-  <div class="doc doc-object doc-function">
-
-
-
-<h3 id="extra_model._models.extra_factory" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">extra_factory</span><span class="p">(</span><span class="n">bases</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents first">
-
-      <p>Create for ExtraModel class types.</p>
-<p>Will dynamically create the class when called with the provided base classes.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>bases</code></td>
-        <td><code>Union[Any, Tuple[Any]]</code></td>
-        <td><p>Base classes to be used when creating ExtraModel class</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Any</code></td>
-      <td><p>ExtraModel class</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
+run(
+    input_path=Path(&quot;input/path&quot;),
+    output_path=Path(&quot;output/path&quot;),
+    output_filename=Path(&quot;output_filename.csv&quot;)
+)
+</code></pre>
                 
               
               
@@ -557,7 +714,7 @@ ExtraModel = extra_factory(MyBaseClass)
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../examples/examples/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -566,19 +723,19 @@ ExtraModel = extra_factory(MyBaseClass)
               <span class="md-footer__direction">
                 Previous
               </span>
-              Examples
+              Overview
             </div>
           </div>
         </a>
       
       
-        <a href="../blog/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../workflow/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Blog
+              Workflow
             </div>
           </div>
           <div class="md-footer__button md-icon">
