@@ -4,7 +4,6 @@ import networkx as nx
 import numpy as np
 import pytest
 from gensim.models import KeyedVectors
-from gensim.scripts.glove2word2vec import glove2word2vec
 from nltk.corpus import wordnet as wn
 
 from extra_model._topics import (
@@ -23,16 +22,13 @@ from extra_model._vectorizer import Vectorizer
 def minivec():
     # preprocess plain-text test embeddings to proper binary format for vectorizer
     glove_file = "tests/resources/test_topics.vec"
-    tmp_file = "tests/resources/test_topics.tmp"
     prepro_file = "tests/resources/test_topics.prepro"
-    _ = glove2word2vec(glove_file, tmp_file)
-    model = KeyedVectors.load_word2vec_format(tmp_file)
+    model = KeyedVectors.load_word2vec_format(glove_file, binary=False, no_header=True)
     model.save(prepro_file)
 
     yield Vectorizer(prepro_file)
 
     # cleanup
-    os.remove(tmp_file)
     os.remove(prepro_file)
 
 
