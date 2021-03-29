@@ -18,9 +18,6 @@ class Vectorizer:
         :type str
         """
         self.wv_glove = KeyedVectors.load(embedding_file, mmap="r")
-        # TODO: should this have True since help file says "If True - forget the original vectors and only keep the
-        #  normalized ones = saves lots of memory!"
-        self.wv_glove.init_sims()
 
     def get_vector(self, key):
         """
@@ -36,16 +33,16 @@ class Vectorizer:
         :return: the embedding vector. Number of dimensions is set by the input file
         :rtype np.array:
         """
-        if key.lower() in self.wv_glove.vocab:
-            return self.wv_glove.word_vec(key.lower(), use_norm=True)
+        if key.lower() in self.wv_glove.key_to_index:
+            return self.wv_glove.get_vector(key.lower(), norm=True)
         else:
             for subword in key.split():
-                if subword.lower() not in self.wv_glove.vocab:
+                if subword.lower() not in self.wv_glove.key_to_index:
                     logger.debug("can't vectorize {0!s}".format(key))
                     return None
             res = np.sum(
                 [
-                    self.wv_glove.word_vec(subword.lower(), use_norm=True)
+                    self.wv_glove.get_vector(subword.lower(), norm=True)
                     for subword in key.split()
                 ],
                 axis=0,
