@@ -26,6 +26,7 @@ def setup_mock(mocker):
 INPUT = "/input"
 OUTPUT = "/output"
 OUTPUT_FILENAME = "result.csv"
+EMBEDDINGS_PATH = "./embeddings"
 
 
 def test_entrypoint__run_raises_no_exception__exit_code_0(cli_runner, run_mock):
@@ -68,7 +69,9 @@ def test_entrypoint__input_and_output_path_set__arguments_passed_to_run(
         entrypoint, [INPUT, OUTPUT, OUTPUT_FILENAME], catch_exceptions=False
     )
 
-    run_mock.assert_called_once_with(Path(INPUT), Path(OUTPUT), Path(OUTPUT_FILENAME))
+    run_mock.assert_called_once_with(
+        Path(INPUT), Path(OUTPUT), Path(OUTPUT_FILENAME), Path(EMBEDDINGS_PATH)
+    )
 
 
 def test_entrypoint_setup__setup_raises_no_exception__exit_code_0(
