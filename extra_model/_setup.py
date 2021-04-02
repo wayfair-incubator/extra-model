@@ -4,8 +4,7 @@ from pathlib import Path
 from typing import List
 
 from gensim.models import KeyedVectors
-from gensim.scripts.glove2word2vec import glove2word2vec
-from gensim.test.utils import datapath, get_tmpfile
+from gensim.test.utils import datapath
 
 from extra_model._errors import ExtraModelError
 
@@ -80,9 +79,9 @@ def format_file(file: Path, output_path: Path) -> None:
     if not output_file.is_file():
         logger.info("Formatting file. This will take approximately 10 minutes.")
         glove_file = datapath(str(file))
-        tmp_file = get_tmpfile("test_word2vec.txt")
-        _ = glove2word2vec(glove_file, tmp_file)
-        model = KeyedVectors.load_word2vec_format(tmp_file)
+        model = KeyedVectors.load_word2vec_format(
+            glove_file, binary=False, no_header=True
+        )
         model.save(str(output_file))
 
     else:

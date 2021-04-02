@@ -156,8 +156,6 @@ def test_unzip_file__output_file_missing__unzip_file(
 def test_format_file__output_file_found__skip_format_file(mocker, create_output_path):
 
     datapath_mock = mocker.patch("extra_model._setup.datapath")
-    mocker.patch("extra_model._setup.get_tmpfile")
-    mocker.patch("extra_model._setup.glove2word2vec")
     mocker.patch("extra_model._setup.KeyedVectors")
 
     file = Path("path/to/file.txt")
@@ -171,8 +169,6 @@ def test_format_file__output_file_found__skip_format_file(mocker, create_output_
 def test_format_file__output_file_missing__format_file(mocker, create_output_path):
 
     datapath_mock = mocker.patch("extra_model._setup.datapath")
-    mocker.patch("extra_model._setup.get_tmpfile")
-    mocker.patch("extra_model._setup.glove2word2vec")
     mocker.patch("extra_model._setup.KeyedVectors")
 
     file = Path("path/to/file.txt")

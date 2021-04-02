@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 OUTPUT_PATH = "/io"
 OUTPUT_FILENAME = "result.csv"
-EMBEDDINGS_PATH = "./embeddings"
+EMBEDDINGS_PATH = "/embeddings"
 
 
 @click.command()
