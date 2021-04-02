@@ -58,6 +58,12 @@ The output filename can also be changed if you want it to be something else than
 docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv
 ```
 
+The location of the embeddings can also be changed from `./embeddings` by supplying a fourth argument:
+
+```bash
+docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv path/to/embeddings
+```
+
 ### Using command line
 
 #### Install `extra-model`

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed `cytoolz` dependency not used by `extra-model`
 - Updated from using `pycld2` to `pycld3`
+- Added fourth positional command line argument to specify the path to the embeddings
 
 ## [0.2.0] 2021-03-17
 
