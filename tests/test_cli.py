@@ -26,7 +26,7 @@ def setup_mock(mocker):
 INPUT = "/input"
 OUTPUT = "/output"
 OUTPUT_FILENAME = "result.csv"
-EMBEDDINGS_PATH = "./embeddings"
+EMBEDDINGS_PATH = "/embeddings"
 
 
 def test_entrypoint__run_raises_no_exception__exit_code_0(cli_runner, run_mock):
