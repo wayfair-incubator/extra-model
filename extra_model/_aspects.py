@@ -34,7 +34,7 @@ def compound_noun_list(token):
 def acomp_list(tokens):
     """Find descriptions for a given token.
 
-    :param tokens: list of tokens that are children of the head of the nount for which descriptions are searched.
+    :param tokens: list of tokens that are children of the head of the noun for which descriptions are searched.
     :type tokens: [:class:`spacy.token`]
     :return: list of adjectives
     :rtype: [string]
@@ -43,12 +43,9 @@ def acomp_list(tokens):
     for child in tokens:
         if child.dep == acomp:
             acomps.append(child.text)
-            for (
-                grandchild
-            ) in (
-                child.children
-            ):  # find both X and Y in patterns of the form "product is X and Y"
-                if grandchild.dep_ == "conj":
+            for grandchild in child.children:
+                # find both X and Y in patterns of the form "product is X and Y"
+                if grandchild.dep_ == "conj" and not grandchild.is_space:
                     acomps.append(grandchild.text)
     return acomps
 
@@ -65,12 +62,10 @@ def adjective_list(tokens):
     for child in tokens:
         if child.dep == amod:
             adjectives.append(child.text)
-            for (
-                grandchild
-            ) in (
-                child.children
-            ):  # find both X and Y in patterns of the form "the X and Y product"
-                if grandchild.dep_ == "conj":
+            for grandchild in child.children:
+                # find both X and Y in patterns of the form "the X and Y product"
+                if grandchild.dep_ == "conj" and not grandchild.is_space:
+                    # grandchild.is_space is handling double space cases
                     adjectives.append(grandchild.text)
     return adjectives
 
