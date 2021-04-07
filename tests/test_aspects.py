@@ -46,6 +46,24 @@ def test_aspects__adjective_list(spacy_nlp):
     ]
 
 
+def test_aspects__acomp_list_double_space(spacy_nlp):
+    # Spacy parses double space as a token which breaks extra down the line
+    example_text = "The shelf is sturdy and  beautiful."
+    assert acomp_list(spacy_nlp(example_text)[1].head.children) == [
+        "sturdy",
+        "beautiful",
+    ]
+
+
+def test_aspects__adjective_list_double_space(spacy_nlp):
+    # Spacy parses double space as a token which breaks extra down the line
+    example_text = "I bought a sturdy and  beautiful shelf."
+    assert adjective_list(spacy_nlp(example_text)[7].children) == [
+        "sturdy",
+        "beautiful",
+    ]
+
+
 @pytest.mark.skip(reason="This needs to be looked at when fixing negations")
 def test_aspects__adjective_negations__direct(spacy_nlp):
     example_text = "This not so sturdy table is a disappointment."
