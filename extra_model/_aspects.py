@@ -130,15 +130,15 @@ def parse(dataframe_texts):  # noqa: C901
         for token in document:
             nouns = compound_noun_list(token)
             adjectives = []
-            if (
-                token.dep == nsubj and token.pos == NOUN and token.head.pos == VERB
-            ):  # find nouns with descriptions
+            if token.dep == nsubj and token.pos == NOUN and token.head.pos == VERB:
+                # find nouns with descriptions
                 adjectives.extend(acomp_list(token.head.children))
             if token.pos == NOUN:  # find nouns with adjectives
                 adjectives.extend(adjective_list(token.children))
                 # necessary for compound nouns
                 adjectives.extend(adjective_list(token.head.children))
             adjectives = list(dict.fromkeys(adjectives))  # remove duplicates
+            adjectives = list(filter(lambda adj: adj != " ", adjectives))
             if len(adjectives) != 0:
                 # since negation can come much later in the sentence, finding
                 # it here
