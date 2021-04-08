@@ -138,7 +138,7 @@ def parse(dataframe_texts):  # noqa: C901
                 # necessary for compound nouns
                 adjectives.extend(adjective_list(token.head.children))
             adjectives = list(dict.fromkeys(adjectives))  # remove duplicates
-            adjectives = list(filter(lambda adj: adj != " ", adjectives))
+            adjectives = list(filter(lambda adj: adj.strip() != "", adjectives))
             if len(adjectives) != 0:
                 # since negation can come much later in the sentence, finding
                 # it here
