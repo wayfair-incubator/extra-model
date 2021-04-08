@@ -82,6 +82,21 @@ def test_aspects__adjective_negations__right_attr(spacy_nlp):
     assert adjective_negations(spacy_nlp(example_text)[2]) == ["terrible"]
 
 
+def test_aspects__parse_multiple_spaces(spacy_nlp, mocker):
+    # latest version of spacy parse whitespace as a separate token which sometimes picked up as an adjective
+    # we want to make sure that no empty adjectives make it further after parsing
+    example_texts = [
+        "Wonderful quality - ease in ordering and returning                                     great prices",
+        "I bought a sturdy and  beautiful shelf.",
+        "Wonderful quality - ease in ordering and returning                             great prices",
+    ]
+    data_frame = pd.DataFrame(example_texts, columns=["Comments"])
+    mocker.patch("spacy.load", return_value=spacy_nlp)
+    result = parse(data_frame)
+    descriptors = result["descriptor"].tolist()
+    assert all([desc.strip() != "" for desc in descriptors])
+
+
 def test_aspects__parse(spacy_nlp, mocker):
     # chose a text that exercise as much code as possible
     # second part of the sentence is here to check that negations are properly filtered
