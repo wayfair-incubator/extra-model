@@ -46,6 +46,7 @@ def acomp_list(tokens):
             for grandchild in child.children:
                 # find both X and Y in patterns of the form "product is X and Y"
                 if grandchild.dep_ == "conj" and not grandchild.is_space:
+                    # grandchild.is_space is handling whitespace cases
                     acomps.append(grandchild.text)
     return acomps
 
@@ -65,7 +66,7 @@ def adjective_list(tokens):
             for grandchild in child.children:
                 # find both X and Y in patterns of the form "the X and Y product"
                 if grandchild.dep_ == "conj" and not grandchild.is_space:
-                    # grandchild.is_space is handling double space cases
+                    # grandchild.is_space is handling whitespace cases
                     adjectives.append(grandchild.text)
     return adjectives
 
