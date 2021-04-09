@@ -46,6 +46,24 @@ def test_aspects__adjective_list(spacy_nlp):
     ]
 
 
+def test_aspects__acomp_list_double_space(spacy_nlp):
+    # Spacy parses double space as a token which breaks extra down the line
+    example_text = "The shelf is sturdy and  beautiful."
+    assert acomp_list(spacy_nlp(example_text)[1].head.children) == [
+        "sturdy",
+        "beautiful",
+    ]
+
+
+def test_aspects__adjective_list_double_space(spacy_nlp):
+    # Spacy parses double space as a token which breaks extra down the line
+    example_text = "I bought a sturdy and  beautiful shelf."
+    assert adjective_list(spacy_nlp(example_text)[7].children) == [
+        "sturdy",
+        "beautiful",
+    ]
+
+
 @pytest.mark.skip(reason="This needs to be looked at when fixing negations")
 def test_aspects__adjective_negations__direct(spacy_nlp):
     example_text = "This not so sturdy table is a disappointment."
@@ -62,6 +80,21 @@ def test_aspects__adjective_negations__right_non_attr(spacy_nlp):
 def test_aspects__adjective_negations__right_attr(spacy_nlp):
     example_text = "This is not a terrible table."
     assert adjective_negations(spacy_nlp(example_text)[2]) == ["terrible"]
+
+
+def test_aspects__parse_multiple_spaces(spacy_nlp, mocker):
+    # latest version of spacy parse whitespace as a separate token which sometimes picked up as an adjective
+    # we want to make sure that no empty adjectives make it further after parsing
+    example_texts = [
+        "Wonderful quality - ease in ordering and returning                                     great prices",
+        "I bought a sturdy and  beautiful shelf.",
+        "Wonderful quality - ease in ordering and returning                             great prices",
+    ]
+    data_frame = pd.DataFrame(example_texts, columns=["Comments"])
+    mocker.patch("spacy.load", return_value=spacy_nlp)
+    result = parse(data_frame)
+    descriptors = result["descriptor"].tolist()
+    assert all([desc.strip() != "" for desc in descriptors])
 
 
 def test_aspects__parse(spacy_nlp, mocker):

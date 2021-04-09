@@ -34,7 +34,7 @@ def compound_noun_list(token):
 def acomp_list(tokens):
     """Find descriptions for a given token.
 
-    :param tokens: list of tokens that are children of the head of the nount for which descriptions are searched.
+    :param tokens: list of tokens that are children of the head of the noun for which descriptions are searched.
     :type tokens: [:class:`spacy.token`]
     :return: list of adjectives
     :rtype: [string]
@@ -43,12 +43,10 @@ def acomp_list(tokens):
     for child in tokens:
         if child.dep == acomp:
             acomps.append(child.text)
-            for (
-                grandchild
-            ) in (
-                child.children
-            ):  # find both X and Y in patterns of the form "product is X and Y"
-                if grandchild.dep_ == "conj":
+            for grandchild in child.children:
+                # find both X and Y in patterns of the form "product is X and Y"
+                if grandchild.dep_ == "conj" and not grandchild.is_space:
+                    # grandchild.is_space is handling whitespace cases
                     acomps.append(grandchild.text)
     return acomps
 
@@ -65,12 +63,10 @@ def adjective_list(tokens):
     for child in tokens:
         if child.dep == amod:
             adjectives.append(child.text)
-            for (
-                grandchild
-            ) in (
-                child.children
-            ):  # find both X and Y in patterns of the form "the X and Y product"
-                if grandchild.dep_ == "conj":
+            for grandchild in child.children:
+                # find both X and Y in patterns of the form "the X and Y product"
+                if grandchild.dep_ == "conj" and not grandchild.is_space:
+                    # grandchild.is_space is handling whitespace cases
                     adjectives.append(grandchild.text)
     return adjectives
 
@@ -135,15 +131,15 @@ def parse(dataframe_texts):  # noqa: C901
         for token in document:
             nouns = compound_noun_list(token)
             adjectives = []
-            if (
-                token.dep == nsubj and token.pos == NOUN and token.head.pos == VERB
-            ):  # find nouns with descriptions
+            if token.dep == nsubj and token.pos == NOUN and token.head.pos == VERB:
+                # find nouns with descriptions
                 adjectives.extend(acomp_list(token.head.children))
             if token.pos == NOUN:  # find nouns with adjectives
                 adjectives.extend(adjective_list(token.children))
                 # necessary for compound nouns
                 adjectives.extend(adjective_list(token.head.children))
             adjectives = list(dict.fromkeys(adjectives))  # remove duplicates
+            adjectives = list(filter(lambda adj: adj.strip() != "", adjectives))
             if len(adjectives) != 0:
                 # since negation can come much later in the sentence, finding
                 # it here
