@@ -50,7 +50,7 @@ def cleanup_mock(mocker):
 
 @pytest.fixture
 def create_output_path(mocker):
-    """ Mock for Path truediv (/) operator """
+    """Mock for Path truediv (/) operator"""
 
     def _create_output_path(file_exists=True):
         output_file = mocker.Mock()
