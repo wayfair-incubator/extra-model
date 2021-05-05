@@ -3,7 +3,7 @@ black==21.5b0
 flake8==3.9.1
 isort==5.8.0
 mypy==0.812
-pytest==6.2.3
+pytest==6.2.4
 pytest-cov==2.11.1
 pytest-mock==3.6.0
 pdbpp==0.10.2
