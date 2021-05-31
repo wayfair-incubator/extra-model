@@ -10,4 +10,4 @@ pdbpp==0.10.2
 pydocstyle==6.1.1
 mkdocs==1.1.2
 mkdocstrings==0.15.1
-mkdocs-material==7.1.5
+mkdocs-material==7.1.6
