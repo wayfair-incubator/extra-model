@@ -9,5 +9,5 @@ pytest-mock==3.6.1
 pdbpp==0.10.2
 pydocstyle==6.1.1
 mkdocs==1.2
-mkdocstrings==0.15.1
+mkdocstrings==0.15.2
 mkdocs-material==7.1.7
