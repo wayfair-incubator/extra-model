@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 from extra_model._summarize import (
@@ -26,18 +27,21 @@ def test_summarize__qa():
             "sentiment_binary",
         ]
     )
-    topicframe.loc[0] = [
-        "table",
-        ["table"],
-        [1],
-        ["table"],
-        [1],
-        1,
-        (["small"], [[1]], [[("small", 1)]]),
-        1.0,
-        1.0,
-        1.0,
-    ]
+    topicframe.loc[0] = np.asarray(
+        [
+            "table",
+            ["table"],
+            [1],
+            ["table"],
+            [1],
+            1,
+            (["small"], [[1]], [[("small", 1)]]),
+            1.0,
+            1.0,
+            1.0,
+        ],
+        dtype=object,
+    )
     aspectframe = pd.DataFrame(
         [{"aspect": "table", "descriptor": "small", "adcluster": "small", "CiD": 0}]
     )
@@ -48,7 +52,9 @@ def test_summarize__qa():
 
 def test_summarize__set_aspect():
     topicframe = pd.DataFrame(columns=["rawterms", "topicID", "adjective_clusters"])
-    topicframe.loc[0] = [["table"], 1, (["small"], [[1]], [[("small", 1)]])]
+    topicframe.loc[0] = np.asarray(
+        [["table"], 1, (["small"], [[1]], [[("small", 1)]])], dtype=object
+    )
     aspectframe = pd.DataFrame(
         [
             {"aspect": "table", "descriptor": "small"},
@@ -70,7 +76,9 @@ def test_summarize__set_aspect():
 
 def test_summarize__link_aspects_to_topics():
     topicframe = pd.DataFrame(columns=["rawterms", "adjective_clusters"])
-    topicframe.loc[0] = [["table"], (["small"], [[1]], [[("small", 1)]])]
+    topicframe.loc[0] = np.asarray(
+        [["table"], (["small"], [[1]], [[("small", 1)]])], dtype=object
+    )
     aspectframe = pd.DataFrame(
         [
             {"aspect": "table", "descriptor": "small"},
