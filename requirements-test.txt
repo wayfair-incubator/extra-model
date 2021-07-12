@@ -6,7 +6,7 @@ mypy==0.910
 pytest==6.2.4
 pytest-cov==2.12.1
 pytest-mock==3.6.1
-pdbpp==0.10.2
+pdbpp==0.10.3
 pydocstyle==6.1.1
 mkdocs==1.2.1
 mkdocstrings==0.15.2
