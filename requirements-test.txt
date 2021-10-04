@@ -4,7 +4,7 @@ flake8==3.9.2
 isort==5.9.3
 mypy==0.910
 pytest==6.2.5
-pytest-cov==2.12.1
+pytest-cov==3.0.0
 pytest-mock==3.6.1
 pdbpp==0.10.3
 pydocstyle==6.1.1
