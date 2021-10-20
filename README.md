@@ -4,6 +4,18 @@
 [![GitHub license](https://img.shields.io/github/license/wayfair-incubator/extra-model)](https://github.com/wayfair-incubator/extra-model/blob/main/LICENSE)
 ![PyPI](https://img.shields.io/pypi/v/extra-model)
 
+Table of Contents
+=================
+
+* [extra\-model](#extra-model)
+  * [Quick start](#quick-start)
+    * [Using docker\-compose](#using-docker-compose)
+      * [Downloading Embeddings](#downloading-embeddings)
+      * [[Optional] Run docker\-compose build again](#optional-run-docker-compose-build-again)
+      * [Run extra\-model](#run-extra-model)
+  * [Learn more](#learn-more)
+* [Authors](#authors)
+
 # extra-model
 
 Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) for the unsupervised topic/aspect extraction on English texts.
