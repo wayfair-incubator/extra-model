@@ -46,22 +46,38 @@ This can be changed in `docker-compose.yaml`
 
 This will produce a `result.csv` file in `/io/` (default setting) folder.
 
-Location of the output can be changed by supplying second path, e.g.:
+There are multiple options that you can set to change how `extra-model` runs.
+
+The best way to see them is by running `docker-compose run extra-model --help`
+
+This will produce following output:
 
 ```bash
-docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder
-```
+❯ docker-compose run extra-model --help
+Usage: extra-model [OPTIONS] INPUT_PATH
 
-The output filename can also be changed if you want it to be something else than `result.csv` by supplying a third argument:
+  Run the Extra algorithm for unsupervised topic extraction.
 
-```bash
-docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv
-```
+  INPUT_PATH (required) is the path to the input csv file with the user
+  generated texts. It must contain `CommentId` and `Comments` columns that are
+  spelled exactly this way.
 
-The location of the embeddings can also be changed from `./embeddings` by supplying a fourth argument:
+  OUTPUT_PATH (option) is the path to the output directory. Default is `/io`.
 
-```bash
-docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv path/to/embeddings
+  OUTPUT_FILENAME (option) is the filename of the output file. Default is
+  `result.csv`. The `.csv` file extension is not enforced. Please take care of
+  this accordingly.
+
+  EMBEDDINGS_PATH (option) is the path where the extra model will load the
+  embeddings from. defaults to `/embeddings`.
+
+Options:
+  -op, --output-path PATH      [default: /io]
+  -of, --output-filename PATH  [default: result.csv]
+  -ep, --embeddings-path PATH  [default: /embeddings]
+  --debug                      Enable debug logging
+  --help                       Show this message and exit.
+
 ```
 
 ### Using command line
@@ -90,6 +106,11 @@ extra-model-setup
 ```
 
 The embeddings will be downloaded, unzipped and formatted into a space-efficient format and saved in `/embeddings`.
+The location can be changed by providing path:
+
+```bash
+extra-model-setup /path/to/store/embeddings
+```
 
 If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the embeddings' directory.
 
@@ -98,19 +119,16 @@ If the process fails, it can be safely restarted. If you want to restart the pro
 Once set up, running `extra-model` is as simple as:
 
 ```bash
-extra-model tests/resources/100_comments.csv
+extra-model /path/to/file.csv 
 ```
 
-This will produce a `result.csv` file in `/io`. If you want to change the output directory this can be done by providing it as a second argument to `extra-model` like so:
+Your file must contain `CommentId` and `Comments` columns. Learn more about input/output [here](https://wayfair-incubator.github.io/extra-model/site/#extra-model-input).
+
+This will produce a `result.csv` file in `/io`. Both paths (and embeddings location) can be changed.
+Learn more on how to do this by running:
 
 ```bash
-extra-model tests/resources/100_comments.csv /path/to/store/output
-```
-
-The output filename can also be changed if you want it to be something else than `result.csv` by supplying a third argument to `extra-model`:
-
-```bash
-docker-compose run extra-model tests/resources/100_comments.csv /path/to/store/output another_filename.csv
+extra-model --help
 ```
 
 ### Using as a Python package
@@ -145,7 +163,10 @@ docker-compose run --rm setup
 ```
 
 
-The embeddings will be downloaded, unzipped and formatted into a space-efficient format. For the Docker based workflow, the embeddings will be saved to the `embeddings` directory. For the CLI workflow, by default, files will be saved in `/embeddings`. You can set another directory by providing it as an argument when running `extra-model-setup` like so:
+The embeddings will be downloaded, unzipped and formatted into a space-efficient format. 
+For the Docker based workflow, the embeddings will be saved to the `embeddings` directory. 
+For the CLI workflow, by default, files will be saved in `/embeddings`. 
+You can set another directory by providing it as an argument when running `extra-model-setup` like so:
 
 ```bash
 extra-model-setup /path/to/store/embeddings
@@ -160,22 +181,25 @@ Once set up, you can use `extra-model` by calling the `run()` function in `extra
 
 ```python
 from extra_model._run import run
+from pathlib import Path
 
 run(
-    input_path=Path("input/path/file.csv"),
-    output_path=Path("output/path")
+    input_path=Path("/input/path/file.csv"),
+    output_path=Path("/output/path")
 )
 ```
 
-This will process `input/path` and produce a `result.csv` file in `output/path`. If you want to change the output filename to be something different from `result.csv`, you can do os by providing an additional argument to `run()`:
+This will process `/input/path` and produce a `result.csv` file in `/output/path`. 
+If you want to change the output filename to be something different from `result.csv`, you can do os by providing an 
+additional argument to `run()`:
 
 ```python
 from extra_model._run import run
+from pathlib import Path
 
 run(
-    input_path=Path("input/path"),
-    output_path=Path("output/path"),
+    input_path=Path("/input/path"),
+    output_path=Path("/output/path"),
     output_filename=Path("output_filename.csv")
 )
 ```
-
