@@ -62,11 +62,11 @@ def test_entrypoint__debug_set__log_level_set_to_DEBUG(cli_runner, run_mock):
     assert logging.getLogger("extra_model").level == logging.DEBUG
 
 
-def test_entrypoint__input_and_output_path_set__arguments_passed_to_run(
-    cli_runner, run_mock
-):
+def test_entrypoint__all_options_are_set_and_passed_to_run(cli_runner, run_mock):
     cli_runner.invoke(
-        entrypoint, [INPUT, OUTPUT, OUTPUT_FILENAME], catch_exceptions=False
+        entrypoint,
+        [INPUT, "-op", OUTPUT, "-of", OUTPUT_FILENAME, "-ep", EMBEDDINGS_PATH],
+        catch_exceptions=False,
     )
 
     run_mock.assert_called_once_with(
