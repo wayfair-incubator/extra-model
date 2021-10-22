@@ -20,6 +20,7 @@ No need to thank us :).
 - Updated all other dependencies to the most up-to-date version (as of October, 22nd 2021)
 - Consolidated `adjective_list()` and `acomp_list()` into generic
   `adjective_phrase()` function
+- Upgraded default Python version to 3.9
 
 ### Removed
 - Removed the dependency on `requests` since we don't use it explicitly in our code
