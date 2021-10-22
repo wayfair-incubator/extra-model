@@ -4,6 +4,8 @@ import pandas as pd
 import spacy
 from spacy.symbols import NOUN, VERB, acomp, amod, nsubj
 
+from extra_model._errors import ExtraModelError
+
 """Generate the basic phrases that will be used for clustering
 Major steps:
 1) Run Spacy for POS tags
@@ -41,8 +43,10 @@ def adjective_phrase(tokens, descriptor):
     :return: list of adjectives
     :rtype: [string]
     """
-
-    assert descriptor in [acomp, amod]
+    if descriptor not in [acomp, amod]:
+        raise ExtraModelError(
+            "descriptor has to be one of [spacy.symbols.acomp, spacy.symbols.amod]"
+        )
 
     res_list = []
     for child in tokens:
