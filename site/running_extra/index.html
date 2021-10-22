@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
       
@@ -18,10 +18,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.db9e7362.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -40,6 +40,8 @@
     
     
       
+
+
     
     
   </head>
@@ -70,7 +72,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="extra-model Documentation" class="md-header__button md-logo" aria-label="extra-model Documentation" data-md-component="logo">
       
@@ -115,11 +119,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -408,10 +415,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
-      <label class="md-nav__link" for="__nav_8">
-        Contributing
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Contributing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Contributing" data-md-level="1">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
@@ -420,6 +431,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -430,8 +442,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -442,8 +456,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -454,6 +470,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -631,14 +648,34 @@ On the other hand, building an image with embeddings in the context will increas
 By default, everything from <code>extra-model</code> folder will be mounted to <code>/package/</code> folder.
 This can be changed in <code>docker-compose.yaml</code></p>
 <p>This will produce a <code>result.csv</code> file in <code>/io/</code> (default setting) folder.</p>
-<p>Location of the output can be changed by supplying second path, e.g.:</p>
-<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder
-</code></pre>
-<p>The output filename can also be changed if you want it to be something else than <code>result.csv</code> by supplying a third argument:</p>
-<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv
-</code></pre>
-<p>The location of the embeddings can also be changed from <code>./embeddings</code> by supplying a fourth argument:</p>
-<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv /io/another_folder another_filename.csv path/to/embeddings
+<p>There are multiple options that you can set to change how <code>extra-model</code> runs.</p>
+<p>The best way to see them is by running <code>docker-compose run extra-model --help</code></p>
+<p>This will produce following output:</p>
+<pre><code class="language-bash">❯ docker-compose run extra-model --help
+Usage: extra-model [OPTIONS] INPUT_PATH
+
+  Run the Extra algorithm for unsupervised topic extraction.
+
+  INPUT_PATH (required) is the path to the input csv file with the user
+  generated texts. It must contain `CommentId` and `Comments` columns that are
+  spelled exactly this way.
+
+  OUTPUT_PATH (option) is the path to the output directory. Default is `/io`.
+
+  OUTPUT_FILENAME (option) is the filename of the output file. Default is
+  `result.csv`. The `.csv` file extension is not enforced. Please take care of
+  this accordingly.
+
+  EMBEDDINGS_PATH (option) is the path where the extra model will load the
+  embeddings from. defaults to `/embeddings`.
+
+Options:
+  -op, --output-path PATH      [default: /io]
+  -of, --output-filename PATH  [default: result.csv]
+  -ep, --embeddings-path PATH  [default: /embeddings]
+  --debug                      Enable debug logging
+  --help                       Show this message and exit.
+
 </code></pre>
 <h3 id="using-command-line">Using command line</h3>
 <h4 id="install-extra-model">Install <code>extra-model</code></h4>
@@ -653,17 +690,19 @@ python -m nltk.downloader wordnet punkt
 <p>Next, run the following to download and set up the required embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project):</p>
 <pre><code class="language-bash">extra-model-setup
 </code></pre>
-<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format and saved in <code>/embeddings</code>.</p>
+<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format and saved in <code>/embeddings</code>.
+The location can be changed by providing path:</p>
+<pre><code class="language-bash">extra-model-setup /path/to/store/embeddings
+</code></pre>
 <p>If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except <code>README.md</code> in the embeddings' directory.</p>
 <h4 id="run-extra-model_1">Run <code>extra-model</code></h4>
 <p>Once set up, running <code>extra-model</code> is as simple as:</p>
-<pre><code class="language-bash">extra-model tests/resources/100_comments.csv
+<pre><code class="language-bash">extra-model /path/to/file.csv 
 </code></pre>
-<p>This will produce a <code>result.csv</code> file in <code>/io</code>. If you want to change the output directory this can be done by providing it as a second argument to <code>extra-model</code> like so:</p>
-<pre><code class="language-bash">extra-model tests/resources/100_comments.csv /path/to/store/output
-</code></pre>
-<p>The output filename can also be changed if you want it to be something else than <code>result.csv</code> by supplying a third argument to <code>extra-model</code>:</p>
-<pre><code class="language-bash">docker-compose run extra-model tests/resources/100_comments.csv /path/to/store/output another_filename.csv
+<p>Your file must contain <code>CommentId</code> and <code>Comments</code> columns. Learn more about input/output <a href="https://wayfair-incubator.github.io/extra-model/site/#extra-model-input">here</a>.</p>
+<p>This will produce a <code>result.csv</code> file in <code>/io</code>. Both paths (and embeddings location) can be changed.
+Learn more on how to do this by running:</p>
+<pre><code class="language-bash">extra-model --help
 </code></pre>
 <h3 id="using-as-a-python-package">Using as a Python package</h3>
 <h4 id="install-extra-model_1">Install <code>extra-model</code></h4>
@@ -681,25 +720,32 @@ python -m nltk.downloader wordnet punkt
 <p>or</p>
 <pre><code class="language-bash">docker-compose run --rm setup
 </code></pre>
-<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format. For the Docker based workflow, the embeddings will be saved to the <code>embeddings</code> directory. For the CLI workflow, by default, files will be saved in <code>/embeddings</code>. You can set another directory by providing it as an argument when running <code>extra-model-setup</code> like so:</p>
+<p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format. 
+For the Docker based workflow, the embeddings will be saved to the <code>embeddings</code> directory. 
+For the CLI workflow, by default, files will be saved in <code>/embeddings</code>. 
+You can set another directory by providing it as an argument when running <code>extra-model-setup</code> like so:</p>
 <pre><code class="language-bash">extra-model-setup /path/to/store/embeddings
 </code></pre>
 <p>If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except <code>README.md</code> in the embeddings' directory.</p>
 <h4 id="use-extra-model-as-a-python-package">Use <code>extra-model</code> as a Python package</h4>
 <p>Once set up, you can use <code>extra-model</code> by calling the <code>run()</code> function in <code>extra_model/_run.py</code> :</p>
 <pre><code class="language-python">from extra_model._run import run
+from pathlib import Path
 
 run(
-    input_path=Path(&quot;input/path/file.csv&quot;),
-    output_path=Path(&quot;output/path&quot;)
+    input_path=Path(&quot;/input/path/file.csv&quot;),
+    output_path=Path(&quot;/output/path&quot;)
 )
 </code></pre>
-<p>This will process <code>input/path</code> and produce a <code>result.csv</code> file in <code>output/path</code>. If you want to change the output filename to be something different from <code>result.csv</code>, you can do os by providing an additional argument to <code>run()</code>:</p>
+<p>This will process <code>/input/path</code> and produce a <code>result.csv</code> file in <code>/output/path</code>. 
+If you want to change the output filename to be something different from <code>result.csv</code>, you can do os by providing an 
+additional argument to <code>run()</code>:</p>
 <pre><code class="language-python">from extra_model._run import run
+from pathlib import Path
 
 run(
-    input_path=Path(&quot;input/path&quot;),
-    output_path=Path(&quot;output/path&quot;),
+    input_path=Path(&quot;/input/path&quot;),
+    output_path=Path(&quot;/output/path&quot;),
     output_filename=Path(&quot;output_filename.csv&quot;)
 )
 </code></pre>
@@ -721,7 +767,8 @@ run(
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href=".." class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -736,7 +783,8 @@ run(
         </a>
       
       
-        <a href="../workflow/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../workflow/" class="md-footer__link md-footer__link--next" aria-label="Next: Workflow" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -756,10 +804,12 @@ run(
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -771,10 +821,10 @@ run(
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../assets/javascripts/bundle.1e84347e.min.js"></script>
       
     
   </body>
