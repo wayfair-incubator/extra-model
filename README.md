@@ -82,6 +82,12 @@ This can be changed in `docker-compose.yaml`
 
 This will produce a `result.csv` file in `/io/` (default setting) folder.
 
+There are multiple flags you can set to change input/outputs of extra. You can find them by running:
+
+```bash
+docker-compose run extra-model --help
+```
+
 ## Learn more
 
 Our [official documentation][official_documentation] is the best place to continue learning about `extra-model`:
