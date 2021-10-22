@@ -35,7 +35,8 @@ def entrypoint(
 ) -> None:
     """Run the Extra algorithm for unsupervised topic extraction.
 
-    INPUT_PATH is the path to the input parquet file with the user generated texts.
+    INPUT_PATH (required) is the path to the input csv file with the user generated texts. It must contain
+    `CommentId` and `Comments` columns that are spelled exactly this way.
 
     OUTPUT_PATH (option) is the path to the output directory. Default is `/io`.
 
@@ -43,7 +44,7 @@ def entrypoint(
     The `.csv` file extension is not enforced. Please take care of this accordingly.
 
     EMBEDDINGS_PATH (option) is the path where the extra model will load the embeddings from.
-    defaults to `./embeddings`.
+    defaults to `/embeddings`.
     """
     logging.getLogger("extra_model").setLevel("DEBUG" if debug else "INFO")
 
