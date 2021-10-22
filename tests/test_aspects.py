@@ -10,6 +10,7 @@ from extra_model._aspects import (
     generate_aspects,
     parse,
 )
+from extra_model._errors import ExtraModelError
 
 
 @pytest.fixture()
@@ -28,6 +29,19 @@ def test_aspects__compound_noun_list__right_compound(spacy_nlp):
     # example texts, there was not a single one. Could remove the code or could
     # go for a deeper search for an example
     pass
+
+
+def test_aspects__adjective_phrase_bad_descriptor(spacy_nlp):
+    example_text = "this is a text."
+
+    with pytest.raises(ExtraModelError) as exc_info:
+        adjective_phrase(spacy_nlp(example_text)[1].head.children, "blurb")
+
+    exception_raised = exc_info.value
+    assert (
+        str(exception_raised)
+        == "descriptor has to be one of [spacy.symbols.acomp, spacy.symbols.amod]"
+    )
 
 
 def test_aspects__adjective_phrase_acomp(spacy_nlp):
