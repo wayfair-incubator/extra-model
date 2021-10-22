@@ -18,6 +18,8 @@ No need to thank us :).
 - Added input validation, so now `extra-model` will throw an error if `CommentId` column is misspelled.
 - Added `click` as explicit dependency. It was erroneously removed at some point, but we actually depend on it, so adding it back in.
 - Updated all other dependencies to the most up-to-date version (as of October, 22nd 2021)
+- Consolidated `adjective_list()` and `acomp_list()` into generic
+  `adjective_phrase()` function
 
 ### Removed
 - Removed the dependency on `requests` since we don't use it explicitly in our code

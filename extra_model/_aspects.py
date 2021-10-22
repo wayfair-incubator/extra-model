@@ -4,6 +4,8 @@ import pandas as pd
 import spacy
 from spacy.symbols import NOUN, VERB, acomp, amod, nsubj
 
+from extra_model._errors import ExtraModelError
+
 """Generate the basic phrases that will be used for clustering
 Major steps:
 1) Run Spacy for POS tags
@@ -31,44 +33,31 @@ def compound_noun_list(token):
     return nouns
 
 
-def acomp_list(tokens):
-    """Find descriptions for a given token.
-
-    :param tokens: list of tokens that are children of the head of the noun for which descriptions are searched.
-    :type tokens: [:class:`spacy.token`]
-    :return: list of adjectives
-    :rtype: [string]
-    """
-    acomps = []
-    for child in tokens:
-        if child.dep == acomp:
-            acomps.append(child.text)
-            for grandchild in child.children:
-                # find both X and Y in patterns of the form "product is X and Y"
-                if grandchild.dep_ == "conj" and not grandchild.is_space:
-                    # grandchild.is_space is handling whitespace cases
-                    acomps.append(grandchild.text)
-    return acomps
-
-
-def adjective_list(tokens):
+def adjective_phrase(tokens, descriptor):
     """Find adjectives modifying a given noun.
 
     :param tokens: tokens of potential adjectice candidates (children of the noun and children of the head for compounds)
     :type tokens: [:class:`spacy.token`]
+    :param descriptor: one of [acomp, amod]
+    :type tokens: :class:`spacy.symbols`
     :return: list of adjectives
     :rtype: [string]
     """
-    adjectives = []
+    if descriptor not in [acomp, amod]:
+        raise ExtraModelError(
+            "descriptor has to be one of [spacy.symbols.acomp, spacy.symbols.amod]"
+        )
+
+    res_list = []
     for child in tokens:
-        if child.dep == amod:
-            adjectives.append(child.text)
+        if child.dep == descriptor:
+            res_list.append(child.text)
             for grandchild in child.children:
                 # find both X and Y in patterns of the form "the X and Y product"
                 if grandchild.dep_ == "conj" and not grandchild.is_space:
                     # grandchild.is_space is handling whitespace cases
-                    adjectives.append(grandchild.text)
-    return adjectives
+                    res_list.append(grandchild.text)
+    return res_list
 
 
 def adjective_negations(token):
@@ -124,8 +113,7 @@ def parse(dataframe_texts):  # noqa: C901
     # n_threads > 5 can segfault with long (>500 tokens) sentences
     # n_threads has been deprecated in spacy 3.x - https://spacy.io/usage/v2-1#incompat
     for index, document in zip(
-        dataframe_texts.index,
-        nlp.pipe(dataframe_texts.Comments, batch_size=500),
+        dataframe_texts.index, nlp.pipe(dataframe_texts.Comments, batch_size=500)
     ):
         negated_adjectives = []
         for token in document:
@@ -133,11 +121,11 @@ def parse(dataframe_texts):  # noqa: C901
             adjectives = []
             if token.dep == nsubj and token.pos == NOUN and token.head.pos == VERB:
                 # find nouns with descriptions
-                adjectives.extend(acomp_list(token.head.children))
+                adjectives.extend(adjective_phrase(token.head.children, acomp))
             if token.pos == NOUN:  # find nouns with adjectives
-                adjectives.extend(adjective_list(token.children))
+                adjectives.extend(adjective_phrase(token.children, amod))
                 # necessary for compound nouns
-                adjectives.extend(adjective_list(token.head.children))
+                adjectives.extend(adjective_phrase(token.head.children, amod))
             adjectives = list(dict.fromkeys(adjectives))  # remove duplicates
             adjectives = list(filter(lambda adj: adj.strip() != "", adjectives))
             if len(adjectives) != 0:
