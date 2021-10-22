@@ -90,21 +90,21 @@ docker-compose run extra-model --help
 
 ## Bumping model version
 
-The package `bump2version` in order to automate the package version, [source](https://github.com/c4urself/bump2version).
+This library uses the package `bump2version` to automate the versioning, [source](https://github.com/c4urself/bump2version).
 
-With the current configuration (in the `setup.cfg` file), running the command 
+For example, with the current configuration (in the `setup.cfg` file), running the command 
 ```bash
-bumpversion patch
+bumpversion major|minor|patch
 ```
 will:
-* Increase the model version in the file `extra_model/__init__.py`
-* Increase the model version in the test file `tests/test_init.py`
+* Increase the model major|minor|patch version in the file `extra_model/__init__.py`
+* Increase the model major|minor|patch version in the test file `tests/test_init.py`
 * Create a commit with the modified files and message `Bump version: {old_version} → {new_version}`
 * Tag the last commit as `v{new_version}`
 
 In order to perform a dry run for the command above, execute:
 ```bash
-bumpversion patch -n --verbose
+bumpversion major|minor|patch -n --verbose
 ```
 
 ## Learn more
