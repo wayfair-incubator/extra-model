@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from extra_model._errors import ExtraModelError
 from extra_model._models import ExtraModel
 
 MODELS_FOLDER = Path("./embeddings")
@@ -25,6 +26,11 @@ def run(
 
     logger.info(f"Loading data from {input_path}")
     input_data = pd.read_csv(input_path)
+    if not {"CommentId", "Comments"}.issubset(input_data.columns):
+        raise ExtraModelError(
+            f"Input columns must be named `CommentId` and `Comments`, \
+        but got {input_data.columns.to_list()} instead"
+        )
 
     logger.info("Running `extra-model`")
     results_raw = extra_model.predict(comments=input_data.to_dict("records"))
