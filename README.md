@@ -88,29 +88,6 @@ There are multiple flags you can set to change input/outputs of extra. You can f
 docker-compose run extra-model --help
 ```
 
-## Bumping model version
-
-This library uses the package `bump2version` to automate the versioning, [source](https://github.com/c4urself/bump2version).
-
-For example, with the current configuration (in the `setup.cfg` file), running the command 
-```bash
-bumpversion major|minor|patch
-```
-will:
-* Increase the model major|minor|patch version in the file `extra_model/__init__.py`
-* Increase the model major|minor|patch version in the test file `tests/test_init.py`
-* Create a commit with the modified files and message `Bump version: {old_version} → {new_version}`
-* Tag the last commit as `v{new_version}`
-
-In order to perform a dry run for the command above, execute:
-```bash
-bumpversion major|minor|patch -n --verbose
-```
-
-Please notice that the the git working directory is expected to be clean when running `bumpversion`.
-
-After successfully running `bumpversion`, please run `git push && git push --tags` to synchronize the local repository with the remote one.
-
 ## Learn more
 
 Our [official documentation][official_documentation] is the best place to continue learning about `extra-model`:
