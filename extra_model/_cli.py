@@ -18,9 +18,13 @@ EMBEDDINGS_PATH = "/embeddings"
 
 @click.command()
 @click.argument("input_path", type=Path)
-@click.argument("output_path", type=Path, default=OUTPUT_PATH)
-@click.argument("output_filename", type=Path, default=OUTPUT_FILENAME)
-@click.argument("embeddings_path", type=Path, default=EMBEDDINGS_PATH)
+@click.option("-op", "--output-path", type=Path, default=OUTPUT_PATH, show_default=True)
+@click.option(
+    "-of", "--output-filename", type=Path, default=OUTPUT_FILENAME, show_default=True
+)
+@click.option(
+    "-ep", "--embeddings-path", type=Path, default=EMBEDDINGS_PATH, show_default=True
+)
 @click.option("--debug", is_flag=True, help="Enable debug logging")
 def entrypoint(
     input_path: Path,
@@ -33,12 +37,12 @@ def entrypoint(
 
     INPUT_PATH is the path to the input parquet file with the user generated texts.
 
-    OUTPUT_PATH is the path to the output directory. Default is `/io`.
+    OUTPUT_PATH (option) is the path to the output directory. Default is `/io`.
 
-    OUTPUT_FILENAME is the filename of the output file. Default is `result.csv`.
+    OUTPUT_FILENAME (option) is the filename of the output file. Default is `result.csv`.
     The `.csv` file extension is not enforced. Please take care of this accordingly.
 
-    EMBEDDINGS_PATH is the path where the extra model will load the embeddings from.
+    EMBEDDINGS_PATH (option) is the path where the extra model will load the embeddings from.
     defaults to `./embeddings`.
     """
     logging.getLogger("extra_model").setLevel("DEBUG" if debug else "INFO")
