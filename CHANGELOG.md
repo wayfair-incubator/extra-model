@@ -19,6 +19,10 @@ No need to thank us :).
 - Added `click` as explicit dependency. It was erroneously removed at some point, but we actually depend on it, so adding it back in.
 - Updated all other dependencies to the most up-to-date version (as of October, 22nd 2021)
 
+### Removed
+- Removed the dependency on `requests` since we don't use it explicitly in our code
+
+
 ## [0.2.1]
 
 ### Changed
