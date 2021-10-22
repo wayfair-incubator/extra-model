@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster as builder
+FROM python:3.9-slim-buster as builder
 
 COPY requirements.txt requirements-test.txt ./
 
@@ -6,7 +6,7 @@ RUN pip install --prefix=/requirements \
     -r requirements.txt \
     -r requirements-test.txt
 
-ARG PYTHONPATH=/requirements/lib/python3.8/site-packages
+ARG PYTHONPATH=/requirements/lib/python3.9/site-packages
 
 # download spacy resources
 RUN python -m spacy download en_core_web_sm --prefix=/requirements
@@ -14,7 +14,7 @@ RUN python -m spacy download en_core_web_sm --prefix=/requirements
 # download nltk resources
 RUN python -m nltk.downloader wordnet punkt
 
-FROM python:3.8-slim-buster
+FROM python:3.9-slim-buster
 
 RUN apt-get update && apt-get install --no-install-recommends --yes \
     curl \
