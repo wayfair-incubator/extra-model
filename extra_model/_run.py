@@ -28,7 +28,7 @@ def run(
     input_data = pd.read_csv(input_path)
     if not {"CommentId", "Comments"}.issubset(input_data.columns):
         raise ExtraModelError(
-            f"Input columns must be named `CommentId` and `Comments`, \
+            f"Input columns must include `CommentId` and `Comments`, \
         but got {input_data.columns.to_list()} instead"
         )
 
