@@ -31,7 +31,7 @@ def compound_noun_list(token):
     return nouns
 
 
-def descriptor_list(tokens, descriptor):
+def adjective_phrase(tokens, descriptor):
     """Find adjectives modifying a given noun.
 
     :param tokens: tokens of potential adjectice candidates (children of the noun and children of the head for compounds)
@@ -117,11 +117,11 @@ def parse(dataframe_texts):  # noqa: C901
             adjectives = []
             if token.dep == nsubj and token.pos == NOUN and token.head.pos == VERB:
                 # find nouns with descriptions
-                adjectives.extend(acomp_list(token.head.children))
+                adjectives.extend(adjective_phrase(token.head.children, acomp))
             if token.pos == NOUN:  # find nouns with adjectives
-                adjectives.extend(adjective_list(token.children))
+                adjectives.extend(adjective_phrase(token.children, amod))
                 # necessary for compound nouns
-                adjectives.extend(adjective_list(token.head.children))
+                adjectives.extend(adjective_phrase(token.head.children, amod))
             adjectives = list(dict.fromkeys(adjectives))  # remove duplicates
             adjectives = list(filter(lambda adj: adj.strip() != "", adjectives))
             if len(adjectives) != 0:

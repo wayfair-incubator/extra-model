@@ -2,9 +2,11 @@ import pandas as pd
 import pytest
 import spacy
 
+from spacy.symbols import acomp, amod
+
 from extra_model._aspects import (
     acomp_list,
-    adjective_list,
+    adjective_phrase,
     adjective_negations,
     compound_noun_list,
     generate_aspects,
@@ -32,15 +34,15 @@ def test_aspects__compound_noun_list__right_compound(spacy_nlp):
 
 def test_aspects__acomp_list(spacy_nlp):
     example_text = "The shelf is sturdy and beautiful."
-    assert acomp_list(spacy_nlp(example_text)[1].head.children) == [
+    assert adjective_phrase(spacy_nlp(example_text)[1].head.children, acomp) == [
         "sturdy",
         "beautiful",
     ]
 
 
-def test_aspects__adjective_list(spacy_nlp):
+def test_aspects__adjective_phrase(spacy_nlp):
     example_text = "I bought a sturdy and beautiful shelf."
-    assert adjective_list(spacy_nlp(example_text)[6].children) == [
+    assert adjective_phrase(spacy_nlp(example_text)[6].children, amod) == [
         "sturdy",
         "beautiful",
     ]
@@ -49,16 +51,16 @@ def test_aspects__adjective_list(spacy_nlp):
 def test_aspects__acomp_list_double_space(spacy_nlp):
     # Spacy parses double space as a token which breaks extra down the line
     example_text = "The shelf is sturdy and  beautiful."
-    assert acomp_list(spacy_nlp(example_text)[1].head.children) == [
+    assert adjective_phrase(spacy_nlp(example_text)[1].head.children, acomp) == [
         "sturdy",
         "beautiful",
     ]
 
 
-def test_aspects__adjective_list_double_space(spacy_nlp):
+def test_aspects__adjective_phrase_double_space(spacy_nlp):
     # Spacy parses double space as a token which breaks extra down the line
     example_text = "I bought a sturdy and  beautiful shelf."
-    assert adjective_list(spacy_nlp(example_text)[7].children) == [
+    assert adjective_phrase(spacy_nlp(example_text)[7].children, amod) == [
         "sturdy",
         "beautiful",
     ]
