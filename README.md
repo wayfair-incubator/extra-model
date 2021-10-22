@@ -107,6 +107,10 @@ In order to perform a dry run for the command above, execute:
 bumpversion major|minor|patch -n --verbose
 ```
 
+Please notice that the the git working directory is expected to be clean when running `bumpversion`.
+
+After successfully running `bumpversion`, please run `git push && git push --tags` to synchronize the local repository with the remote one.
+
 ## Learn more
 
 Our [official documentation][official_documentation] is the best place to continue learning about `extra-model`:
