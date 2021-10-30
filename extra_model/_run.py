@@ -20,9 +20,12 @@ def run(
     embeddings_path: Path = MODELS_FOLDER,
 ) -> None:
     """
-    :param input_df: is a dataframe with with 2 columns: CommentId and Comments.
+    :param input_path: is a dataframe or a path to .csv with with 2 columns: CommentId and Comments.
     :param embeddings_path: path to the embeddings files
-    :return: dataframe of the extramodel results
+    :param is_dataframe: boolean to set input_path to be used as dataframe instead of Path
+    :param output_path: path to save the output .csv
+    :param output_filename: filename of the output .csv to be generated
+    :return: dataframe of the extramodel results if is_dataframe is True 
     """
     logging.basicConfig(format="  %(message)s")
 
