@@ -71,3 +71,19 @@ def test_run__wrong_input_raises_error(mocker, extra_model_mock, pandas_mock):
 
     with pytest.raises(ExtraModelError, match="wrong_column_1"):
         run(input_path=mocker.MagicMock(), output_path=mocker.MagicMock())
+
+
+def test_run_passing_dataframe_instead_of_input_path(
+    mocker, extra_model_mock, pandas_mock
+):
+    mock_dataframe = pd.DataFrame(
+        data=[[1, "test comment"], [2, "test comment 2"]],
+        columns=["CommentId", "Comments"],
+    )
+    output_path = mocker.MagicMock()
+    output_path.exists.return_value = True
+
+    result = run(input_path = mock_dataframe, is_dataframe = True, output_path = output_path)
+
+    assert not output_path.exists.called
+    assert not output_path.mkdir.called

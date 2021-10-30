@@ -34,7 +34,7 @@ def run(
 
     logger.info(f"Loading data from {input_path}")
 
-    if is_dataframe == False:
+    if is_dataframe is False:
         input_data = pd.read_csv(input_path)
     else:
         input_data = input_path
@@ -49,8 +49,8 @@ def run(
     results_raw = extra_model.predict(comments=input_data.to_dict("records"))
     results = pd.DataFrame(results_raw)
 
-    if is_dataframe == True:
-        logger.info(f"Returning results")
+    if is_dataframe is True:
+        logger.info("Returning results")
         return results
     else:
         if output_path and not output_path.exists():
