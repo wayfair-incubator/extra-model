@@ -62,6 +62,7 @@ def test_entrypoint__debug_set__log_level_set_to_DEBUG(cli_runner, run_mock):
     assert logging.getLogger("extra_model").level == logging.DEBUG
 
 
+# With .csv mode all options set
 def test_entrypoint__all_options_are_set_and_passed_to_run(cli_runner, run_mock):
     cli_runner.invoke(
         entrypoint,
@@ -70,7 +71,10 @@ def test_entrypoint__all_options_are_set_and_passed_to_run(cli_runner, run_mock)
     )
 
     run_mock.assert_called_once_with(
-        Path(INPUT), Path(OUTPUT), Path(OUTPUT_FILENAME), Path(EMBEDDINGS_PATH)
+        input_path=Path(INPUT),
+        output_path=Path(OUTPUT),
+        output_filename=Path(OUTPUT_FILENAME),
+        embeddings_path=Path(EMBEDDINGS_PATH),
     )
 
 

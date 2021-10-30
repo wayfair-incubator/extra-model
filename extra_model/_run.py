@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 def run(
     input_path,
-    is_dataframe: bool = False,
     output_path: Path = None,
+    is_dataframe: bool = False,
     output_filename: Path = OUTPUT_FILE,
     embeddings_path: Path = MODELS_FOLDER,
 ) -> None:
@@ -25,7 +25,7 @@ def run(
     :param is_dataframe: boolean to set input_path to be used as dataframe instead of Path
     :param output_path: path to save the output .csv
     :param output_filename: filename of the output .csv to be generated
-    :return: dataframe of the extramodel results if is_dataframe is True 
+    :return: dataframe of the extramodel results if is_dataframe is True else return None
     """
     logging.basicConfig(format="  %(message)s")
 
@@ -52,10 +52,11 @@ def run(
     if is_dataframe == True:
         logger.info(f"Returning results")
         return results
+    else:
+        if output_path and not output_path.exists():
+            logger.info(f"Creating folder {output_path}")
+            output_path.mkdir(parents=True)
 
-    if not output_path.exists():
-        logger.info(f"Creating folder {output_path}")
-        output_path.mkdir(parents=True)
-
-    logger.info(f"Saving output to {output_path / output_filename}")
-    results.to_csv(output_path / output_filename, encoding="utf-8", index=False)
+        if output_path and output_filename:
+            logger.info(f"Saving output to {output_path / output_filename}")
+            results.to_csv(output_path / output_filename, encoding="utf-8", index=False)

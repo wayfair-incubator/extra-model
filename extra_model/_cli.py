@@ -49,7 +49,12 @@ def entrypoint(
     logging.getLogger("extra_model").setLevel("DEBUG" if debug else "INFO")
 
     try:
-        run(input_path, output_path, output_filename, embeddings_path)
+        run(
+            input_path=input_path,
+            output_path=output_path,
+            output_filename=output_filename,
+            embeddings_path=embeddings_path,
+        )
         sys.exit(0)
 
     except ExtraModelError as e:
