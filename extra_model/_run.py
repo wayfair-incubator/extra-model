@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 def run(
     input_path,
-    output_path: Path,
-    is_dataframe: False,
+    is_dataframe: bool = False,
+    output_path: Path = None,
     output_filename: Path = OUTPUT_FILE,
     embeddings_path: Path = MODELS_FOLDER,
 ) -> None:
