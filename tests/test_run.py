@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 from extra_model._errors import ExtraModelError
-from extra_model._run import run
+from extra_model._run import run, run_from_dataframe
 
 
 @pytest.fixture
@@ -71,3 +71,14 @@ def test_run__wrong_input_raises_error(mocker, extra_model_mock, pandas_mock):
 
     with pytest.raises(ExtraModelError, match="wrong_column_1"):
         run(mocker.MagicMock(), mocker.MagicMock())
+
+
+def test_run__run_from_dataframe(mocker, extra_model_mock, pandas_mock):
+    df = pd.DataFrame(
+        data=[[1, "test comment"], [2, "test comment 2"]],
+        columns=["CommentId", "Comments"],
+    )
+    run_from_dataframe(df)
+    assert extra_model_mock.called
+    assert pandas_mock.DataFrame.called
+    

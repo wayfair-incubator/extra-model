@@ -66,11 +66,7 @@ def run_from_dataframe(
     """
     logging.basicConfig(format="  %(message)s")
 
-    extra_model = ExtraModel(models_folder=embeddings_path)
-    extra_model.load_from_files()
-
     check_input_structure(input_df)
-    results = build_model_and_predict(embeddings_path, input_df)
 
-    logger.info(f"Returning results")
-    return results
+    logger.info("Returning results")
+    return build_model_and_predict(embeddings_path, input_df)
