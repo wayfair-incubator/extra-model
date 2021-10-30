@@ -13,9 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 def run(
-    input_path: Path,
+    input_path,
     output_path: Path,
-    input_df: pd.core.frame.DataFrame,
     is_dataframe: False,
     output_filename: Path = OUTPUT_FILE,
     embeddings_path: Path = MODELS_FOLDER,
@@ -32,10 +31,10 @@ def run(
 
     logger.info(f"Loading data from {input_path}")
 
-    if input_df is not None and is_dataframe == True:
-        input_data = input_df
-    else:
+    if is_dataframe == False:
         input_data = pd.read_csv(input_path)
+    else:
+        input_data = input_path
 
     if not {"CommentId", "Comments"}.issubset(input_data.columns):
         raise ExtraModelError(
@@ -47,7 +46,7 @@ def run(
     results_raw = extra_model.predict(comments=input_data.to_dict("records"))
     results = pd.DataFrame(results_raw)
 
-    if input_df is not None and is_dataframe == True:
+    if is_dataframe == True:
         logger.info(f"Returning results")
         return results
 
