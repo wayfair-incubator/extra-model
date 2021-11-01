@@ -81,4 +81,3 @@ def test_run__run_from_dataframe(mocker, extra_model_mock, pandas_mock):
     run_from_dataframe(df)
     assert extra_model_mock.called
     assert pandas_mock.DataFrame.called
-    
