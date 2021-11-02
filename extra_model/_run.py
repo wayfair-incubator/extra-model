@@ -16,11 +16,12 @@ def run_from_dataframe(
     df: pd.core.frame.DataFrame, embeddings_path: Path = MODELS_FOLDER
 ) -> pd.core.frame.DataFrame:
     """
+    Run extra-model with dataframe as an input instead of csv_path
+    
     :param df: is a dataframe with with 2 columns: CommentId and Comments.
     :param embeddings_path: path to the embeddings files
     :return: dataframe of the extramodel results
     """
-
     logging.basicConfig(format="  %(message)s")
 
     if not {"CommentId", "Comments"}.issubset(df.columns):
