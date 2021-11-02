@@ -81,3 +81,15 @@ def test_run__run_from_dataframe(mocker, extra_model_mock, pandas_mock):
     run_from_dataframe(df)
     assert extra_model_mock.called
     assert pandas_mock.DataFrame.called
+
+
+def test_run_from_dataframe__wrong_input_raises_error(
+    mocker, extra_model_mock, pandas_mock
+):
+    df = pd.DataFrame(
+        data=[[1]],
+        columns=["wrong_column_1"],
+    )
+
+    with pytest.raises(ExtraModelError, match="wrong_column_1"):
+        run_from_dataframe(df)
