@@ -203,3 +203,16 @@ run(
     output_filename=Path("output_filename.csv")
 )
 ```
+
+You can use `run_from_dataframe` function from `extra_model/_run.py`  to use `extra-model` with dataframe 
+
+```python
+from extra_model._run import run_from_dataframe
+from pathlib import Path
+
+df = pd.DataFrame(
+        data=[[1, "test comment"], [2, "test comment 2"]],
+        columns=["CommentId", "Comments"],
+    )
+run_from_dataframe(df)
+```
