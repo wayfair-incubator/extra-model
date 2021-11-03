@@ -16,7 +16,7 @@ def run_from_dataframe(
     df: pd.core.frame.DataFrame, embeddings_path: Path = MODELS_FOLDER
 ) -> pd.core.frame.DataFrame:
     """
-    Run extra-model with dataframe as an input
+    Run extra-model with dataframe as an input.
 
     :param df: is a dataframe with with 2 columns: CommentId and Comments.
     :param embeddings_path: path to the embeddings files
