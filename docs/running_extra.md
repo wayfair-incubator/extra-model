@@ -214,5 +214,6 @@ df = pd.DataFrame(
         data=[[1, "test comment"], [2, "test comment 2"]],
         columns=["CommentId", "Comments"],
     )
-run_from_dataframe(df)
+results = run_from_dataframe(df)
 ```
+Inputs/outputs are documented [here](https://wayfair-incubator.github.io/extra-model/site/#extra-model-input)
