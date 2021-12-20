@@ -1,5 +1,5 @@
 click==8.0.3
-numpy==1.21.4
+numpy==1.21.5
 nltk==3.6.5
 scikit-learn==1.0.1
 vaderSentiment==3.3.2
