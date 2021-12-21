@@ -12,7 +12,7 @@ ARG PYTHONPATH=/requirements/lib/python3.9/site-packages
 RUN python -m spacy download en_core_web_sm --prefix=/requirements
 
 # download nltk resources
-RUN python -m nltk.downloader wordnet punkt
+RUN python -m nltk.downloader wordnet punkt omw-1.4
 
 FROM python:3.9-slim-buster
 
