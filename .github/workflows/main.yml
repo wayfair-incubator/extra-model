@@ -134,6 +134,9 @@ jobs:
         - name: Install nltk punkt resource
           run: python -m nltk.downloader punkt
 
+        - name: Install nltk omw-1.4 resource
+          run: python -m nltk.downloader omw-1.4
+
         - name: Run pytest
           run: pytest --cov-report xml:coverage-${{ matrix.python-version }}.xml --junitxml=test-results-${{ matrix.python-version }}.xml
 
