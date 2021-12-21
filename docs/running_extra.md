@@ -94,7 +94,7 @@ Then, add all the external dependencies:
 
 ```bash
 python -m spacy download en_core_web_sm
-python -m nltk.downloader wordnet punkt
+python -m nltk.downloader wordnet punkt omw-1.4
 ```
 
 #### Downloading Embeddings
@@ -145,7 +145,7 @@ Then, add all the external dependencies:
 
 ```bash
 python -m spacy download en_core_web_sm
-python -m nltk.downloader wordnet punkt
+python -m nltk.downloader wordnet punkt omw-1.4
 ```
 
 #### Downloading Embeddings
