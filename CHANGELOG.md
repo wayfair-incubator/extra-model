@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrealeased]
 
 ### Changed
+- Updated all versions to the latest available (courtesy of `dependabot`)
 - Added `run_from_dataframe` in `_run.py`, which enables passing dataframe as an input
+- Dropped Python 3.7 support (i.e., we no longer test for this version) since `numpy` dropped it
 
 
 ## [0.3.0]
