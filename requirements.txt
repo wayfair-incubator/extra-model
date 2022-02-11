@@ -7,4 +7,4 @@ pandas==1.4.0
 pycld3==0.22
 networkx==2.6.3
 gensim==4.1.2
-spacy==3.2.1
+spacy==3.2.2
