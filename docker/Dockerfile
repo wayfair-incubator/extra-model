@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster as builder
+FROM --platform=linux/amd64 python:3.9-slim-buster as builder
 
 COPY requirements.txt requirements-test.txt ./
 
