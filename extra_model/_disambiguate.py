@@ -113,7 +113,7 @@ def cluster(aspects, aspect_vectors, vectorizer):
     return contexts
 
 
-def match(aspect_counts, vectorizer):
+def match(aspect_counts, vectorizer): # noqa: C901
     """Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
 
     :param aspect_counts: Counter object of aspect->number of occurrence
