@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `run_from_dataframe` in `_run.py`, which enables passing dataframe as an input
 - Dropped Python 3.7 support (i.e., we no longer test for this version) since `numpy` dropped it
 
+### Fixed
+- an update to scipy exposed an issue in rare cases in disambiguation, where choice of meaning for contextless aspects 
+only worked accidentally. These are now treated explicitly: we choose the most common meaning.
+
 
 ## [0.3.0]
 

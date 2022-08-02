@@ -113,7 +113,7 @@ def cluster(aspects, aspect_vectors, vectorizer):
     return contexts
 
 
-def match(aspect_counts, vectorizer):
+def match(aspect_counts, vectorizer):  # noqa: C901
     """Match a word to a specific wordnet entry, using the vector similarity of the aspects context and the synonym gloss.
 
     :param aspect_counts: Counter object of aspect->number of occurrence
@@ -187,6 +187,11 @@ def match(aspect_counts, vectorizer):
         # If only one word-sense is matched we don't have to disambiguate, just
         # take it
         if len(synset_vec) == 1:
+            synsets_match.append(synset[0])
+            continue
+        # If the context-clustering has not yielded a context, we can't
+        # really disambuguate, just take the first (i.e. most common) synonym
+        if not isinstance(context, np.ndarray) and np.isnan(context):
             synsets_match.append(synset[0])
             continue
 
