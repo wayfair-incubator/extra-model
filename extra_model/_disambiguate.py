@@ -189,6 +189,11 @@ def match(aspect_counts, vectorizer):
         if len(synset_vec) == 1:
             synsets_match.append(synset[0])
             continue
+        # If the context-clustering has not yielded a context, we can't
+        # really disambuguate, just take the first (i.e. most common) synonym
+        if not isinstance(context, np.ndarray) and np.isnan(context):
+            synsets_match.append(synset[0])
+            continue
 
         # if there's ambiguity, choose the worde sense with the smallest
         # embedding distance between dictionary definition and noun context
