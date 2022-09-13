@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all versions to the latest available (courtesy of `dependabot`)
 - Added `run_from_dataframe` in `_run.py`, which enables passing dataframe as an input
 - Dropped Python 3.7 support (i.e., we no longer test for this version) since `numpy` dropped it
+- Replaced `pycld3` with `langdetect`. `pycld3` is unlikely to be supported in 3.10 and it recently started failing to build in 3.9. Since `pycld3` was only used in one place and given that `langdetect` looks like a reasonable replacement, we've decided to replace it.
 
 ### Fixed
 - an update to scipy exposed an issue in rare cases in disambiguation, where choice of meaning for contextless aspects 

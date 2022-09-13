@@ -1,6 +1,6 @@
 import logging
 
-import cld3
+import langdetect
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -38,9 +38,9 @@ def filter(dataframe):
     # detect language and filter english. If it's 'unknown' it's probably
     # still english
     dataframe.loc[:, "lang"] = dataframe.Comments.apply(
-        lambda com: cld3.get_language(com).language
+        lambda com: langdetect.detect(com)
     )
-    dataframe = dataframe[(dataframe["lang"] == "en") | (dataframe["lang"] == "un")]
+    dataframe = dataframe[(dataframe["lang"] == "en")]
 
     # drop auxiliary columns again, re-index
     dataframe.drop(["cl", "lang"], axis="columns", inplace=True)
