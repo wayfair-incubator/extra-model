@@ -6,7 +6,7 @@ RUN pip install --prefix=/requirements \
     -r requirements.txt \
     -r requirements-test.txt
 
-ARG PYTHONPATH=/requirements/lib/python3.9/site-packages
+ARG PYTHONPATH=/requirements/lib/python3.10/site-packages
 
 # download spacy resources
 RUN python -m spacy download en_core_web_sm --prefix=/requirements
