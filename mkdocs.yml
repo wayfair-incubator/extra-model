@@ -11,18 +11,18 @@ nav:
   - Using a Custom Base Class: custom_base_class.md
   - Blog: blog.md
   - RAM Requirements: ram_requirements.md
-#  - Reference: reference.md
+  #  - Reference: reference.md
   - Contributing:
-    - Developer's Guide: contributing/developer_guide.md
-    - Documentation: contributing/documentation.md
-    - Publish a Release: contributing/publish_release.md
+      - Developer's Guide: contributing/developer_guide.md
+      - Documentation: contributing/documentation.md
+      - Publish a Release: contributing/publish_release.md
 theme: material
 plugins:
   - mkdocstrings:
       handlers:
         python:
           selection:
-            docstring_style: "restructured-text"
+            docstring_style: "sphinx"
           rendering:
             heading_level: 3
             show_root_heading: True
