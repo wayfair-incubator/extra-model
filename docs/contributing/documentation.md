@@ -19,13 +19,20 @@
 
 ## Publish
 
+> **NOTE**: This requires [Docker](https://www.docker.com/) to be installed on your
+machine and you to be authenticated against GitHub (for example via [SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)).
+
 1. Pull down the `gh-pages` branch. This only needs to be done once
 
         git checkout --track origin/gh-pages
 
-1. Run the `publish_documentation` script
+2. Switch back to the `main` branch
+
+        git checkout main
+
+3. Run the `publish_documentation` script
 
         ./publish_documentation.sh
-    
-1. Visit the hosted documentation  
+
+4. Visit the hosted documentation  
     **[https://wayfair-incubator.github.io/extra-model/site/](https://wayfair-incubator.github.io/extra-model/site/)**  
