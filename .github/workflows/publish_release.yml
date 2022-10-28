@@ -1,6 +1,6 @@
 name: Publish Release
 env:
-  PYTHON_VERSION: "3.9"
+  PYTHON_VERSION: "3.10"
 on:
   release:
     types: [published]
