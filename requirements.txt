@@ -8,4 +8,4 @@ langdetect==1.0.9
 networkx==2.8.8
 gensim==4.2.0
 scipy==1.9.3
-spacy==3.4.3
+spacy==3.4.4
