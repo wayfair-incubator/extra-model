@@ -6,6 +6,6 @@ vaderSentiment==3.3.2
 pandas==1.5.2
 langdetect==1.0.9
 networkx==2.8.8
-gensim==4.2.0
+gensim==4.3.0
 scipy==1.9.3
 spacy==3.4.4
