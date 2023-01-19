@@ -3,7 +3,7 @@ numpy==1.24.1
 nltk==3.8.1
 scikit-learn==1.2.0
 vaderSentiment==3.3.2
-pandas==1.5.2
+pandas==1.5.3
 langdetect==1.0.9
 networkx==3.0
 gensim==4.3.0
