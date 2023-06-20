@@ -65,7 +65,6 @@ def create_output_path(mocker):
 def test_setup__input_return_n__setup_functions_not_called(
     input_mock, download_file_mock, unzip_file_mock, format_file_mock, cleanup_mock
 ):
-
     input_mock.return_value = "n"
 
     setup_extra(OUTPUT)
@@ -79,7 +78,6 @@ def test_setup__input_return_n__setup_functions_not_called(
 def test_setup__input_return_True__setup_functions_called(
     input_mock, download_file_mock, unzip_file_mock, format_file_mock, cleanup_mock
 ):
-
     input_mock.return_value = "y"
 
     setup_extra(OUTPUT)
@@ -93,7 +91,6 @@ def test_setup__input_return_True__setup_functions_called(
 def test_setup__output_path_set__argument_passed_to_setup_functions(
     input_mock, download_file_mock, unzip_file_mock, format_file_mock, cleanup_mock
 ):
-
     setup_extra(OUTPUT)
 
     download_file_mock.assert_called_once_with(URL, OUTPUT)
@@ -110,7 +107,6 @@ def test_setup__output_path_set__argument_passed_to_setup_functions(
 def test_download_file__output_file_found__skip_download_file(
     create_output_path, run_subprocess_mock
 ):
-
     output_path = create_output_path(file_exists=True)
 
     download_file(URL, output_path)
@@ -121,7 +117,6 @@ def test_download_file__output_file_found__skip_download_file(
 def test_download_file__output_file_missing__download_file(
     create_output_path, run_subprocess_mock
 ):
-
     output_path = create_output_path(file_exists=False)
 
     download_file(URL, output_path)
@@ -132,7 +127,6 @@ def test_download_file__output_file_missing__download_file(
 def test_unzip_file__output_file_found__skip_unzip_file(
     create_output_path, run_subprocess_mock
 ):
-
     file = Path("path/to/file.zip")
     output_path = create_output_path(file_exists=True)
 
@@ -144,7 +138,6 @@ def test_unzip_file__output_file_found__skip_unzip_file(
 def test_unzip_file__output_file_missing__unzip_file(
     create_output_path, run_subprocess_mock
 ):
-
     file = Path("path/to/file.zip")
     output_path = create_output_path(file_exists=False)
 
@@ -154,7 +147,6 @@ def test_unzip_file__output_file_missing__unzip_file(
 
 
 def test_format_file__output_file_found__skip_format_file(mocker, create_output_path):
-
     datapath_mock = mocker.patch("extra_model._setup.datapath")
     mocker.patch("extra_model._setup.KeyedVectors")
 
@@ -167,7 +159,6 @@ def test_format_file__output_file_found__skip_format_file(mocker, create_output_
 
 
 def test_format_file__output_file_missing__format_file(mocker, create_output_path):
-
     datapath_mock = mocker.patch("extra_model._setup.datapath")
     mocker.patch("extra_model._setup.KeyedVectors")
 

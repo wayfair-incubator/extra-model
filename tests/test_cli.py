@@ -30,14 +30,12 @@ EMBEDDINGS_PATH = "/embeddings"
 
 
 def test_entrypoint__run_raises_no_exception__exit_code_0(cli_runner, run_mock):
-
     result = cli_runner.invoke(entrypoint, [INPUT], catch_exceptions=False)
 
     assert result.exit_code == 0
 
 
 def test_entrypoint__run_raises_ExtraModelError__exit_code_1(cli_runner, run_mock):
-
     run_mock.side_effect = ExtraModelError
 
     result = cli_runner.invoke(entrypoint, [INPUT], catch_exceptions=False)
@@ -48,7 +46,6 @@ def test_entrypoint__run_raises_ExtraModelError__exit_code_1(cli_runner, run_moc
 def test_entrypoint__run_raises_unhandled_exception__exception_raised(
     cli_runner, run_mock
 ):
-
     run_mock.side_effect = Exception
 
     with pytest.raises(Exception):
@@ -56,7 +53,6 @@ def test_entrypoint__run_raises_unhandled_exception__exception_raised(
 
 
 def test_entrypoint__debug_set__log_level_set_to_DEBUG(cli_runner, run_mock):
-
     cli_runner.invoke(entrypoint, [INPUT, "--debug"], catch_exceptions=False)
 
     assert logging.getLogger("extra_model").level == logging.DEBUG
@@ -77,7 +73,6 @@ def test_entrypoint__all_options_are_set_and_passed_to_run(cli_runner, run_mock)
 def test_entrypoint_setup__setup_raises_no_exception__exit_code_0(
     cli_runner, setup_mock
 ):
-
     result = cli_runner.invoke(entrypoint_setup, catch_exceptions=False)
 
     assert result.exit_code == 0
@@ -86,7 +81,6 @@ def test_entrypoint_setup__setup_raises_no_exception__exit_code_0(
 def test_entrypoint_setup__setup_raises_ExtraModelError__exit_code_1(
     cli_runner, setup_mock
 ):
-
     setup_mock.side_effect = ExtraModelError
 
     result = cli_runner.invoke(entrypoint_setup, catch_exceptions=False)
@@ -97,7 +91,6 @@ def test_entrypoint_setup__setup_raises_ExtraModelError__exit_code_1(
 def test_entrypoint_setup__setup_raises_unhandled_exception__exception_raised(
     cli_runner, setup_mock
 ):
-
     setup_mock.side_effect = Exception
 
     with pytest.raises(Exception):
@@ -107,7 +100,6 @@ def test_entrypoint_setup__setup_raises_unhandled_exception__exception_raised(
 def test_entrypoint_setup__output_path_set__argument_passed_to_setup(
     cli_runner, setup_mock
 ):
-
     cli_runner.invoke(entrypoint_setup, [OUTPUT], catch_exceptions=False)
 
     setup_mock.assert_called_once_with(Path(OUTPUT))
