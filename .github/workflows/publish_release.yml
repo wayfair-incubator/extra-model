@@ -22,6 +22,6 @@ jobs:
         # v1.4.2 release. Using full SHA for security
         # https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
       - name: "Publish distribution 📦 to PyPI"
-        uses: "pypa/gh-action-pypi-publish@2a939dd49bdb1e0d1c38d33980bcb39186f8e076"
+        uses: "pypa/gh-action-pypi-publish@413a8d5d62d32e541601a504492b8d5c5501a001"
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
