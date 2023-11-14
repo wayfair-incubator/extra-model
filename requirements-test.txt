@@ -12,4 +12,4 @@ pydocstyle==6.3.0
 mkdocs==1.5.3
 mkdocstrings==0.23.0
 mkdocs-material==9.4.8
-mkdocstrings-python==1.7.3
+mkdocstrings-python==1.7.4
