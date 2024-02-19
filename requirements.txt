@@ -7,5 +7,5 @@ pandas==2.0.3
 langdetect==1.0.9
 networkx==3.1
 gensim==4.3.2
-scipy==1.10.1
+scipy==1.12.0
 spacy==3.7.2
