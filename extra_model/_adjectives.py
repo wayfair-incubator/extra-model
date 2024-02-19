@@ -212,27 +212,29 @@ def adjective_info(dataframe_topics, dataframe_aspects, vectorizer):
     )
 
     dataframe_aspects["sentiment_compound"] = dataframe_aspects["descriptor"].apply(
-        lambda descriptor: sentiment_dict[descriptor][0]
-        if descriptor in sentiment_dict
-        else 0
+        lambda descriptor: (
+            sentiment_dict[descriptor][0] if descriptor in sentiment_dict else 0
+        )
     )
     dataframe_aspects["sentiment_binary"] = dataframe_aspects["descriptor"].apply(
-        lambda descriptor: sentiment_dict[descriptor][1]
-        if descriptor in sentiment_dict
-        else 0
+        lambda descriptor: (
+            sentiment_dict[descriptor][1] if descriptor in sentiment_dict else 0
+        )
     )
 
     # flip sentiment if adjective is negated
     dataframe_aspects["sentiment_compound"] = dataframe_aspects.apply(
-        lambda x: x["sentiment_compound"] * (-1)
-        if x["is_negated"]
-        else x["sentiment_compound"],
+        lambda x: (
+            x["sentiment_compound"] * (-1)
+            if x["is_negated"]
+            else x["sentiment_compound"]
+        ),
         axis=1,
     )
     dataframe_aspects["sentiment_binary"] = dataframe_aspects.apply(
-        lambda x: x["sentiment_binary"] * (-1)
-        if x["is_negated"]
-        else x["sentiment_binary"],
+        lambda x: (
+            x["sentiment_binary"] * (-1) if x["is_negated"] else x["sentiment_binary"]
+        ),
         axis=1,
     )
     return dataframe_topics, dataframe_aspects
