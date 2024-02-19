@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unrealesed
 
 ### Changed
+- Dropped Python 3.8 support because multiple major packages dropped support for it
+- Added support for Python 3.11
+- Removed codecov support as it now requires paying for it if you are part of an organization
 
 ## [0.4.0]
 
