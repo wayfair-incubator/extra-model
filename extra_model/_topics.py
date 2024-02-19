@@ -1,4 +1,5 @@
 """Aggregate aspects into semantic clusters ('topics')."""
+
 import logging
 from collections import Counter
 
@@ -419,9 +420,14 @@ def get_topics(dataframe_aspects, vectors):
     aspects, synsets_match = match(aspect_counts, vectors)
     disambiguation_dict = dict(zip(aspects, synsets_match))
     dataframe_aspects.loc[:, "wordnet_node"] = dataframe_aspects["aspect"].apply(
-        lambda aspect: disambiguation_dict[aspect].name()
-        if (aspect in disambiguation_dict and disambiguation_dict[aspect] is not None)
-        else None
+        lambda aspect: (
+            disambiguation_dict[aspect].name()
+            if (
+                aspect in disambiguation_dict
+                and disambiguation_dict[aspect] is not None
+            )
+            else None
+        )
     )
 
     # build the hypernym graph

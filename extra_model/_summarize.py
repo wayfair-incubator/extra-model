@@ -1,4 +1,5 @@
 """Fill out and link the dataframes for topics, aspects and texts. Provide some summary ouput if debug-level is set to info or lower."""
+
 import logging
 
 logger = logging.getLogger(__name__)

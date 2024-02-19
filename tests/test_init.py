@@ -1,4 +1,5 @@
 """Test package init."""
+
 import extra_model
 
 
