@@ -53,3 +53,12 @@ To customize / override a specific testing stage, please read the documentation 
 1. Bandit: [https://bandit.readthedocs.io/en/latest/](https://bandit.readthedocs.io/en/latest/)
 1. iSort: [https://pycqa.github.io/isort/](https://pycqa.github.io/isort/)
 1. pydocstyle: [http://www.pydocstyle.org/en/stable/](http://www.pydocstyle.org/en/stable/)
+
+### Ignoring bulk reformats in `git blame`
+
+Repo-wide reformatting commits are listed in `.git-blame-ignore-revs`. To keep them
+out of your blame output:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```

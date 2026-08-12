@@ -1,0 +1,5 @@
+# Bulk reformats. Ignore with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# style: apply black 26 formatting
+03039ca6532e6a3a40eed8abc7ac0bb5cba183a0
