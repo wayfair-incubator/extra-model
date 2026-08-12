@@ -680,7 +680,112 @@
 
     <div class="doc doc-contents first">
 
-        <p>Docstring.</p>
+        <p>Run extra-model on a csv file and write the results to a csv file.</p>
+<p>The output directory is created if it doesn't already exist.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>input_path</code>
+            </td>
+            <td>
+                  <code><span title="pathlib.Path">Path</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>path to the input csv file. It must have a <code>CommentId</code> and a
+<code>Comments</code> column, spelled exactly that way.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_path</code>
+            </td>
+            <td>
+                  <code><span title="pathlib.Path">Path</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>path to the directory the results are written to.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_filename</code>
+            </td>
+            <td>
+                  <code><span title="pathlib.Path">Path</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>name of the results file, written inside <code>output_path</code>.
+The <code>.csv</code> extension is not enforced.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="extra_model._run.OUTPUT_FILE">OUTPUT_FILE</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>embeddings_path</code>
+            </td>
+            <td>
+                  <code><span title="pathlib.Path">Path</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>path to the directory holding the embeddings files.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="extra_model._run.MODELS_FOLDER">MODELS_FOLDER</span></code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>ExtraModelError</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if the input file is missing the required columns.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>

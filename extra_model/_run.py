@@ -45,7 +45,19 @@ def run(
     output_filename: Path = OUTPUT_FILE,
     embeddings_path: Path = MODELS_FOLDER,
 ) -> None:
-    """Docstring."""
+    """
+    Run extra-model on a csv file and write the results to a csv file.
+
+    The output directory is created if it doesn't already exist.
+
+    :param input_path: path to the input csv file. It must have a `CommentId` and a
+        `Comments` column, spelled exactly that way.
+    :param output_path: path to the directory the results are written to.
+    :param output_filename: name of the results file, written inside `output_path`.
+        The `.csv` extension is not enforced.
+    :param embeddings_path: path to the directory holding the embeddings files.
+    :raises ExtraModelError: if the input file is missing the required columns.
+    """
     logging.basicConfig(format="  %(message)s")
 
     logger.info(f"Loading data from {input_path}")
