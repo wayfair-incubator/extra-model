@@ -1,6 +1,6 @@
 name: Publish Release
 env:
-  PYTHON_VERSION: "3.10"
+  PYTHON_VERSION: "3.13"
 on:
   release:
     types: [published]
@@ -10,18 +10,18 @@ jobs:
     environment: "Publish Release"
     steps:
       - name: "Check out code"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v5"
 
-      - uses: "actions/setup-python@v5.2.0"
+      - uses: "actions/setup-python@v5.6.0"
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: "Build wheel"
         uses: "./.github/actions/build-dist"
 
-        # v1.4.2 release. Using full SHA for security
+        # v1.14.2 release. Using full SHA for security
         # https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
       - name: "Publish distribution 📦 to PyPI"
-        uses: "pypa/gh-action-pypi-publish@f7600683efdcb7656dec5b29656edb7bc586e597"
+        uses: "pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33"
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}

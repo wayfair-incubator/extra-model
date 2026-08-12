@@ -4,12 +4,82 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unrealesed
+## [1.0.0]
+
+**Final release. This project is archived and will receive no further updates.**
 
 ### Changed
+- **`extra-model` now requires Python 3.12 or 3.13.** Support for 3.8 through 3.11 is
+  dropped. Python 3.14 is not supported and cannot be: `gensim` and `spacy` publish no
+  wheels for it, and both are load-bearing dependencies.
+- Every dependency moved to the highest version installable on 3.12/3.13:
+  `click` 8.4.2, `numpy` 2.5.2, `nltk` 3.10.2, `scikit-learn` 1.9.0, `pandas` 3.0.5,
+  `networkx` 3.6.1, `gensim` 4.4.0, `scipy` 1.18.0, `spacy` 3.8.15. `langdetect` and
+  `vaderSentiment` are unmaintained upstream and stay at 1.0.9 and 3.3.2.
+  The `gensim` bump is what unblocked `scipy`: 4.3.3 imported `scipy.linalg.triu`,
+  removed in scipy 1.13.
+- Dependencies are now declared as `>=X,<next-major` ranges instead of exact `==` pins,
+  so the archived package can still resolve alongside other libraries. `requirements.txt`
+  keeps exact pins for reproducible builds.
+- The `en_core_web_sm` 3.8.0 spacy pipeline is now a pinned dependency. It used to be
+  fetched unversioned with `python -m spacy download`, which meant the model could change
+  underneath a fixed release. Installing `extra-model` no longer requires a separate
+  download step.
+- Packaging consolidated into `pyproject.toml`; `setup.py`, `setup.cfg`, `pytest.ini`,
+  `mypy.ini` and `.isort.cfg` are gone. Versioning moved from `bump2version` to
+  `bump-my-version`.
+- Docker image moved from `python:3.10-slim-buster` to `python:3.13-slim-bookworm`.
+  Debian buster is EOL and its apt repositories are archived, so the old image could no
+  longer be built at all.
 - Dropped Python 3.8 support because multiple major packages dropped support for it
-- Added support for Python 3.11
 - Removed codecov support as it now requires paying for it if you are part of an organization
+
+### Fixed
+- **Published wheels now declare `Requires-Python`.** `setup.cfg` contained
+  `python_requires >=3.9,<3.11` with the `=` missing after the key, so configparser
+  parsed it as a key named `python_requires >` and the constraint was silently dropped.
+  Every previous release, including 0.4.0 on PyPI, shipped with empty `Requires-Python`
+  metadata, so pip would install this package on any interpreter.
+- **`pip install extra-model` was broken.** `nltk` 3.8.2 moved `word_tokenize` to the
+  `punkt_tab` resource, but the Dockerfile, CI and installation docs all downloaded
+  `punkt`. Since the package required `nltk` 3.9.1, a correct installation raised
+  `LookupError` at runtime. CI did not catch this because its test job installed
+  `requirements.txt` (which pinned `nltk` 3.8.1) and never installed the package itself.
+- The API Reference documentation page is restored. `mkdocs.yml` still used the
+  pre-0.19 `mkdocstrings` `selection:`/`rendering:` schema, which broke rendering; the
+  page had been commented out of the navigation.
+- The CI `isort` job passed `--recursive`, a flag removed in isort 5, so it had not been
+  running correctly.
+- Embeddings are downloaded over HTTPS instead of plain HTTP.
+- **Language detection is now deterministic.** `langdetect` picks a random seed unless
+  told otherwise, so the same comment could be detected as a different language between
+  runs. Because non-English comments are filtered out, that meant two identical runs
+  could analyse different sets of comments. `DetectorFactory.seed` is now fixed, which
+  produced byte-identical output on the reference corpus.
+- The "Input columns must include ..." error no longer contains a run of stray
+  whitespace, caused by a line continuation inside an f-string.
+
+### Known issues, not fixed
+- `_disambiguate.py` divides by a zero norm when an aspect's cluster contains only that
+  aspect, emitting `RuntimeWarning: invalid value encountered in divide` and producing
+  NaN context vectors. Those rows are later dropped by `dropna`, so no NaN reaches the
+  output, but the affected aspects are silently discarded. Fixing this would change
+  which aspects survive disambiguation, so it was left alone in a release intended to
+  be behavior-preserving.
+
+### Notes on behavior
+- Output is effectively unchanged by the upgrade. On the 100-comment reference corpus,
+  13 of 14 output columns are bit-identical to 0.4.0 — all aspects, descriptors, topics,
+  wordnet nodes, sentiments and counts. Only `TopicImportance` differs, by at most
+  1.1e-09 absolute (2.5e-08 relative), which is floating-point accumulation noise.
+- In particular, the `networkx` `steiner_tree` default method change from `kou` to
+  `mehlhorn` did not alter topic structure.
+- `pandas` 3.0 changes the in-memory dtype of text columns from `object` to `str`. The
+  CSV output and the `predict()` return value are unaffected.
+- Internal dataframe helpers no longer mutate their arguments in place.
+  `_summarize.link_aspects_to_topics` now returns both dataframes rather than adding a
+  column to the topic frame as a side effect. This is internal API, not part of the
+  documented public surface.
 
 ## [0.4.0]
 

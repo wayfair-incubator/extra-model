@@ -2,7 +2,7 @@
 
 git checkout main
 git pull
-docker-compose run --rm mkdocs build
+docker compose run --rm mkdocs build
 git add site
 git stash
 git checkout gh-pages

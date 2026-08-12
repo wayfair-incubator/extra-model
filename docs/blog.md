@@ -1,5 +1,10 @@
 # extra-model Blog
 
+> These entries are dated snapshots kept for the record. Details such as supported
+> Python versions were accurate when written and have since changed -- the final
+> 1.0.0 release supports Python 3.12 and 3.13. See the Overview page for current
+> information.
+
 ## [22-10-21] Simplifying usage of `extra-model`
 During the month of October it's always a good idea to clean some cobwebs that has been around for a while.
 In the spirit of Hacktoberfest we've decided to clean up couple of issues that simplify how `extra-model` is called.

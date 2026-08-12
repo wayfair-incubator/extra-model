@@ -19,8 +19,20 @@ def spacy_nlp():
 
 
 def test_aspects__compound_noun_list__left_compound(spacy_nlp):
+    # en_core_web_sm misparses this sentence: it tags "wood" as attr (the head
+    # of the phrase) and "screw" as appos, rather than "wood" as a compound
+    # modifying "screw". So no compound is found here. The assertion records
+    # the parser's actual behavior; compound detection itself is covered by
+    # test_aspects__compound_noun_list__compound_dependency below.
     example_text = "This is a wood screw."
-    assert compound_noun_list(spacy_nlp(example_text)[4]) == ["screw", "wood screw"]
+    assert compound_noun_list(spacy_nlp(example_text)[4]) == ["screw"]
+
+
+def test_aspects__compound_noun_list__compound_dependency(spacy_nlp):
+    # "coffee" is tagged as a compound modifying "table", which is the
+    # dependency compound_noun_list actually looks for
+    example_text = "I bought a coffee table."
+    assert compound_noun_list(spacy_nlp(example_text)[4]) == ["table", "coffee table"]
 
 
 @pytest.mark.skip(reason="Left-headed compounds are exceedingly rare in English")
@@ -82,8 +94,10 @@ def test_aspects__adjective_phrase_amod_double_space(spacy_nlp):
 def test_aspects__adjective_negations__direct(spacy_nlp):
     example_text = "This not so sturdy table is a disappointment."
     assert adjective_negations(spacy_nlp(example_text)[1]) == ["sturdy"]
-    # There is a difference here in spacy versions that will need to be investigated.
-    # succeeds in 2.0.18 but fails in 3.0.
+    # This passed under spacy 2.0.18 and has failed since 3.0, because of how
+    # spacy attaches the negation. The project is archived on spacy 3.8.x, so
+    # it stays skipped rather than waiting on an investigation that will not
+    # happen.
 
 
 def test_aspects__adjective_negations__right_non_attr(spacy_nlp):

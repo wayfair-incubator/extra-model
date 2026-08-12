@@ -3,6 +3,12 @@ import logging
 import langdetect
 import pandas as pd
 
+# langdetect is non-deterministic unless its seed is fixed, so the same comment can
+# be detected as a different language from run to run. Since non-English comments are
+# dropped below, that would make the set of surviving comments -- and therefore the
+# output -- vary between identical runs.
+langdetect.DetectorFactory.seed = 0
+
 logger = logging.getLogger(__name__)
 
 
@@ -43,7 +49,7 @@ def filter(dataframe):
     dataframe = dataframe[(dataframe["lang"] == "en")]
 
     # drop auxiliary columns again, re-index
-    dataframe.drop(["cl", "lang"], axis="columns", inplace=True)
-    dataframe.reset_index(inplace=True, drop=True)
+    dataframe = dataframe.drop(["cl", "lang"], axis="columns")
+    dataframe = dataframe.reset_index(drop=True)
 
     return dataframe

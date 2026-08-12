@@ -114,11 +114,21 @@ class ExtraModelBase:
             self._storage_metadata[key] = {}
 
     def storage_metadata(self):
-        """Docstring."""
+        """Return the metadata describing this model and its stored files.
+
+        :return: the storage metadata, as populated by `__init__` and updated by
+            `load_from_files`.
+        :rtype: dict
+        """
         return self._storage_metadata
 
     def load_from_files(self):
-        """Docstring."""
+        """Load the embeddings from `models_folder` and mark the model as trained.
+
+        Reads the storage metadata via the base class, then builds the
+        :class:`extra_model._vectorizer.Vectorizer` from the embedding files. This
+        must be called before :meth:`predict`.
+        """
         super().load_from_files()
         self.vectorizer = Vectorizer(
             os.path.join(self.models_folder, self.embedding_type)
@@ -126,7 +136,12 @@ class ExtraModelBase:
         self.is_trained = True
 
     def train(self):
-        """Docstring."""
+        """Copy the embedding files into `models_folder` and mark the model as trained.
+
+        Extra is an unsupervised algorithm, so there is no model to fit. This only
+        stages the pre-trained embedding files from `CB_BASE_DIR` so that the rest of
+        the interface has something to work with.
+        """
         for key, filename in self._filenames.items():
             logger.debug(f"Downloading {key}")
             shutil.copyfile(
@@ -136,12 +151,24 @@ class ExtraModelBase:
         self.is_trained = True
 
     def predict(self, comments: List[Dict[str, str]]) -> List[Dict]:
-        """Docstring."""
+        """Run the Extra algorithm over a list of comments.
+
+        Filters the input by language and length, extracts aspects and the adjectives
+        describing them, groups those aspects into topics, and attaches sentiment.
+
+        :param comments: the texts to analyse. Each entry must have a `CommentId` and
+            a `Comments` key, spelled exactly that way.
+        :return: one record per aspect found, keyed by the public output names
+            (`Aspect`, `Descriptor`, `Topic`, `SentimentCompound`, and so on). See
+            https://wayfair-incubator.github.io/extra-model/site/#extra-model-output
+        :rtype: [dict]
+        :raises RuntimeError: if called before `load_from_files` or `train`.
+        :raises ValueError: if no valid aspects could be extracted from the input.
+        """
         if not self.is_trained:
             raise RuntimeError("Extra must be trained before you can predict!")
-        dataframe_texts = pd.DataFrame(comments)
-        dataframe_texts.rename(
-            {"CommentId": "source_guid"}, axis="columns", inplace=True
+        dataframe_texts = pd.DataFrame(comments).rename(
+            {"CommentId": "source_guid"}, axis="columns"
         )
         dataframe_texts = filter(dataframe_texts)
         dataframe_aspects = generate_aspects(dataframe_texts)
@@ -156,7 +183,9 @@ class ExtraModelBase:
         dataframe_topics, dataframe_aspects = adjective_info(
             dataframe_topics, dataframe_aspects, self.vectorizer
         )
-        dataframe_aspects = link_aspects_to_topics(dataframe_aspects, dataframe_topics)
+        dataframe_aspects, dataframe_topics = link_aspects_to_topics(
+            dataframe_aspects, dataframe_topics
+        )
         dataframe_aspects = link_aspects_to_texts(dataframe_aspects, dataframe_texts)
 
         # do some extra book-keeping if debug-level is set low enough
@@ -178,7 +207,7 @@ class ExtraModelBase:
             ]
         ]
 
-        dataframe_aspects.dropna(axis=0, inplace=True)
+        dataframe_aspects = dataframe_aspects.dropna(axis=0)
         dataframe_aspects["topicID"] = dataframe_aspects["topicID"].astype(int)
 
         output = dataframe_aspects.merge(
@@ -194,7 +223,6 @@ def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = None) -> Any:
     Will dynamically create the class when called with the provided base classes.
 
     :param bases: Base classes to be used when creating ExtraModel class
-    :type bases: Class type or tuple of class types
     :return: ExtraModel class
     """
     if bases is None:

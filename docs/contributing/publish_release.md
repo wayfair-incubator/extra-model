@@ -15,11 +15,11 @@
         git add .
         git commit -m 'some brief description of the changes'
 
-1. This library uses the package `bump2version` to automate its versioning, [source](https://github.com/c4urself/bump2version).
+1. This library uses the package `bump-my-version` to automate its versioning, [source](https://github.com/callowayproject/bump-my-version).
 
-For example, with the current configuration (in the `setup.cfg` file), running the command 
+For example, with the current configuration (in the `pyproject.toml` file), running the command 
 ```bash
-bumpversion major|minor|patch
+bump-my-version bump major|minor|patch
 ```
 will:
 * Increase the model major|minor|patch version in the file `extra_model/__init__.py`
@@ -29,7 +29,7 @@ will:
 
 In order to perform a dry run for the command above, execute:
 ```bash
-bumpversion major|minor|patch -n --verbose
+bump-my-version bump major|minor|patch -n --verbose
 ```
 
 Please notice that the git working directory is expected to be clean when running `bumpversion`.

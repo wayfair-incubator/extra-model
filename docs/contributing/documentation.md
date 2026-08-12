@@ -10,7 +10,7 @@
 
 1. Run the following command to render and serve documentation locally
 
-        docker-compose run --rm --service-ports mkdocs
+        docker compose run --rm --service-ports mkdocs
 
 1. Visit the local documentation to see your changes while developing  
     **[http://localhost:8000](http://localhost:8000)**  

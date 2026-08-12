@@ -19,20 +19,20 @@ cd extra-model
 Then build an image:
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 Then run the test suite to see if docker is set up correctly:
 
 ```bash
-docker-compose run test
+docker compose run test
 ```
 
 You are now set to work on your feature.
 
 ## Testing
 
-You'll be unable to merge code unless the linting and tests pass. You can run these in your container via `docker-compose run test`.
+You'll be unable to merge code unless the linting and tests pass. You can run these in your container via `docker compose run test`.
 
 The tests, linting, and code coverage are run automatically via CI, and you'll see the output on your pull requests.
 
@@ -41,7 +41,7 @@ Every new feature branch should increase the test coverage rather than decreasin
 
 We use [pytest](https://docs.pytest.org/en/latest/) as our testing framework.
 
-To test/lint your project, you can run `docker-compose run test`.
+To test/lint your project, you can run `docker compose run test`.
 
 ### Stages
 
@@ -53,3 +53,12 @@ To customize / override a specific testing stage, please read the documentation 
 1. Bandit: [https://bandit.readthedocs.io/en/latest/](https://bandit.readthedocs.io/en/latest/)
 1. iSort: [https://pycqa.github.io/isort/](https://pycqa.github.io/isort/)
 1. pydocstyle: [http://www.pydocstyle.org/en/stable/](http://www.pydocstyle.org/en/stable/)
+
+### Ignoring bulk reformats in `git blame`
+
+Repo-wide reformatting commits are listed in `.git-blame-ignore-revs`. To keep them
+out of your blame output:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```

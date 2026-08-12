@@ -8,14 +8,21 @@ Table of Contents
 
 * [extra\-model](#extra-model)
   * [Quick start](#quick-start)
-    * [Using docker\-compose](#using-docker-compose)
+    * [Using docker compose](#using-docker-compose)
       * [Downloading Embeddings](#downloading-embeddings)
-      * [[Optional] Run docker\-compose build again](#optional-run-docker-compose-build-again)
+      * [[Optional] Run docker compose build again](#optional-run-docker-compose-build-again)
       * [Run extra\-model](#run-extra-model)
   * [Learn more](#learn-more)
 * [Authors](#authors)
 
 # extra-model
+
+> **This project is archived.** Version 1.0.0 is the final release. The repository is
+> read-only and will receive no further updates, bug fixes or security patches.
+>
+> 1.0.0 requires **Python 3.12 or 3.13** and pins the `en_core_web_sm` 3.8.0 spacy
+> pipeline. Python 3.14 is not supported: `gensim` and `spacy`, both of which
+> `extra-model` depends on, ship no wheels for it.
 
 Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) for the unsupervised topic/aspect extraction on English texts.
 
@@ -30,7 +37,7 @@ For example, on Mac/Windows it should have at least 8 Gb of RAM available to it.
 1. GitHub repo does **not** come with Glove Embeddings. See section `Downloading Embeddings` for how to download the required embeddings.
 
 
-### Using docker-compose
+### Using docker compose
 
 This is a preferred way to run `extra-model`. 
 You can find instructions on how to run `extra-model` using CLI or as a Python package [here](https://wayfair-incubator.github.io/extra-model/site/running_extra/)  
@@ -38,13 +45,13 @@ You can find instructions on how to run `extra-model` using CLI or as a Python p
 First, build the image:
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 Then, run following command to make sure that `extra-model` was installed correctly:
 
 ```bash
-docker-compose run test
+docker compose run test
 ```
 
 #### Downloading Embeddings
@@ -54,14 +61,14 @@ Next step is to download the embeddings (we use [Glove](https://nlp.stanford.edu
 To download the required embeddings, run the following command:
 
 ```bash
-docker-compose run --rm setup
+docker compose run --rm setup
 ```
 
 The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
 
-#### [Optional] Run `docker-compose build` again
+#### [Optional] Run `docker compose build` again
 
-After you've downloaded the embeddings, you may want to run `docker-compose build` again. 
+After you've downloaded the embeddings, you may want to run `docker compose build` again. 
 This will build an image with embeddings already present inside the image. 
 
 The tradeoff here is that the image will be much bigger, but you won't spend ~2 minutes each time you run `extra-model` waiting for embeddings to be mounted into the container.
@@ -72,7 +79,7 @@ On the other hand, building an image with embeddings in the context will increas
 Finally, running `extra-model` is as simple as:
 
 ```bash
-docker-compose run extra-model /package/tests/resources/100_comments.csv
+docker compose run extra-model /package/tests/resources/100_comments.csv
 ```
 
 NOTE: when using this approach, input file should be mounted inside the container.
@@ -84,7 +91,7 @@ This will produce a `result.csv` file in `/io/` (default setting) folder.
 There are multiple flags you can set to change input/outputs of extra. You can find them by running:
 
 ```bash
-docker-compose run extra-model --help
+docker compose run extra-model --help
 ```
 
 ## Learn more
@@ -93,7 +100,7 @@ Our [official documentation][official_documentation] is the best place to contin
 1. [Explanation of inputs/outputs][official_documentation]
 1. [Step-by-step workflow](https://wayfair-incubator.github.io/extra-model/site/workflow/) of what happens inside of `extra-model`
 1. [Examples](https://wayfair-incubator.github.io/extra-model/site/examples/examples/) of how `extra-model` can be used in downstream applications
-1. [Detailed explanation](https://wayfair-incubator.github.io/extra-model/site/running_extra/) of how to run `extra-model` using different interfaces (via `docker-compose`, via CLI, as a Python package).
+1. [Detailed explanation](https://wayfair-incubator.github.io/extra-model/site/running_extra/) of how to run `extra-model` using different interfaces (via `docker compose`, via CLI, as a Python package).
 
 # Authors
 

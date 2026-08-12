@@ -1,3 +1,82 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "extra-model"
+description = "Code to run the Extra algorithm for unsupervised topic extraction."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Misha Balyasin", email = "mbalyasin@wayfair.com" }]
+requires-python = ">=3.12,<3.14"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "click>=8.4,<9",
+    "numpy>=2.5,<3",
+    "nltk>=3.10,<4",
+    "scikit-learn>=1.9,<2",
+    "vaderSentiment>=3.3,<4",
+    "pandas>=3.0,<4",
+    # langdetect is unmaintained (last release 2021) and ships no usable wheel;
+    # pin exactly so a future sdist-only break is at least reproducible.
+    "langdetect==1.0.9",
+    "networkx>=3.6,<4",
+    "gensim>=4.4,<5",
+    "scipy>=1.18,<2",
+    "spacy>=3.8.15,<4",
+]
+
+[project.urls]
+Homepage = "https://github.com/wayfair-incubator/extra-model"
+
+[project.scripts]
+extra-model = "extra_model._cli:entrypoint"
+extra-model-setup = "extra_model._cli:entrypoint_setup"
+
+[tool.setuptools.dynamic]
+version = { attr = "extra_model.__version__" }
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+extra_model = ["py.typed"]
+
+[tool.black]
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--verbose --cov=extra_model --cov-report html:cov_html --cov-report term"
+python_files = ["tests/*.py"]
+
+[tool.bumpversion]
+current_version = "1.0.0"
+commit = true
+tag = true
+tag_name = "v{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "extra_model/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "tests/test_init.py"
+search = '__version__ == "{current_version}"'
+replace = '__version__ == "{new_version}"'
