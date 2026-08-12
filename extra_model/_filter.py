@@ -3,6 +3,12 @@ import logging
 import langdetect
 import pandas as pd
 
+# langdetect is non-deterministic unless its seed is fixed, so the same comment can
+# be detected as a different language from run to run. Since non-English comments are
+# dropped below, that would make the set of surviving comments -- and therefore the
+# output -- vary between identical runs.
+langdetect.DetectorFactory.seed = 0
+
 logger = logging.getLogger(__name__)
 
 

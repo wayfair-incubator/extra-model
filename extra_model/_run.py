@@ -25,8 +25,10 @@ def run_from_dataframe(
     logging.basicConfig(format="  %(message)s")
 
     if not {"CommentId", "Comments"}.issubset(df.columns):
-        raise ExtraModelError(f"Input columns must include `CommentId` and `Comments`, \
-        but got {df.columns.to_list()} instead")
+        raise ExtraModelError(
+            "Input columns must include `CommentId` and `Comments`, "
+            f"but got {df.columns.to_list()} instead"
+        )
 
     extra_model = ExtraModel(models_folder=embeddings_path)
     extra_model.load_from_files()

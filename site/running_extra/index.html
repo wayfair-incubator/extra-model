@@ -268,12 +268,12 @@
   <a href="#using-docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using docker-compose
+        Using docker compose
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Using docker-compose">
+    <nav class="md-nav" aria-label="Using docker compose">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -291,7 +291,7 @@
   <a href="#optional-run-docker-compose-build-again" class="md-nav__link">
     <span class="md-ellipsis">
       
-        [Optional] Run docker-compose build again
+        [Optional] Run docker compose build again
       
     </span>
   </a>
@@ -750,12 +750,12 @@
   <a href="#using-docker-compose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using docker-compose
+        Using docker compose
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Using docker-compose">
+    <nav class="md-nav" aria-label="Using docker compose">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -773,7 +773,7 @@
   <a href="#optional-run-docker-compose-build-again" class="md-nav__link">
     <span class="md-ellipsis">
       
-        [Optional] Run docker-compose build again
+        [Optional] Run docker compose build again
       
     </span>
   </a>
@@ -918,36 +918,36 @@
 
   <h1>Running Extra</h1>
 
-<h3 id="using-docker-compose">Using docker-compose</h3>
+<h3 id="using-docker-compose">Using docker compose</h3>
 <p>First, build the image:</p>
-<pre><code class="language-bash">docker-compose build
+<pre><code class="language-bash">docker compose build
 </code></pre>
 <p>Then, run following command to make sure that <code>extra-model</code> was installed correctly:</p>
-<pre><code class="language-bash">docker-compose run test
+<pre><code class="language-bash">docker compose run test
 </code></pre>
 <h4 id="downloading-embeddings">Downloading Embeddings</h4>
 <p>Next step is to download the embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project).</p>
 <p>To download the required embeddings, run the following command:</p>
-<pre><code class="language-bash">docker-compose run --rm setup
+<pre><code class="language-bash">docker compose run --rm setup
 </code></pre>
 <p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the <code>embeddings/</code> directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except <code>README.md</code> in the <code>embeddings/</code> directory.</p>
-<h4 id="optional-run-docker-compose-build-again">[Optional] Run <code>docker-compose build</code> again</h4>
-<p>After you've downloaded the embeddings, you may want to run <code>docker-compose build</code> again. 
+<h4 id="optional-run-docker-compose-build-again">[Optional] Run <code>docker compose build</code> again</h4>
+<p>After you've downloaded the embeddings, you may want to run <code>docker compose build</code> again. 
 This will build an image with embeddings already present inside the image. </p>
 <p>The tradeoff here is that the image will be much bigger, but you won't spend ~2 minutes each time you run <code>extra-model</code> waiting for embeddings to be mounted into the container.
 On the other hand, building an image with embeddings in the context will increase build time from ~3 minutes to ~10 minutes.</p>
 <h4 id="run-extra-model">Run <code>extra-model</code></h4>
 <p>Finally, running <code>extra-model</code> is as simple as:</p>
-<pre><code class="language-bash">docker-compose run extra-model /package/tests/resources/100_comments.csv
+<pre><code class="language-bash">docker compose run extra-model /package/tests/resources/100_comments.csv
 </code></pre>
 <p>NOTE: when using this approach, input file should be mounted inside the container.
 By default, everything from <code>extra-model</code> folder will be mounted to <code>/package/</code> folder.
 This can be changed in <code>docker-compose.yaml</code></p>
 <p>This will produce a <code>result.csv</code> file in <code>/io/</code> (default setting) folder.</p>
 <p>There are multiple options that you can set to change how <code>extra-model</code> runs.</p>
-<p>The best way to see them is by running <code>docker-compose run extra-model --help</code></p>
+<p>The best way to see them is by running <code>docker compose run extra-model --help</code></p>
 <p>This will produce following output:</p>
-<pre><code class="language-bash">❯ docker-compose run extra-model --help
+<pre><code class="language-bash">❯ docker compose run extra-model --help
 Usage: extra-model [OPTIONS] INPUT_PATH
 
   Run the Extra algorithm for unsupervised topic extraction.
@@ -1010,11 +1010,11 @@ already pinned as a dependency, so only the nltk corpora are needed:</p>
 <pre><code class="language-bash">python -m nltk.downloader wordnet punkt_tab omw-1.4
 </code></pre>
 <h4 id="downloading-embeddings_2">Downloading Embeddings</h4>
-<p>Next, use either the <code>extra-model-setup</code> CLI or <code>docker-compose</code> to download and set up the required embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project):</p>
+<p>Next, use either the <code>extra-model-setup</code> CLI or <code>docker compose</code> to download and set up the required embeddings (we use <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> from Stanford in this project):</p>
 <pre><code class="language-bash">extra-model-setup
 </code></pre>
 <p>or</p>
-<pre><code class="language-bash">docker-compose run --rm setup
+<pre><code class="language-bash">docker compose run --rm setup
 </code></pre>
 <p>The embeddings will be downloaded, unzipped and formatted into a space-efficient format. 
 For the Docker based workflow, the embeddings will be saved to the <code>embeddings</code> directory. 

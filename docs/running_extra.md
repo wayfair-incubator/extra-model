@@ -1,15 +1,15 @@
-### Using docker-compose
+### Using docker compose
 
 First, build the image:
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 Then, run following command to make sure that `extra-model` was installed correctly:
 
 ```bash
-docker-compose run test
+docker compose run test
 ```
 
 #### Downloading Embeddings
@@ -19,14 +19,14 @@ Next step is to download the embeddings (we use [Glove](https://nlp.stanford.edu
 To download the required embeddings, run the following command:
 
 ```bash
-docker-compose run --rm setup
+docker compose run --rm setup
 ```
 
 The embeddings will be downloaded, unzipped and formatted into a space-efficient format. Files will be saved in the `embeddings/` directory in the root of the project directory. If the process fails, it can be safely restarted. If you want to restart the process with new files, delete all files except `README.md` in the `embeddings/` directory.
 
-#### [Optional] Run `docker-compose build` again
+#### [Optional] Run `docker compose build` again
 
-After you've downloaded the embeddings, you may want to run `docker-compose build` again. 
+After you've downloaded the embeddings, you may want to run `docker compose build` again. 
 This will build an image with embeddings already present inside the image. 
 
 The tradeoff here is that the image will be much bigger, but you won't spend ~2 minutes each time you run `extra-model` waiting for embeddings to be mounted into the container.
@@ -37,7 +37,7 @@ On the other hand, building an image with embeddings in the context will increas
 Finally, running `extra-model` is as simple as:
 
 ```bash
-docker-compose run extra-model /package/tests/resources/100_comments.csv
+docker compose run extra-model /package/tests/resources/100_comments.csv
 ```
 
 NOTE: when using this approach, input file should be mounted inside the container.
@@ -48,12 +48,12 @@ This will produce a `result.csv` file in `/io/` (default setting) folder.
 
 There are multiple options that you can set to change how `extra-model` runs.
 
-The best way to see them is by running `docker-compose run extra-model --help`
+The best way to see them is by running `docker compose run extra-model --help`
 
 This will produce following output:
 
 ```bash
-❯ docker-compose run extra-model --help
+❯ docker compose run extra-model --help
 Usage: extra-model [OPTIONS] INPUT_PATH
 
   Run the Extra algorithm for unsupervised topic extraction.
@@ -150,7 +150,7 @@ python -m nltk.downloader wordnet punkt_tab omw-1.4
 
 #### Downloading Embeddings
 
-Next, use either the `extra-model-setup` CLI or `docker-compose` to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
+Next, use either the `extra-model-setup` CLI or `docker compose` to download and set up the required embeddings (we use [Glove](https://nlp.stanford.edu/projects/glove/) from Stanford in this project):
 
 ```bash
 extra-model-setup
@@ -159,7 +159,7 @@ extra-model-setup
 or
 
 ```bash
-docker-compose run --rm setup
+docker compose run --rm setup
 ```
 
 

@@ -51,6 +51,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The CI `isort` job passed `--recursive`, a flag removed in isort 5, so it had not been
   running correctly.
 - Embeddings are downloaded over HTTPS instead of plain HTTP.
+- **Language detection is now deterministic.** `langdetect` picks a random seed unless
+  told otherwise, so the same comment could be detected as a different language between
+  runs. Because non-English comments are filtered out, that meant two identical runs
+  could analyse different sets of comments. `DetectorFactory.seed` is now fixed, which
+  produced byte-identical output on the reference corpus.
+- The "Input columns must include ..." error no longer contains a run of stray
+  whitespace, caused by a line continuation inside an f-string.
+
+### Known issues, not fixed
+- `_disambiguate.py` divides by a zero norm when an aspect's cluster contains only that
+  aspect, emitting `RuntimeWarning: invalid value encountered in divide` and producing
+  NaN context vectors. Those rows are later dropped by `dropna`, so no NaN reaches the
+  output, but the affected aspects are silently discarded. Fixing this would change
+  which aspects survive disambiguation, so it was left alone in a release intended to
+  be behavior-preserving.
 
 ### Notes on behavior
 - Output is effectively unchanged by the upgrade. On the 100-comment reference corpus,
