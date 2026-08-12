@@ -90,11 +90,11 @@ First, install `extra-model` via pip:
 pip install extra-model
 ```
 
-Then, add all the external dependencies:
+Then, add the external dependencies. The `en_core_web_sm` spacy pipeline is
+already pinned as a dependency, so only the nltk corpora are needed:
 
 ```bash
-python -m spacy download en_core_web_sm
-python -m nltk.downloader wordnet punkt omw-1.4
+python -m nltk.downloader wordnet punkt_tab omw-1.4
 ```
 
 #### Downloading Embeddings
@@ -141,11 +141,11 @@ First, install `extra-model` via pip:
 pip install extra-model
 ```
 
-Then, add all the external dependencies:
+Then, add the external dependencies. The `en_core_web_sm` spacy pipeline is
+already pinned as a dependency, so only the nltk corpora are needed:
 
 ```bash
-python -m spacy download en_core_web_sm
-python -m nltk.downloader wordnet punkt omw-1.4
+python -m nltk.downloader wordnet punkt_tab omw-1.4
 ```
 
 #### Downloading Embeddings

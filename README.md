@@ -17,6 +17,13 @@ Table of Contents
 
 # extra-model
 
+> **This project is archived.** Version 1.0.0 is the final release. The repository is
+> read-only and will receive no further updates, bug fixes or security patches.
+>
+> 1.0.0 requires **Python 3.12 or 3.13** and pins the `en_core_web_sm` 3.8.0 spacy
+> pipeline. Python 3.14 is not supported: `gensim` and `spacy`, both of which
+> `extra-model` depends on, ship no wheels for it.
+
 Code to run the Extra [algorithm](https://www.aclweb.org/anthology/D18-1384/) for the unsupervised topic/aspect extraction on English texts.
 
 [Read the Official Documentation here](https://wayfair-incubator.github.io/extra-model/site)

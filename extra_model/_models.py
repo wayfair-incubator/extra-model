@@ -195,7 +195,6 @@ def extra_factory(bases: Optional[Union[Any, Tuple[Any]]] = None) -> Any:
     Will dynamically create the class when called with the provided base classes.
 
     :param bases: Base classes to be used when creating ExtraModel class
-    :type bases: Class type or tuple of class types
     :return: ExtraModel class
     """
     if bases is None:

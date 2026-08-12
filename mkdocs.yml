@@ -11,7 +11,7 @@ nav:
   - Using a Custom Base Class: custom_base_class.md
   - Blog: blog.md
   - RAM Requirements: ram_requirements.md
-  #  - Reference: reference.md
+  - Reference: reference.md
   - Contributing:
       - Developer's Guide: contributing/developer_guide.md
       - Documentation: contributing/documentation.md
@@ -21,10 +21,9 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          selection:
+          options:
             docstring_style: "sphinx"
-          rendering:
             heading_level: 3
-            show_root_heading: True
-            show_source: False
-            show_root_full_path: False
+            show_root_heading: true
+            show_source: false
+            show_root_full_path: false

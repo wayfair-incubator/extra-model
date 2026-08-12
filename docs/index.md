@@ -1,5 +1,12 @@
 # extra-model
 
+> **This project is archived.** Version 1.0.0 is the final release. The repository is
+> read-only and will receive no further updates, bug fixes or security patches.
+>
+> 1.0.0 requires **Python 3.12 or 3.13** and pins the `en_core_web_sm` 3.8.0 spacy
+> pipeline. Python 3.14 is not supported: `gensim` and `spacy`, both of which
+> `extra-model` depends on, ship no wheels for it.
+
 `extra-model` is an implementation of the `ExtRA` algorithm described in the paper ["ExtRA: Extracting Prominent Review Aspects from Customer Feedback"](https://www.aclweb.org/anthology/D18-1384). 
 
 It is an unsupervised algorithm that implements an NLP task called [Aspect-Based Sentiment Analysis](https://paperswithcode.com/task/aspect-based-sentiment-analysis). 
