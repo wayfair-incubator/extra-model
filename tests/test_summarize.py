@@ -85,14 +85,18 @@ def test_summarize__link_aspects_to_topics():
             {"aspect": "chair", "descriptor": "small"},
         ]
     )
-    result = link_aspects_to_topics(aspectframe, topicframe)
+    aspects, topics = link_aspects_to_topics(aspectframe, topicframe)
     assert (
-        result.iloc[0]["topicID"] == 0
-        and aspectframe.iloc[0]["adcluster"] == "small"
-        and not aspectframe.iloc[1]["topicID"]
-        and not aspectframe.iloc[1]["adcluster"]
-        and topicframe.iloc[0]["topicID"] == 0  # has the topicID been added?
+        aspects.iloc[0]["topicID"] == 0
+        and aspects.iloc[0]["adcluster"] == "small"
+        and not aspects.iloc[1]["topicID"]
+        and not aspects.iloc[1]["adcluster"]
+        and topics.iloc[0]["topicID"] == 0  # has the topicID been added?
     )
+    # neither argument is modified in place
+    assert "topicID" not in aspectframe.columns
+    assert "adcluster" not in aspectframe.columns
+    assert "topicID" not in topicframe.columns
 
 
 def test_summarize__link_aspects_to_texts():

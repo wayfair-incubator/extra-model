@@ -139,9 +139,8 @@ class ExtraModelBase:
         """Docstring."""
         if not self.is_trained:
             raise RuntimeError("Extra must be trained before you can predict!")
-        dataframe_texts = pd.DataFrame(comments)
-        dataframe_texts.rename(
-            {"CommentId": "source_guid"}, axis="columns", inplace=True
+        dataframe_texts = pd.DataFrame(comments).rename(
+            {"CommentId": "source_guid"}, axis="columns"
         )
         dataframe_texts = filter(dataframe_texts)
         dataframe_aspects = generate_aspects(dataframe_texts)
@@ -156,7 +155,9 @@ class ExtraModelBase:
         dataframe_topics, dataframe_aspects = adjective_info(
             dataframe_topics, dataframe_aspects, self.vectorizer
         )
-        dataframe_aspects = link_aspects_to_topics(dataframe_aspects, dataframe_topics)
+        dataframe_aspects, dataframe_topics = link_aspects_to_topics(
+            dataframe_aspects, dataframe_topics
+        )
         dataframe_aspects = link_aspects_to_texts(dataframe_aspects, dataframe_texts)
 
         # do some extra book-keeping if debug-level is set low enough
@@ -178,7 +179,7 @@ class ExtraModelBase:
             ]
         ]
 
-        dataframe_aspects.dropna(axis=0, inplace=True)
+        dataframe_aspects = dataframe_aspects.dropna(axis=0)
         dataframe_aspects["topicID"] = dataframe_aspects["topicID"].astype(int)
 
         output = dataframe_aspects.merge(

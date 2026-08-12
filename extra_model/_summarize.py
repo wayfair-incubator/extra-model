@@ -105,20 +105,22 @@ def link_aspects_to_topics(dataframe_aspects, dataframe_topics):
     :type dataframe_aspects: :class:`pandas.DataFrame`
     :param dataframe_topics:  the dataframe that has the topic and adjective cluster information
     :type dataframe_topics: :class:`pandas.DataFrame`
-    :return: the enriched dataframe
-    :rtype: :class:`pandas.DataFrame`
+    :return: the enriched aspect dataframe, and the topic dataframe with its topicID column
+    :rtype: (:class:`pandas.DataFrame`, :class:`pandas.DataFrame`)
     """
-    # create empty collumns to be filled
-    dataframe_aspects["topicID"] = None
-    dataframe_aspects["adcluster"] = None
+    # work on copies and hand both back, so neither argument is modified in
+    # place for the caller
+    dataframe_aspects = dataframe_aspects.assign(topicID=None, adcluster=None)
 
     # create a topic-id from the dataframe index
-    dataframe_topics.reset_index(inplace=True)
-    dataframe_topics.rename({"index": "topicID"}, axis="columns", inplace=True)
+    dataframe_topics = dataframe_topics.reset_index().rename(
+        {"index": "topicID"}, axis="columns"
+    )
 
-    dataframe_topics.apply(lambda topic: set_aspect(topic, dataframe_aspects), axis=1)
+    for _, topic in dataframe_topics.iterrows():
+        set_aspect(topic, dataframe_aspects)
 
-    return dataframe_aspects
+    return dataframe_aspects, dataframe_topics
 
 
 def link_aspects_to_texts(dataframe_aspects, dataframe_texts):

@@ -43,7 +43,7 @@ def filter(dataframe):
     dataframe = dataframe[(dataframe["lang"] == "en")]
 
     # drop auxiliary columns again, re-index
-    dataframe.drop(["cl", "lang"], axis="columns", inplace=True)
-    dataframe.reset_index(inplace=True, drop=True)
+    dataframe = dataframe.drop(["cl", "lang"], axis="columns")
+    dataframe = dataframe.reset_index(drop=True)
 
     return dataframe
