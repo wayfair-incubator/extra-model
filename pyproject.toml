@@ -1,3 +1,79 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "extra-model"
+description = "Code to run the Extra algorithm for unsupervised topic extraction."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Misha Balyasin", email = "mbalyasin@wayfair.com" }]
+requires-python = ">=3.9,<3.12"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "click==8.1.7",
+    "numpy==1.26.4",
+    "nltk==3.9.1",
+    "scikit-learn==1.5.2",
+    "vaderSentiment==3.3.2",
+    "pandas==2.2.3",
+    "langdetect==1.0.9",
+    "networkx==3.2.1",
+    "gensim==4.3.3",
+    "scipy==1.12.0",
+    "spacy==3.8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/wayfair-incubator/extra-model"
+
+[project.scripts]
+extra-model = "extra_model._cli:entrypoint"
+extra-model-setup = "extra_model._cli:entrypoint_setup"
+
+[tool.setuptools.dynamic]
+version = { attr = "extra_model.__version__" }
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+extra_model = ["py.typed"]
+
+[tool.black]
+target-version = ["py39"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--verbose --cov=extra_model --cov-report html:cov_html --cov-report term"
+python_files = ["tests/*.py"]
+
+[tool.bumpversion]
+current_version = "0.4.0"
+commit = true
+tag = true
+
+[[tool.bumpversion.files]]
+filename = "extra_model/__init__.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "tests/test_init.py"
+search = '__version__ == "{current_version}"'
+replace = '__version__ == "{new_version}"'
