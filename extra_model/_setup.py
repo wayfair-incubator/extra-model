@@ -14,7 +14,21 @@ logger = logging.getLogger(__name__)
 
 
 def setup(output_path: Path) -> None:
-    """Docstring."""
+    """Download the GloVe embeddings and convert them to the format extra-model needs.
+
+    Downloads the archive, unzips it, converts it to gensim's keyed-vector format and
+    deletes the intermediate files. The archive is about 2GB and the whole process
+    takes roughly 40 minutes, needing several gigabytes of free disk space while the
+    unpacked and converted copies coexist. The user is asked to confirm before
+    anything is downloaded, and answering anything other than `y` returns without
+    doing any work.
+
+    Safe to re-run: any step whose output file already exists is skipped, so an
+    interrupted setup can be resumed.
+
+    :param output_path: directory the embeddings are downloaded to and built in.
+    :raises ExtraModelError: if the download or unzip subprocess fails.
+    """
     logging.basicConfig(level="INFO", format="  %(message)s")
 
     logger.info("")
