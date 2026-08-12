@@ -109,6 +109,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      # report every interpreter's result, so a failure on one doesn't cancel
+      # the others and hide whether they would have passed
+      fail-fast: false
       matrix:
         python-version: ["3.12", "3.13"]
     steps:
