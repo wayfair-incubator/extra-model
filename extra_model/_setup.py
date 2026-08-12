@@ -8,7 +8,7 @@ from gensim.test.utils import datapath
 
 from extra_model._errors import ExtraModelError
 
-URL = "http://downloads.cs.stanford.edu/nlp/data/glove.840B.300d.zip"
+URL = "https://downloads.cs.stanford.edu/nlp/data/glove.840B.300d.zip"
 
 logger = logging.getLogger(__name__)
 

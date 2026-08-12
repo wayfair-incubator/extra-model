@@ -1,11 +1,14 @@
-click==8.1.7
-numpy==1.26.4
-nltk==3.8.1
-scikit-learn==1.5.2
+click==8.4.2
+numpy==2.5.2
+nltk==3.10.2
+scikit-learn==1.9.0
 vaderSentiment==3.3.2
-pandas==2.2.3
+pandas==3.0.5
 langdetect==1.0.9
-networkx==3.2.1
-gensim==4.3.3
-scipy==1.12.0
-spacy==3.8.0
+networkx==3.6.1
+gensim==4.4.0
+scipy==1.18.0
+spacy==3.8.15
+# spaCy pipeline used by extra_model/_aspects.py. Pinned explicitly rather than
+# fetched with `python -m spacy download`, so the version is reproducible.
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl

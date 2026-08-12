@@ -5,15 +5,15 @@ name: CI
 on: [push, pull_request]
 
 env:
-  PYTHON_VERSION: "3.10"
+  PYTHON_VERSION: "3.13"
 
 jobs:
   bandit:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
-      - uses: actions/setup-python@v5.2.0
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
@@ -28,9 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Python
-        uses: actions/setup-python@v5.2.0
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
@@ -45,8 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Check out code
-          uses: actions/checkout@v4
-        - uses: actions/setup-python@v5.2.0
+          uses: actions/checkout@v5
+        - uses: actions/setup-python@v5.6.0
           with:
             python-version: ${{ env.PYTHON_VERSION }}
         - name: Install dependencies
@@ -61,8 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
-      - uses: actions/setup-python@v5.2.0
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install dependencies
@@ -72,14 +72,14 @@ jobs:
           test-requirements: "true"
 
       - name: Run isort
-        run: isort --recursive --check-only extra_model tests
+        run: isort --check-only extra_model tests
 
   mypy:
     runs-on: ubuntu-latest
     steps:
         - name: Check out code
-          uses: actions/checkout@v4
-        - uses: actions/setup-python@v5.2.0
+          uses: actions/checkout@v5
+        - uses: actions/setup-python@v5.6.0
           with:
             python-version: ${{ env.PYTHON_VERSION }}
         - name: Install dependencies
@@ -94,8 +94,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Check out code
-          uses: actions/checkout@v4
-        - uses: actions/setup-python@v5.2.0
+          uses: actions/checkout@v5
+        - uses: actions/setup-python@v5.6.0
           with:
             python-version: ${{ env.PYTHON_VERSION }}
         - name: Install dependencies
@@ -110,11 +110,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, "3.10", "3.11"]
+        python-version: ["3.12", "3.13"]
     steps:
         - name: Check out code
-          uses: actions/checkout@v4
-        - uses: actions/setup-python@v5.2.0
+          uses: actions/checkout@v5
+        - uses: actions/setup-python@v5.6.0
           with:
             python-version: ${{ matrix.python-version }}
         - name: Install dependencies
@@ -123,19 +123,11 @@ jobs:
             requirements: "true"
             test-requirements: "true"
 
-        - name: Install spacy language pack
-          uses: ./.github/actions/install-spacy-lang
-          with:
-            pack: en_core_web_sm
+        # the en_core_web_sm spacy pipeline is pinned in requirements.txt and
+        # installed with the rest of the dependencies
 
-        - name: Install nltk wordnet resource
-          run: python -m nltk.downloader wordnet
-
-        - name: Install nltk punkt resource
-          run: python -m nltk.downloader punkt
-
-        - name: Install nltk omw-1.4 resource
-          run: python -m nltk.downloader omw-1.4
+        - name: Install nltk resources
+          run: python -m nltk.downloader wordnet punkt_tab omw-1.4
 
         - name: Run pytest
           run: pytest --cov-report xml:coverage-${{ matrix.python-version }}.xml --junitxml=test-results-${{ matrix.python-version }}.xml
@@ -144,8 +136,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
-      - uses: actions/setup-python@v5.2.0
+        uses: actions/checkout@v5
+      - uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Verify wheel
